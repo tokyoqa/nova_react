@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Component } from "react";
 import "./Idcard.css"
 
-function Idcard () {
+class Idcard extends Component {
+    render(){
     return(
         <div className="form">
              <div className="title">Идентификация</div>
@@ -19,6 +20,7 @@ function Idcard () {
             </div>
 
     )
+}
 }
 
 export  default Idcard;

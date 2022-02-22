@@ -1,45 +1,4 @@
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
 
-input[type=number] {
-    -moz-appearance:textfield;
-}
-
-body {
-    align-items: center;
-    background-color: #072536;
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-    width: 90%;
-    margin: 0 auto;
-    background-repeat: no-repeat;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-     background-size: 100% 100%;
-  }
-
-  
-  .form {
-    background-color: #27863b;
-    border-radius: 20px;
-    box-sizing: border-box;
-    height: 350px;
-    padding: 20px;
-    width: 320px;
-  }
-  
-  .title {
-    color: #eee;
-    font-family: sans-serif;
-    font-size: 36px;
-    font-weight: 600;
-    margin-top: 30px;
-  }
-  
   .subtitle {
     color: #eee;
     font-family: sans-serif;
@@ -139,4 +98,3 @@ body {
   .submit:active {
     background-color: #c9dcaf;
   }
-  

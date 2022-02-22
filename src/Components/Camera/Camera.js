@@ -1,3 +1,4 @@
+import React, { Component } from "react";
 const camera = function () {
     let width = 0;
     let height = 0;
@@ -54,5 +55,7 @@ const camera = function () {
     
     }
     }();
-    
+
+
+
     export default camera;
