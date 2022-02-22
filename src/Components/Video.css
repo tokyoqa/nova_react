@@ -17,7 +17,7 @@ body {
     background-color: #27863b;
     border-radius: 20px;
     box-sizing: border-box;
-    height: 350px;
+    height: 420px;
     padding: 20px;
     width: 320px;
   }
@@ -39,7 +39,7 @@ body {
   }
   
   .input-container {
-    height: 50px;
+    height: 150px;
     position: relative;
     width: 100%;
   }
@@ -130,3 +130,7 @@ body {
     background-color: #c9dcaf;
   }
   
+  .fit-picture {
+    width: 250px;
+    height: 150px;
+}

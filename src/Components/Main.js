@@ -1,18 +1,18 @@
 import React from "react";
-import styles from "./Main.css"
+import "./Main.css"
 
 
 function Main(){
     return(
-        <div class="form">
-         <div class="title">Здраствуйте</div>
-         <div class="subtitle">Давайте пройдем идентификацию</div>
-         <div class="input-container ic1">
-          <input id="firstname" class="input" type="number" placeholder="" />
-          <div class="cut"></div>
-          <label for="firstname" class="placeholder">+996(556)-68-00-00</label>
+        <div classNameName="form">
+         <div classNameName="title">Здраствуйте</div>
+         <div classNameName="subtitle">Давайте пройдем идентификацию</div>
+         <div classNameName="input-container ic1">
+          <input id="firstname" classNameName="input" type="number" placeholder="" />
+          <div classNameName="cut"></div>
+          <label for="firstname" classNameName="placeholder">+996(556)-68-00-00</label>
         </div>
-        <button type="text" class="submit" onclick="addState(),window.location.reload()">Далее</button>
+        <button type="text" classNameName="submit" onclick="addState(),window.location.reload()">Далее</button>
         </div>
     )
 }

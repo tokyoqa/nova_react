@@ -1,18 +1,18 @@
 import React from "react";
-import styles from "./Identification.css";
+import "./Identification.css";
 
 function Identification (){
     return(
-        <div class="form">
-        <div class="title">Идентификация</div>
-        <div class="subtitle">Введите 6ти значный код</div>
-            <div class="input-container ic1">
-                <input id="firstname" class="input" type="text" placeholder=" "/>
-                <div class="cut"></div>
-                <label for="firstname" class="placeholder">00-00-00</label>
+        <div className="form">
+        <div className="title">Идентификация</div>
+        <div className="subtitle">Введите 6ти значный код</div>
+            <div className="input-container ic1">
+                <input id="firstname" className="input" type="text" placeholder=" "/>
+                <div className="cut"></div>
+                <label for="firstname" className="placeholder">00-00-00</label>
             </div>
-        <button type="text" class="submit" onclick="addState(),window.location.reload()">Далее</button>
-        <button type="text" class="submit code">Отправить код повторно</button>
+        <button type="text" className="submit" onclick="addState(),window.location.reload()">Далее</button>
+        <button type="text" className="submit code">Отправить код повторно</button>
         </div>
     )
 }
