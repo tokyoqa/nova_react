@@ -1,61 +1,35 @@
-import React, { Component } from "react";
-const camera = function () {
-    let width = 0;
-    let height = 0;
-    
-    const createObjects = function () {
-    
-    
-        const video = document.createElement('video');
-        video.id = 'video';
-        video.width = width;
-        video.width = height;
-        video.autoplay = true;
-        document.body.appendChild(video);
-    
-        const canvas = document.createElement('canvas');
-        canvas.id = 'canvas';
-        canvas.width = width;
-        canvas.width = height;
-        document.body.appendChild(canvas);
-    }
-    
-    
-    return {
-        video: null,
-        context: null,
-        canvas: null,
-    
-        startCamera: function (w = 680, h = 480) {
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                width = w;
-                height = h;
-    
-                createObjects();
-    
-                this.video = document.getElementById('video');
-                this.canvas = document.getElementById('canvas');
-                this.context = this.canvas.getContext('2d');
-    
-    
-                (function (video) {
-                    navigator.mediaDevices.getUserMedia({video: true}).then(function (stream) {
-                        video.srcObject = stream;
-                        video.play();
-                    });
-                })(this.video)
-    
-            }
-        },
-    
-    
-        takeSnapshot: function () {
-            this.context.drawImage(this.video, 0, 0, width, height);
-        }
-    
-    }
-    }();
+import React, {useRef, useEffect, useState } from "react";
+import './Camera.css'
+import Webcam from "react-webcam";
 
 
-
-    export default camera;
+const WebcamCapture = () => {
+    const webcamRef = React.useRef(null);
+    const [imgSrc, setImgSrc] = React.useState(null);
+  
+    const capture = React.useCallback(() => {
+      const imageSrc = webcamRef.current.getScreenshot();
+      setImgSrc(imageSrc);
+    }, [webcamRef, setImgSrc]);
+  
+    return (
+      <>
+        <Webcam
+          audio={false}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+        />
+        <button onClick={capture}>Capture photo</button>
+        {imgSrc && (
+          <img
+            src={imgSrc}
+          />
+        )}
+      </>
+    );
+  };
+  
+  React.render(<WebcamCapture />, document.getElementById("root"));
+  
+  
+export default Webcam;

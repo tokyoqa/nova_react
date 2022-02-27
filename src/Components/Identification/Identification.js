@@ -3,19 +3,14 @@ import "./Identification.css";
 
 function Identification (){
     return(
-        <div classNameName="form">
-        <div classNameName="title">Идентификация</div>
-        <div classNameName="subtitle">Введите 6ти значный код</div>
-            <div classNameName="input-container ic1">
-                <input id="firstname" classNameName="input" type="text" placeholder=" "/>
-                <div classNameName="cut"></div>
-                <label for="firstname" classNameName="placeholder">00-00-00</label>
-            </div>
-        <button type="text" classNameName="submit" onclick="addState(),window.location.reload()">Далее</button>
-        <button type="text" classNameName="submit code">Отправить код повторно</button>
+        <div className="ident_form">
+        <div className="ident_title">Идентификация</div>
+        <div className="ident_subtitle">Введите 6-ти значный код</div>
+        <input id="firstname" className="ident_input" type="number" placeholder="00-00-00"/>
+        <button className="ident_submit">Далее</button>
+        <button className="ident_submit resend">Отправить код повторно</button>
         </div>
     )
 }
-
 
 export default Identification;

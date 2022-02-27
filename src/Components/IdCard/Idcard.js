@@ -4,19 +4,18 @@ import "./Idcard.css"
 class Idcard extends Component {
     render(){
     return(
-        <div className="form">
-             <div className="title">Идентификация</div>
-             <div className="subtitle">Вставьте фото пасспорта</div>
-             <div className="input-container ic1">
-             <input type="file" accept="image/*" onchange="loadFile(event)"/>
-             <img id="output"/>
+        <div className="id_form">
+            <div className="id_title">Загрузите фото паспорта</div>
+            <div className="id_input__container ic1">
+                <img id="input_preview"/>
+                <input type="file" accept="image/*"/>
+                
             </div>
-
-            <div className="input-container2 ic2">
-                <input type="file" accept="image/*" onchange="loadFile(event)"/>
-                <img id="output"/>
-               </div>
-               <button type="text" className="submit" onclick="addState(),window.location.reload()">Далее</button>
+            <div className="id_input__container ic2">
+                <input type="file" accept="image/*" />
+                <img id="input_preview"/>
+            </div>
+               <button className="submit">Далее</button>
             </div>
 
     )

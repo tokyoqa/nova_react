@@ -1,5 +1,4 @@
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -14,17 +13,7 @@ code {
 
 
 body {
-  align-items: center;
   background-color: #072536;
-  display: flex;
-  justify-content: center;
-  height: 100vh;
-  width: 90%;
-  margin: 0 auto;
-  background-repeat: no-repeat;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-   background-size: 100% 100%;
 }
 
 .form {
