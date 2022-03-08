@@ -1,12 +1,7 @@
 import React, { useRef, useState } from 'react';
 import './Camera.css'
 
-
-
-
-
-
-const Component = () => {
+const Camera = () => {
 
   return (
     <div>
