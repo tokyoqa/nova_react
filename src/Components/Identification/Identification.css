@@ -3,23 +3,23 @@
     margin: 0 auto;
     margin-top: 100px;
     height: 400px;
-    width: 27%;
-    background-color: #27863b;
+    width: 400px;
+    background-color: #0d844e;
     border-radius: 20px;
     box-sizing: border-box;
     padding: 20px;
   }
   
   .ident_title {
-    color: #eee;
+    color: #fff;
     font-family: sans-serif;
     font-size: 18px;
     font-weight: 600;
-    margin: 10px 10px 20px;
+    margin: 30px 10px 20px;
   }
 
   .ident_subtitle {
-    color: #eee;
+    color: #fff;
     font-family: sans-serif;
     font-size: 18px;
     font-weight: 600;
@@ -28,7 +28,7 @@
   }
   
   .ident_input {
-    background-color: #d8d9da;
+    background-color: #fff;
     border-radius: 12px;
     border: 0;
     box-sizing: border-box;
@@ -40,7 +40,7 @@
   }
   
   .ident_submit {
-    background-color: #d8d9da;
+    background-color: #ffffff;
     border-radius: 12px;
     border: 0;
     box-sizing: border-box;
@@ -48,7 +48,7 @@
     cursor: pointer;
     font-size: 18px;
     height: 50px;
-    margin: 30px 0 0 0;
+    margin-top: 30px;
     outline: 0;
     text-align: center;
     width: 100%;
