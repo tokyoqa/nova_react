@@ -1,27 +1,28 @@
+import { Route, Routes } from 'react-router-dom';
+
 import Identification from './Components/Identification/Identification';
 import Main from './Components/Main/Main'
 import Idcard from './Components/IdCard/Idcard';
 import Terms from './Components/Terms/Terms'
 import Video from './Components/Video/Video'
 import Camera from './Components/Camera/Camera'
-import { Component } from 'react';
-import {AppBar, Container, Toolbar, Typography} from '@mui/material';
+import Layout from './Layout/Layout';
+import NotFound from './Components/NotFound/NotFound.jsx';
  
-
-
 function App(){
-  
-
   return(
     <div>
-      <AppBar position='fixed' style={{background: '#0d844e'}}>
-        <Container>
-          <Toolbar>
-            <Typography>Айыл Банк</Typography>
-          </Toolbar>
-        </Container>
-      </AppBar>
-      <Main/>
+      <Routes>
+        <Route path="/" element={<Layout/>}>
+            <Route index element={<Main/>}/>
+            <Route path='identification' element={<Identification/>}/>
+            <Route path='idcard' element={<Idcard/>}/>
+            <Route path='camera' element={<Camera/>}/>
+            <Route path='terms' element={<Terms/>}/>
+            <Route path='video' element={<Video/>}/>
+            <Route path="*" element={<NotFound/>}/>
+        </Route>
+      </Routes>
     </div>
   )
 }
