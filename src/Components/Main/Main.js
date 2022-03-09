@@ -6,10 +6,11 @@ const PhoneMask = "+{996}(000)00-00-00";
 
 function Main() {
   const [number, setNumber] = useState("");
-  //вот так делается запрос (на самом деле можно было бы все на редакс перенести но это долго, мб потом сделаем)
   const [result, setResult] = useState(""); 
+
+
   function setData(){
-    axios.get('https://jsonplaceholder.typicode.com/todos/1')
+    axios.post('h00000+ttps://jsonplaceholder.typicode.com/todos/1')
     .then(function (response) {
       console.log(response);
       setResult(response); 

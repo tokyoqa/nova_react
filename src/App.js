@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-
 import Identification from './Components/Identification/Identification';
 import Main from './Components/Main/Main'
 import Idcard from './Components/IdCard/Idcard';
