@@ -7,13 +7,16 @@ import Video from './Components/Video/Video'
 import Camera from './Components/Camera/Camera'
 import Layout from './Layout/Layout';
 import NotFound from './Components/NotFound/NotFound.jsx';
+
+
+
  
 function App(){
   return(
     <div>
       <Routes>
         <Route path="/" element={<Layout/>}>
-            <Route index element={<Main/>}/>
+            <Route index element={<Idcard/>}/>
             <Route path='identification' element={<Identification/>}/>
             <Route path='idcard' element={<Idcard/>}/>
             <Route path='camera' element={<Camera/>}/>
