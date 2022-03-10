@@ -16,7 +16,7 @@ function App(){
     <div>
       <Routes>
         <Route path="/" element={<Layout/>}>
-            <Route index element={<Idcard/>}/>
+            <Route index element={<Camera/>}/>
             <Route path='identification' element={<Identification/>}/>
             <Route path='idcard' element={<Idcard/>}/>
             <Route path='camera' element={<Camera/>}/>

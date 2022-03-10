@@ -1,65 +1,35 @@
-// import React, { Component } from 'react';
-// import Camera from 'react-camera';
-// export default class App extends Component {
+import axios from 'axios';
+import React, { useState } from 'react';
+import Camera from 'react-html5-camera-photo';
+import 'react-html5-camera-photo/build/css/index.css';
 
-//   constructor(props) {
-//     super(props);
-//     this.takePicture = this.takePicture.bind(this);
-//   }
+function App (props) {
+  const [dataUri, setDataUri] = useState('');
 
-//   takePicture() {
-//     this.camera.capture()
-//     .then(blob => {
-//       this.img.src = URL.createObjectURL(blob);
-//       this.img.onload = () => { URL.revokeObjectURL(this.src); }
-//     })
-//   }
+  
+  function handleTakePhotoAnimationDone (dataUri) {
+    console.log('takePhoto');
+    setDataUri(dataUri);
+    axios
+        .post("http://127.0.0.1:5000/?", dataUri)
+        .then(function(responce){
+            console.log(responce);
+            console.log(responce.data)
+        })
+        .catch(function(error){
+            console.log(error);
+            console.log(error.data)
+        })
+  }
 
-//   render() {
-//     return (
-//       <div style={style.container}>
-//         <Camera
-//           style={style.preview}
-//           ref={(cam) => {
-//             this.camera = cam;
-//           }}
-//         >
-//           <div style={style.captureContainer} onClick={this.takePicture}>
-//             <div style={style.captureButton} />
-//           </div>
-//         </Camera>
-//         <img
-//           style={style.captureImage}
-//           ref={(img) => {
-//             this.img = img;
-//           }}
-//         />
-//       </div>
-//     );
-//   }
-// }
+  return (
+    <div>
+        <Camera 
+            onTakePhotoAnimationDone = {handleTakePhotoAnimationDone}
+            isFullscreen={false}
+        />
+    </div>
+  );
+}
 
-// const style = {
-//   preview: {
-//     position: 'relative',
-//   },
-//   captureContainer: {
-//     display: 'flex',
-//     position: 'absolute',
-//     justifyContent: 'center',
-//     zIndex: 1,
-//     bottom: 0,
-//     width: '100%'
-//   },
-//   captureButton: {
-//     backgroundColor: '#fff',
-//     borderRadius: '50%',
-//     height: 56,
-//     width: 56,
-//     color: '#000',
-//     margin: 20
-//   },
-//   captureImage: {
-//     width: '100%',
-//   }
-// };
+export default App;
