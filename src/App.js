@@ -15,12 +15,13 @@ import { Update } from '@mui/icons-material';
 
 
 function App(){
-
+    const [id, setId] = useState(null); 
+    console.log(id); 
   return(
     <div>
       <Routes>
         <Route path="/" element={<Layout/>}>
-            <Route index element={<Main/>}/>
+            <Route index element={<Main setId={setId} />}/>
             <Route path='identification' element={<Identification/>}/>
             <Route path='idcard' element={<Idcard/>}/>
             <Route path='camera' comment={<Camera/>}/>

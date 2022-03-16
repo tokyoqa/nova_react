@@ -5,8 +5,8 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import { render } from "@testing-library/react";
 
-const Main = () => {
-  let id = 3;
+const Main = ({setId}) => {
+
   const PhoneMask = "{996}000000000";
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
@@ -24,7 +24,7 @@ function postData(){
       }
     }
   ) 
-  .then((res) => { id = res.data.id;
+  .then((res) => { setId(res.data.id);
     navigate(-1)
     console.log(res)
   })
