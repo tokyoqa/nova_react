@@ -5,28 +5,30 @@ import "./Identification.css";
 import { useNavigate } from "react-router";
 
 
-function Identification (){
-    const codeMask = "0000-0000";
+export const Identification  = ({idNum}) => {
+    let id = 2;
+    const codeMask = "0000"; 
     let navigate = useNavigate();
     const [secureCode, setCode] = useState("");
     const [result, setResult] = useState("");
 
     function postSecureCode(){
-        axios.post('http://192.168.41.35:8088/api/check?secretCode=' + secureCode)
+        axios.get('http://192.168.41.33:8080/api/code?id=' + id + '&code='  + secureCode )
         .then(function(response){
             console.log(response);
             setResult(response)
-            navigate('idcard')
+            navigate = ('/idcard')
         })
         .catch(function(error){
           console.log(error)
           setResult(error)
         });
+        console.log(idNum, secureCode)
     }
 
     return(
         <div className="ident_form">
-            <div className="ident_title">Идентификация</div>
+            <div className="ident_title">Идентификация ID = {idNum}</div>
             <div className="ident_subtitle">Введите код из SMS</div>
             <IMaskInput
             mask={codeMask}
@@ -34,7 +36,6 @@ function Identification (){
             className="ident_input"
             onAccept={(value) =>{setCode(value)}}
             value={secureCode}
-            placeholder="__/__"
             />
             <button className="ident_submit" onClick={postSecureCode} >Далее</button>
             <button className="ident_submit resend">Отправить код повторно</button>

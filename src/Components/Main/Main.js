@@ -3,26 +3,34 @@ import "./Main.css";
 import { IMask, IMaskInput } from "react-imask";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { render } from "@testing-library/react";
 
-const PhoneMask = "{996}000000000";
-function Main() {
-  let navigate = useNavigate();
+const Main = () => {
+  let id = 3;
+  const PhoneMask = "{996}000000000";
+  let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
-  const [result, setResult] = useState(""); 
+  const [idNum , setIdNum] = useState("");
 
-function postDate (){
-  axios.post('http://192.168.41.35:8088/api/save?phoneNumber='+ number)
-  .then(function(response){
-    console.log(response);
-    setResult(response)
-    navigate('identification')
+function postData(){
+  axios
+  (
+    {
+      url: 'http://192.168.41.33:8080/api/number',
+      method: 'POST',
+      headers: {'content-type': 'application/JSON'},
+      data: { 
+        number: number
+      }
+    }
+  ) 
+  .then((res) => { id = res.data.id;
+    navigate(-1)
+    console.log(res)
   })
-  .catch(function(error){
-    console.log(error)
-    setResult(error)
-  });
-}
+  .catch((err) => console.log(err))
 
+}
   return (
     <div className="main_form">
       <div className="main_title">Введите номер телефона:</div>
@@ -33,14 +41,13 @@ function postDate (){
         value={number}
         placeholder="+996 000 000 000"
       />
-      <button id="main-btn" className="main_submit" onClick={postDate}>
+      <button id="main-btn" className="main_submit" onClick={postData}>
         Продолжить
       </button>
     </div>
   );
+
 }
-
-
 
 export default Main;
 

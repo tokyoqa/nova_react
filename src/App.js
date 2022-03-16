@@ -7,19 +7,23 @@ import Video from './Components/Video/Video'
 import Camera from './Components/Camera/Camera'
 import Layout from './Layout/Layout';
 import NotFound from './Components/NotFound/NotFound.jsx';
+import axios from "axios";
+import { useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
+import { Update } from '@mui/icons-material';
 
 
 
- 
 function App(){
+
   return(
     <div>
       <Routes>
         <Route path="/" element={<Layout/>}>
-            <Route index element={<Camera/>}/>
+            <Route index element={<Main/>}/>
             <Route path='identification' element={<Identification/>}/>
             <Route path='idcard' element={<Idcard/>}/>
-            <Route path='camera' element={<Camera/>}/>
+            <Route path='camera' comment={<Camera/>}/>
             <Route path='terms' element={<Terms/>}/>
             <Route path='video' element={<Video/>}/>
             <Route path="*" element={<NotFound/>}/>

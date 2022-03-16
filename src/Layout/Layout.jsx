@@ -14,7 +14,6 @@ function Layout() {
           </Toolbar>
         </Container>
       </AppBar>
-
       <div className={styles.outlet}>
         <Outlet />
       </div>

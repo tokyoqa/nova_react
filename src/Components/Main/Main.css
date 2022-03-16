@@ -21,7 +21,7 @@
 .form-input-phone{
   margin: 50px 0 20px;
   padding-left: 20px;
-  background-color: #d8d9da;
+  background-color: #ffffff;
   border-radius: 12px;
   border: 0;
   box-sizing: border-box;
@@ -57,7 +57,7 @@ input[type=number] {
 }
 
 .main_submit:active {
-  background-color: #839668;
+  background-color: #ffffff;
 }
 
 .main_submit:hover{

@@ -1,38 +1,61 @@
 import axios from "axios";
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useState, } from "react";
+import { useNavigate } from "react-router";
 import "./Idcard.css"
 
+axios.defaults.headers.post['Contect-Type'] = 'multipart';
+const url ="http://192.168.41.33:8080/api/passport"
 
 class Idcard extends Component {
-  
+
     state = {
-      selectedFile: null
+        selectedFileFront: null
     };
-    
-    onFileChange = event => {
-      this.setState({ selectedFile: event.target.files[0] });
-      this.setState({ selectedFile: event.target.files[0] });
+    state = {
+        selectedFileBack: null
     };
-    
+    state = {
+        id : 2
+    }
+    onFileChangeFront = event => {
+      this.setState({ selectedFileFront: event.target.files[0] });
+      this.setState({ selectedFileFront: event.target.files[0] });
+    };
+
+    onFileChangeBack = event => {
+        this.setState({ selectedFileBack: event.target.files[0] });
+        this.setState({ selectedFileBack: event.target.files[0] });
+    };
+
     onFileUpload = () => {
       const formData = new FormData();
-
       formData.append(
-        "myFile",
-        this.state.selectedFile,
-        this.state.selectedFile.name
+          'id',
+          this.state.id 
+      )
+      formData.append(
+        "frontSide",
+        this.state.selectedFileFront,
+        this.state.selectedFileFront.name
       );
-      console.log(this.state.selectedFile);
+      formData.append(
+        "backSide",
+        this.state.selectedFileBack,
+        this.state.selectedFileBack.name
+      );
+
       axios
-      .post("http://127.0.0.1:5000/?"+ formData)
-      .then(function(responce){
-          console.log(responce);
-          console.log(responce.data)
-      })
-      .catch(function(error){
-          console.log(error);
-          console.log(error.data)
-      })
+        .post(url, formData)
+
+        .then(function (res) {
+            console.log(res);
+            console.log(res.data);
+            
+        })
+        .catch(function (err) {
+            console.log(err)
+        });
+
     };
  
     render() {
@@ -47,29 +70,27 @@ class Idcard extends Component {
                     <div className="form-box mb32">
                         <div className="photo-area">
                             <div className="photo-item">
-                                <form id="front_passport_form">
+                                <form id="front_passport_form" >
                                 <label className="photo-item-label" >
                                     <input 
                                     type="file" 
-                                    onChange={this.onFileChange}
+                                    onChange={this.onFileChangeFront}
                                     name="front_passport" 
                                     id="front_passport" 
                                     />
-                                    <input type="hidden"/>
                                 </label>
                                 <div className="photo-item-title">Лицевая сторона</div>
                                 </form>
                             </div>
                             <div className="photo-item">
-                                <form  id="back_passport_form">
+                                <form  id="back_passport_form" encType="multipart/form-data">
                                 <label className="photo-item-label" >
                                     <input 
                                     type="file" 
-                                    onChange={this.onFileChange}
+                                    onChange={this.onFileChangeBack}
                                     name="back_passport" 
-                                    id="back_passport"
+                                    id="back_passport/file"
                                     />
-                                    <input type="hidden"/>
                                 </label>
                                 <div className="photo-item-title">Обратная сторона</div>
                                 </form>
@@ -84,17 +105,3 @@ class Idcard extends Component {
     }
 
 export default Idcard ;
-
-        //         <input type="file" onChange={this.onFileChange} />
-        //         <button onClick={this.onFileUpload}>
-        //           Upload!
-        //         </button>
-        //     </div>
-        // </div>
-//       );
-//     }
-//   }
- 
-//   export default App;
-
-// function Idcard (){
