@@ -4,14 +4,13 @@ import { IMask, IMaskInput } from "react-imask";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { render } from "@testing-library/react";
+import Cookies from "js-cookie";
 
 const Main = ({setId}) => {
 
   const PhoneMask = "{996}000000000";
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
-  const [idNum , setIdNum] = useState("");
-
 function postData(){
   axios
   (
@@ -25,7 +24,7 @@ function postData(){
     }
   ) 
   .then((res) => { setId(res.data.id);
-    navigate(-1)
+    navigate('/Identification')
     console.log(res)
   })
   .catch((err) => console.log(err))

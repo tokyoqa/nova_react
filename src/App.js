@@ -24,7 +24,7 @@ function App(){
             <Route index element={<Main setId={setId} />}/>
             <Route path='identification' element={<Identification/>}/>
             <Route path='idcard' element={<Idcard/>}/>
-            <Route path='camera' comment={<Camera/>}/>
+            <Route path='camera' element={<Camera/>}/>
             <Route path='terms' element={<Terms/>}/>
             <Route path='video' element={<Video/>}/>
             <Route path="*" element={<NotFound/>}/>

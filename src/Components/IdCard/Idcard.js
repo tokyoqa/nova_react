@@ -14,9 +14,7 @@ class Idcard extends Component {
     state = {
         selectedFileBack: null
     };
-    state = {
-        id : 2
-    }
+
     onFileChangeFront = event => {
       this.setState({ selectedFileFront: event.target.files[0] });
       this.setState({ selectedFileFront: event.target.files[0] });
@@ -28,11 +26,6 @@ class Idcard extends Component {
     };
 
     onFileUpload = () => {
-      const formData = new FormData();
-      formData.append(
-          'id',
-          this.state.id 
-      )
       formData.append(
         "frontSide",
         this.state.selectedFileFront,
@@ -43,6 +36,10 @@ class Idcard extends Component {
         this.state.selectedFileBack,
         this.state.selectedFileBack.name
       );
+      formData.append(
+          'id',
+          this.state.id
+      )
 
       axios
         .post(url, formData)
