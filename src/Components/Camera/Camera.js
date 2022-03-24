@@ -3,27 +3,36 @@ import React, { useState } from 'react';
 import 'react-html5-camera-photo/build/css/index.css';
 import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
+import { useNavigate } from "react-router";
 
-function App (props) {
+
+const  CameraJS = ({id}) => {
+    let navigate = useNavigate();
     const [dataUri, setDataUri] = useState('');
+    const url = 'http://192.168.41.33:8081/api/selfie'
+
         function handleTakePhoto (dataUri) {
             setDataUri(dataUri);
+            const config = {
+                base64: dataUri,
+                id: id
+            }
+            
             axios
-                .post("http://192.168.41.35:8088/api/save/photo?file=" + dataUri + "&userId =" )
+                .post(url, config )
                 .then(function(responce){
                     console.log(responce);
                     console.log(responce.data)
+                    navigate('/Terms')
                 })
-                .catch(function(error){
+                .catch(function(error){ 
                     console.log(error);
                     console.log(error.data);
                 })
-                console.log(dataUri);
                 
         }
 
         function handleTakePhotoAnimationDone (dataUri) {
-            // Do stuff with the photo...
             console.log('takePhoto');
         }
 
@@ -38,7 +47,8 @@ function App (props) {
         }
 
         return (
-            <Camera
+            <div>
+            {/* <Camera
             onTakePhoto = { (dataUri) => { handleTakePhoto(dataUri); } }
             onTakePhotoAnimationDone = { (dataUri) => { handleTakePhotoAnimationDone(dataUri); } }
             onCameraError = { (error) => { handleCameraError(error); } }
@@ -54,8 +64,15 @@ function App (props) {
             sizeFactor = {1}
             onCameraStart = { (stream) => { handleCameraStart(stream); } }
             onCameraStop = { () => { handleCameraStop(); } }
-            />
+            /> */}
+                <button onClick={handleTakePhoto} >Send files to Nurdinus</button>
+            </div>
         );
         }
 
-export default App;
+export default CameraJS;
+
+
+
+
+

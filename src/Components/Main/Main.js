@@ -4,18 +4,18 @@ import { IMask, IMaskInput } from "react-imask";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { render } from "@testing-library/react";
-import Cookies from "js-cookie";
 
 const Main = ({setId}) => {
 
   const PhoneMask = "{996}000000000";
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
+
 function postData(){
   axios
   (
     {
-      url: 'http://192.168.41.33:8080/api/number',
+      url: 'http://192.168.41.33:8081/api/number',
       method: 'POST',
       headers: {'content-type': 'application/JSON'},
       data: { 
@@ -24,7 +24,7 @@ function postData(){
     }
   ) 
   .then((res) => { setId(res.data.id);
-    navigate('/Identification')
+    navigate('/identification')
     console.log(res)
   })
   .catch((err) => console.log(err))
