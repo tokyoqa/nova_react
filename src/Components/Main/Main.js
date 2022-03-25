@@ -20,7 +20,7 @@ const Main = ({setId}) => {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        'Accept': 'application/json'
       },
       data: { 
         number: number
