@@ -1,81 +1,95 @@
-import React from "react";
+import React, { useRef, useState, useCallback } from "react";
 import "./Video.css";
+import Webcam from "react-webcam";
 import axios from "axios";
-import { useNavigate } from "react-router";
-import { useState } from "react";
+import '../../Config';
 
 
 
-// const Video = ({id}) => {
-//   const url = ''
-//   let navigate = useNavigate;
-//   const config = {
-//     // video: mediaBlobUrl,
-//     id: id
-//   }
+export default function App({id}) {
+	const [selectedFile, setSelectedFile] = useState();
+  	const webcamRef = useRef(null);
+  	const mediaRecorderRef = useRef(null);
+  	const [recordedChunks, setRecordedChunks] = useState([]);
+  	const [videoSrc, setVideoSrc] = useState(null);
+  	let options = {};
+  	const formDate = new FormData();
 
-//   const sendVideo = () =>{ 
-//     axios.post(url , config)
-//     .then(function(response){
-//         console.log(response);
-//         navigate('')
-//     })
-//     .catch(function(error){
-//       console.log(error)
-//     });
-//   }
+	if (MediaRecorder.isTypeSupported("video/webm")) {
+		options = { mimeType: "video/webm" };
+	} else if (MediaRecorder.isTypeSupported("video/mp4")) {
+		options = { mimeType: "video/mp4" };
+	}
 
-  const Video = () => {
+	const handleDataAvailable = ({ data }) => {
+		if (data.size > 0) {
+		setRecordedChunks((prev) => prev.concat(data));
+		}
+	};
 
-	const [playing, setPlaying] = useState(false);
-  const [video, setVideo] = useState(null)
-
-	const HEIGHT = 500;
-	const WIDTH = 500;
-
-	const startVideo = () => {
-		setPlaying(true);
-		navigator.getUserMedia(
-			{
-				video: true,
-			},
-			(stream) => {
-				let video = document.getElementsByClassName('app__videoFeed')[0];
-				if (video) {
-					video.srcObject = stream;
-				}
-			},
-			(err) => console.error(err)
+	const handleStartCaptureClick = () => {
+		if (window.MediaRecorder) {
+		mediaRecorderRef.current = new window.MediaRecorder(
+			webcamRef.current.stream,
+			options
 		);
+		mediaRecorderRef.current.addEventListener(
+			"dataavailable",
+			handleDataAvailable
+		);
+		mediaRecorderRef.current.start();
+		}
+	};
+	const handleStopCaptureClick = () => {
+		if (mediaRecorderRef.current && mediaRecorderRef.current.stop) {
+		mediaRecorderRef.current.stop();
+		}
 	};
 
-	const stopVideo = () => {
-		setPlaying(false);
-		let video = document.getElementsByClassName('app__videoFeed')[0];
-    console.log(video);
-		video.srcObject.getTracks()[0].stop();
+	const handleShowVideo = () => {
+		if (recordedChunks.length) {
+		const blob = new Blob(recordedChunks, {
+			type: options?.mimeType || ""
+		});
+		const videoFile = new File([blob], {type:'video/mp4'}) 
+		const config = {
+			video: formDate,
+			id: id
+		}
+		
+		formDate.append(
+			'video',
+			blob,
+		)
+
+		const urlObject = URL.createObjectURL(blob);
+		console.log(formDate)
+		setVideoSrc(urlObject);
+		axios
+			.post(global.config.REST_API + 'api/video', config)
+			.then(res=>console.log(res))
+			.catch(err=> console.error(err))
+		}
+
 	};
 
-	return (
-		<div className="app">
-			<div className="app__container">
-				<video
-					height={HEIGHT}
-					width={WIDTH}
-					muted
-					autoPlay
-					className="app__videoFeed"
-				></video>
-			</div>
-			<div className="app__input">
-				{playing ? (
-					<button onClick={stopVideo}>Stop</button>
-				) : (
-					<button onClick={startVideo}>Start</button>
-				)}
-			</div>
-		</div>
-	);
+  return (
+    <>
+      <div className="camera-form">	
+			<Webcam
+			className="camera-item"
+			audio={true}
+			ref={webcamRef}
+			height={500}
+			videoConstraints={{ facingMode: "user" }}
+			mirrored={true}
+			/> 
+      </div>
+      <div className="btn-form">
+          <button onClick={handleStartCaptureClick}>start record</button>
+          <button onClick={handleStopCaptureClick}>stop record</button>
+		  <button onClick={handleShowVideo}>Send Video</button>
+      </div>
+    </>
+  );
 }
-
-export default Video;

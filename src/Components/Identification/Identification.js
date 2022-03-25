@@ -3,15 +3,16 @@ import React, { useState } from "react";
 import { IMask, IMaskInput } from "react-imask";
 import "./Identification.css";
 import { useNavigate } from "react-router";
+import '../../Config';
+
 
 export const Identification  = ({ id }) => {
-    const url = 'http://192.168.41.33:8081/api/code?id='
     const codeMask = "0000"; 
     let navigate = useNavigate();
     const [secureCode, setCode] = useState("");
 
     function postSecureCode(){
-        axios.get(url + id + '&code='  + secureCode )
+        axios.get( global.config.REST_API + 'api/code?id=' + id + '&code='  + secureCode )
         .then(function(response){
             console.log(response);
             navigate('/idcard')

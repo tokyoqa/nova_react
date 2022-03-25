@@ -3,8 +3,7 @@ import "./Main.css";
 import { IMask, IMaskInput } from "react-imask";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { render } from "@testing-library/react";
-
+import '../../Config';
 const Main = ({setId}) => {
 
   const PhoneMask = "{996}000000000";
@@ -15,7 +14,7 @@ function postData(){
   axios
   (
     {
-      url: 'http://192.168.41.33:8081/api/number',
+      url: global.config.REST_API + 'api/number',
       method: 'POST',
       headers: {'content-type': 'application/JSON'},
       data: { 

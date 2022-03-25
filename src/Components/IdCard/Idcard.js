@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { Component, useState, } from "react";
 import { useNavigate } from "react-router";
 import "./Idcard.css"
+import '../../Config';
 
 
 axios.defaults.headers.post['Contect-Type'] = 'multipart';
-const url ="http://192.168.41.33:8081/api/passport"
 const Idcard = ({id}) => {
 const navigate = useNavigate()
 
@@ -42,7 +42,7 @@ const navigate = useNavigate()
       )
 
       axios
-        .post(url, formData)
+        .post(global.config.REST_API = 'api/passport', formData)
 
         .then(function (res) {
             console.log(res);

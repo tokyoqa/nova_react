@@ -4,12 +4,12 @@ import 'react-html5-camera-photo/build/css/index.css';
 import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import { useNavigate } from "react-router";
+import '../../Config';
 
 
 const  CameraJS = ({id}) => {
     let navigate = useNavigate();
     const [dataUri, setDataUri] = useState('');
-    const url = 'http://192.168.41.33:8081/api/selfie'
 
         function handleTakePhoto (dataUri) {
             setDataUri(dataUri);
@@ -19,16 +19,17 @@ const  CameraJS = ({id}) => {
             }
             
             axios
-                .post(url, config )
+                .post(global.config.REST_API + 'api/selfie', config )
                 .then(function(responce){
                     console.log(responce);
-                    console.log(responce.data)
-                    navigate('/Terms')
+                    console.log(responce.data);
+                    navigate('/Terms');
                 })
                 .catch(function(error){ 
                     console.log(error);
                     console.log(error.data);
                 })
+                console.log(dataUri)
                 
         }
 
@@ -48,7 +49,7 @@ const  CameraJS = ({id}) => {
 
         return (
             <div>
-            {/* <Camera
+            <Camera
             onTakePhoto = { (dataUri) => { handleTakePhoto(dataUri); } }
             onTakePhotoAnimationDone = { (dataUri) => { handleTakePhotoAnimationDone(dataUri); } }
             onCameraError = { (error) => { handleCameraError(error); } }
@@ -64,8 +65,8 @@ const  CameraJS = ({id}) => {
             sizeFactor = {1}
             onCameraStart = { (stream) => { handleCameraStart(stream); } }
             onCameraStop = { () => { handleCameraStop(); } }
-            /> */}
-                <button onClick={handleTakePhoto} >Send files to Nurdinus</button>
+            />
+                {/* <button onClick={handleTakePhoto} >Send files to Nurdinus</button> */}
             </div>
         );
         }
