@@ -16,6 +16,8 @@ function postData(){
     {
       url: global.config.REST_API + 'api/number',
       method: 'POST',
+      mode: 'no-cors',
+      credentials: 'include',
       headers: {'content-type': 'application/JSON'},
       data: { 
         number: number
