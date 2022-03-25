@@ -4,8 +4,6 @@ import Webcam from "react-webcam";
 import axios from "axios";
 import '../../Config';
 
-
-
 export default function App({id}) {
 	const [selectedFile, setSelectedFile] = useState();
   	const webcamRef = useRef(null);

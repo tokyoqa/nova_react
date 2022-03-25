@@ -2,17 +2,12 @@ import React  from "react";
 import "./Terms.css"
 import { useNavigate } from "react-router";
 
-
-
 function Terms(){
     let navigate = useNavigate();
-
-
 
     const goToNextPage = () => {
         navigate('/video')        
     }
-
 
     return(
         <div className="terms_form">

@@ -10,7 +10,7 @@ const Main = ({setId}) => {
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
 
-function postData(){
+ async function postData(){
   axios
   (
     {
@@ -18,10 +18,11 @@ function postData(){
       method: 'POST',
       mode: 'no-cors',
       credentials: 'include',
-      headers: {'content-type': 'application/JSON'},
+      headers: {'Content-Type': 'application/json'},
       data: { 
         number: number
       }
+      
     }
   ) 
   .then((res) => { setId(res.data.id);
@@ -50,4 +51,3 @@ function postData(){
 }
 
 export default Main;
-
