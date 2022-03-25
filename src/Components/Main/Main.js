@@ -15,14 +15,19 @@ const Main = ({setId}) => {
   (
     {
       url: global.config.REST_API + 'api/number',
-      method: 'POST',
+      method: 'GET',
       mode: 'no-cors',
       credentials: 'include',
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        "Access-Control-Allow-Origin": "*",
+        'Access-Control-Allow-Methods' : 'GET, POST, PATCH, PUT, DELETE, OPTIONS'
+      },
       data: { 
         number: number
       }
-      
+
     }
   ) 
   .then((res) => { setId(res.data.id);
