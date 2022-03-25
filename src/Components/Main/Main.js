@@ -15,7 +15,7 @@ const Main = ({setId}) => {
   (
     {
       url: global.config.REST_API + 'api/number',
-      method: 'GET',
+      method: 'POST',
       mode: 'no-cors',
       credentials: 'include',
       headers: {
