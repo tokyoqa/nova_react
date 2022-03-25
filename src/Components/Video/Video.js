@@ -78,7 +78,6 @@ export default function App({id}) {
       <div className="camera-form">	
 			<Webcam
 			className="camera-item"
-			audio={true}
 			ref={webcamRef}
 			height={500}
 			videoConstraints={{ facingMode: "user" }}

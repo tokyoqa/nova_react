@@ -50,10 +50,10 @@ const  CameraJS = ({id}) => {
         return (
             <div>
             <Camera
-            onTakePhoto = { (dataUri) => { handleTakePhoto(dataUri); } }
+            idealFacingMode={FACING_MODES.USER}
+            onTakePhoto = {(dataUri) => { handleTakePhoto(dataUri); } }
             onTakePhotoAnimationDone = { (dataUri) => { handleTakePhotoAnimationDone(dataUri); } }
             onCameraError = { (error) => { handleCameraError(error); } }
-            idealFacingMode = {FACING_MODES.ENVIRONMENT}
             idealResolution = {{width: 640, height: 480}}
             imageType = {IMAGE_TYPES.PNG}
             imageCompression = {0.97}
