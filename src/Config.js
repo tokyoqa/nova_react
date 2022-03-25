@@ -1,3 +1,3 @@
 export default global.config = {
-    REST_API: 'https://172.27.216.10:8081/remoteAuthentication/'
+    REST_API: 'https://webes.ab.kg:8443/remoteAuth/'
 }
