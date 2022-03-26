@@ -38,7 +38,6 @@ const Main = ({setId}) => {
   ) 
   .then((res) => { setId(res.data.id);
     if (res.data.statusCode = 2){
-      <Response/>
     } 
     navigate('/identification')
     console.log(res)
