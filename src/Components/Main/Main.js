@@ -23,6 +23,8 @@ const Main = ({setId}) => {
         'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Methods': '*',
         "Access-Control-Allow-Origin": "https://ident.ab.kg:9442/api/number",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
         withCredentials: true,
         mode: 'no-cors'
 
@@ -36,13 +38,16 @@ const Main = ({setId}) => {
   .then((res) => { setId(res.data.id);
     navigate('/identification')
     console.log(res)
+    res.headers('Access-Control-Allow-Origin', 'URLs to trust of allow');
+    res.headers('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.headers('Access-Control-Allow-Headers', 'Content-Type');
   })
   .catch((err) => console.log(err))
 
 }
   return (
     <div className="main_form">
-      <div className="main_title">Введите номер телефона:</div>
+      <div className="main_title">Front version: 1 </div>
       <IMaskInput
         mask={PhoneMask}
         className="form-input-phone"
