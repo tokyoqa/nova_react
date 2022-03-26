@@ -16,11 +16,13 @@ const Main = ({setId}) => {
     {
       url: global.config.REST_API + 'api/number',
       method: 'POST',
-      mode: 'no-cors',
-      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        withCredentials: true,
+        mode: 'no-cors'
+
       },
       data: { 
         number: number
