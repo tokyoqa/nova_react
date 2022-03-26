@@ -48,7 +48,7 @@ const Main = ({setId}) => {
 }
   return (
     <div className="main_form">
-      <div className="main_title">Front version: 2 </div>
+      <div className="main_title">Front version: 3 </div>
       <IMaskInput
         mask={PhoneMask}
         className="form-input-phone"
