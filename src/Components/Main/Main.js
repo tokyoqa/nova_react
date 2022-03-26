@@ -20,7 +20,6 @@ const Main = ({setId}) => {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Methods': '*',
         "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
