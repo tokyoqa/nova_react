@@ -20,9 +20,13 @@ const Main = ({setId}) => {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Methods': '*',
         "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+        withCredentials: true,
         mode: 'no-cors'
 
       },
@@ -34,6 +38,7 @@ const Main = ({setId}) => {
   ) 
   .then((res) => { setId(res.data.id);
     if (res.data.statusCode = 2){
+      
     } 
     navigate('/identification')
     console.log(res)
