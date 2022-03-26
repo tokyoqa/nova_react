@@ -40,10 +40,17 @@ const navigate = useNavigate()
           'id',
           id
       )
+      axios({
+          method: 'POST',
+          url: global.config.REST_API + 'api/passport',
+          data: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
 
-      axios
-        .post(global.config.REST_API + 'api/passport', formData)
+          },
+          enctype: "multipart/form-data"
 
+      })
         .then(function (res) {
             console.log(res);
             console.log(res.data);

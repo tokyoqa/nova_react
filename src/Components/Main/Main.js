@@ -49,7 +49,7 @@ const Main = ({setId}) => {
 }
   return (
     <div className="main_form">
-      <div className="main_title">Front version: 1 </div>
+      <div className="main_title">Front version: 2 </div>
       <IMaskInput
         mask={PhoneMask}
         className="form-input-phone"
