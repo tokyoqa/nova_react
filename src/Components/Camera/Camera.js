@@ -27,6 +27,7 @@ const  CameraJS = ({id}) => {
                 headers: {
                   'Content-Type': 'multipart/form-data',
                   'Accept': 'multipart/form-data',
+                  'Access-Control-Allow-Origin:': '*',
                   'Access-Control-Allow-Headers': '*',
                   'Access-Control-Allow-Methods': '*',
                   "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
