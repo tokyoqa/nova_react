@@ -42,7 +42,7 @@ const navigate = useNavigate()
       )
 
       axios
-        .post(global.config.REST_API = 'api/passport', formData)
+        .post(global.config.REST_API + 'api/passport', formData)
 
         .then(function (res) {
             console.log(res);

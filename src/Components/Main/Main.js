@@ -4,8 +4,10 @@ import { IMask, IMaskInput } from "react-imask";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import '../../Config';
-const Main = ({setId}) => {
 
+
+const Main = ({setId}) => {
+  var cors = require('cors')
   const PhoneMask = "{996}000000000";
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
@@ -22,7 +24,7 @@ const Main = ({setId}) => {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Methods': '*',
-        "Access-Control-Allow-Origin": "https://ident.ab.kg:9442/api/number",
+        "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
         "Access-Control-Allow-Credentials": "true",
         "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
         withCredentials: true,
@@ -36,11 +38,11 @@ const Main = ({setId}) => {
     }
   ) 
   .then((res) => { setId(res.data.id);
+    if (res.data.statusCode = 0){
+      
+    } 
     navigate('/identification')
     console.log(res)
-    res.headers('Access-Control-Allow-Origin', 'URLs to trust of allow');
-    res.headers('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.headers('Access-Control-Allow-Headers', 'Content-Type');
   })
   .catch((err) => console.log(err))
 
