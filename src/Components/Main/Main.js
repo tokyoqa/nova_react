@@ -20,6 +20,9 @@ const Main = ({setId}) => {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*',
+        "Access-Control-Allow-Origin": "https://ident.ab.kg:9442/api/number",
         withCredentials: true,
         mode: 'no-cors'
 
