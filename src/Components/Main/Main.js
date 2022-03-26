@@ -7,7 +7,6 @@ import '../../Config';
 
 
 const Main = ({setId}) => {
-  var cors = require('cors')
   const PhoneMask = "{996}000000000";
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
