@@ -66,7 +66,17 @@ export default function App({id}) {
 		axios
 			.post(global.config.REST_API + 'api/video', config)
 			.then(res=>console.log(res))
-			.catch(err=> console.error(err))
+			.catch(error =>{
+				if (error.responce){
+					console.log(error.response.status);
+				}
+				else if(error.request){
+					console.log(error.request);
+				}
+				else {
+					console.log(error.message);
+				}
+			})
 		}
 
 	};

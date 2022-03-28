@@ -25,7 +25,6 @@ const  CameraJS = ({id}) => {
                     id: id
                 },
                 headers: {
-                  'Access-Control-Allow-Origin:': '*',
                   'Access-Control-Allow-Headers': '*',
                   'Access-Control-Allow-Methods': '*',
                 },
@@ -37,9 +36,16 @@ const  CameraJS = ({id}) => {
                     console.log(responce.data);
                     navigate('/Terms');
                 })
-                .catch(function(error){ 
-                    console.log(error);
-                    console.log(error.data);
+                .catch(error =>{
+                    if (error.responce){
+                        console.log(error.response.status);
+                    }
+                    else if(error.request){
+                        console.log(error.request);
+                    }
+                    else {
+                        console.log(error.message);
+                    }
                 })
         }
 

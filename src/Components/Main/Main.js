@@ -41,7 +41,17 @@ const Main = ({setId}) => {
     navigate('/identification')
     console.log(res)
   })
-  .catch((err) => console.log(err))
+  .catch(error =>{
+    if (error.responce){
+        console.log(error.response.status);
+    }
+    else if(error.request){
+        console.log(error.request);
+    }
+    else {
+        console.log(error.message);
+    }
+})
 
 }
   return (

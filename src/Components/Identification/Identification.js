@@ -17,9 +17,17 @@ export const Identification  = ({ id }) => {
             console.log(response);
             navigate('/idcard')
         })
-        .catch(function(error){
-          console.log(error)
-        });
+        .catch(error =>{
+            if (error.responce){
+                console.log(error.response.status);
+            }
+            else if(error.request){
+                console.log(error.request);
+            }
+            else {
+                console.log(error.message);
+            }
+        })
     }
 
     return(
