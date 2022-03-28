@@ -71,15 +71,12 @@ export default function App({id}) {
 			  headers: {
 				'Content-Type': 'multipart/form-data',
 				'Accept': 'multipart/form-data',
-				'Access-Control-Allow-Origin': '*',
-				'Access-Control-Allow-nHeaders': '*',
+				'Access-Control-Allow-Origin':  '*',
+				'Access-Control-Allow-nHeaders':'*',
 				'Access-Control-Allow-Methods': '*',
-				"Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
-				"Access-Control-Allow-Credentials": "true",
 				"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
 				withCredentials: true,
 				mode: 'no-cors'
-		
 			  },
 			  config
 			}
