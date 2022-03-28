@@ -46,7 +46,6 @@ const  CameraJS = ({id}) => {
                     console.log(error);
                     console.log(error.data);
                 })
-                console.log(dataUri)
                 
         }
 
