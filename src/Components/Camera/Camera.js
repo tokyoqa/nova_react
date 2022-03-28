@@ -37,7 +37,7 @@ const  CameraJS = ({id}) => {
             })
                 .then(function(responce){       
                     console.log(responce);
-                    console.log(responce.data);
+                    alert(responce.data.message);
                     navigate('/Terms');
                 })
                 .catch(error =>{

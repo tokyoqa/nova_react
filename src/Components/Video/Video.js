@@ -81,7 +81,7 @@ export default function App({id}) {
 			  enctype: "multipart/form-data"
 			}
 		  ) 
-			.then(res=>console.log(res))
+			.then(res=>alert(res.data.message))
 			.catch(error =>{
 				if (error.responce){
 					console.log(error.response.status);
