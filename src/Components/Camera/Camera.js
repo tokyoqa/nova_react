@@ -86,7 +86,6 @@ const  CameraJS = ({id}) => {
             onCameraStart = { (stream) => { handleCameraStart(stream); } }
             onCameraStop = { () => { handleCameraStop(); } }
             />
-                {/* <button onClick={handleTakePhoto} >Send files to Nurdinus</button> */}
             </div>
         );
         }

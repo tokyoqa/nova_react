@@ -4,81 +4,49 @@ import Webcam from "react-webcam";
 import axios from "axios";
 import '../../Config';
 
-export default function App({id}) {
-	const [selectedFile, setSelectedFile] = useState();
-  	const webcamRef = useRef(null);
-  	const mediaRecorderRef = useRef(null);
-  	const [recordedChunks, setRecordedChunks] = useState([]);
-  	const [videoSrc, setVideoSrc] = useState(null);
-  	let options = {};
-  	const formDate = new FormData();
+export default function Video({id}) {
 
-	if (MediaRecorder.isTypeSupported("video/webm")) {
-		options = { mimeType: "video/webm" };
-	} else if (MediaRecorder.isTypeSupported("video/mp4")) {
-		options = { mimeType: "video/mp4" };
-	}
+    const [file, setFile] = useState()
 
-	const handleDataAvailable = ({ data }) => {
-		if (data.size > 0) {
-		setRecordedChunks((prev) => prev.concat(data));
-		}
-	};
 
-	const handleStartCaptureClick = () => {
-		if (window.MediaRecorder) {
-		mediaRecorderRef.current = new window.MediaRecorder(
-			webcamRef.current.stream,
-			options
-		);
-		mediaRecorderRef.current.addEventListener(
-			"dataavailable",
-			handleDataAvailable
-		);
-		mediaRecorderRef.current.start();
-		}
-	};
-	const handleStopCaptureClick = () => {
-		if (mediaRecorderRef.current && mediaRecorderRef.current.stop) {
-		mediaRecorderRef.current.stop();
-		}
-	};
+	const uploadVideo = (event) => {
+        file(event.target.files[0])
+        file (event.target.files[0])
+    };
 
-	const handleShowVideo = () => {
-		if (recordedChunks.length) {
-		const blob = new Blob(recordedChunks, {
-			type: options?.mimeType || ""
-		});
-		const videoFile = new File([blob], {type:'video/mp4'}) 
-		const config = {
-			video: formDate,
-			id: id
-		}
-		
-		formDate.append(
-			'video',
-			blob,
-		)
+      const sendVideo = () => {
+      const formData = new FormData();
 
-		const urlObject = URL.createObjectURL(blob);
-		console.log(formDate)
-		setVideoSrc(urlObject);
-		axios
-		(
-			{
-			  url: global.config.REST_API + 'api/video',
-			  method: 'POST',
-			  headers: {
-				'Content-Type': 'multipart/form-data',
-				'Accept': 'multipart/form-data',
-				'Access-Control-Allow-Origin': '*',
-				'Access-Control-Allow-Headers': '*',
-				'Access-Control-Allow-Methods': '*',
-				mode: 'no-cors'
-			  },
-			  config
-			}
-		  ) 
+      formData.append(
+        "video",
+        file,
+        file.name
+      );
+      formData.append(
+          'id',
+          id
+      )
+	  
+	  axios
+	  (
+		  {
+			url: global.config.REST_API + 'api/video',
+			method: 'POST',
+			formData,
+			headers: {
+			  'Content-Type': 'application/json',
+			  'Accept': 'application/json',
+			  'Access-Control-Allow-Origin': '*',
+			  'Access-Control-Allow-nHeaders': '*',
+			  'Access-Control-Allow-Methods': '*',
+			  "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
+			  "Access-Control-Allow-Credentials": "true",
+			  "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+			   mode: 'no-cors'
+			  }
+
+		   }
+	  )
 			.then(res=>console.log(res))
 			.catch(error =>{
 				if (error.responce){
@@ -91,26 +59,17 @@ export default function App({id}) {
 					console.log(error.message);
 				}
 			})
-		}
+		
 
-	};
 
-  return (
+
+
+}
+ return(
     <>
-      <div className="camera-form">	
-			<Webcam
-			className="camera-item"
-			ref={webcamRef}
-			height={500}
-			videoConstraints={{ facingMode: "user" }}
-			mirrored={true}
-			/> 
-      </div>
-      <div className="btn-form">
-          <button onClick={handleStartCaptureClick}>start record</button>
-          <button onClick={handleStopCaptureClick}>stop record</button>
-		  <button onClick={handleShowVideo}>Send Video</button>
-      </div>
+   		  <input type="file"  onChange={uploadVideo}/>
+		  <button onClick={sendVideo}>Send Video</button>
+
     </>
-  );
+  		);
 }

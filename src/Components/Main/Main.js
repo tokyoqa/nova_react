@@ -10,10 +10,10 @@ const Main = ({setId}) => {
   const PhoneMask = "{996}000000000";
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
-  const [errorCode01, setErrorCode01] = useState(false)
-  const [errorCode02, setErrorCode02] = useState(false)
-  const [errorCode03, setErrorCode03] = useState(false)
-  const [errorCode04, setErrorCode04] = useState(false)
+  const [errorCode01, setErrorCode01] = useState(null)
+  const [errorCode02, setErrorCode02] = useState(null)
+  const [errorCode03, setErrorCode03] = useState(null)
+  const [errorCode04, setErrorCode04] = useState(null)
 
 
  async function postData(){
@@ -42,9 +42,33 @@ const Main = ({setId}) => {
     }
   ) 
   .then((res) => { setId(res.data.id);
-    if (res.data.statusCode = 0){
-        setErrorCode01(true)
-    } 
+    if (res.data.statusCode = 1){
+      console.log(errorCode01)
+      
+      console.log(errorCode01)
+      
+
+    }
+
+    else if(res.data.statusCode = 0){
+      console.log(errorCode01)
+    }
+
+
+    else if (res.data.statusCode = 2){
+      setErrorCode02(true)
+      console.log(errorCode01)
+
+    }
+    else if(res.data.statusCode = 3){
+      setErrorCode03(true)
+      console.log(errorCode01)
+      console.log("Time pout")
+      
+    }
+    else if(res.data.statusCode - 4){
+      setErrorCode04(true)
+    }
     navigate('/identification')
     console.log(res)
   })
