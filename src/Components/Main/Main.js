@@ -10,6 +10,7 @@ const Main = ({setId}) => {
   const PhoneMask = "{996}000000000";
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
+  const [errorCode01, setErrorCode01] = useState(false, 'null')
 
  async function postData(){
   axios
@@ -21,7 +22,7 @@ const Main = ({setId}) => {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-nHeaders': '*',
         'Access-Control-Allow-Methods': '*',
         "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
         "Access-Control-Allow-Credentials": "true",
@@ -37,21 +38,13 @@ const Main = ({setId}) => {
     }
   ) 
   .then((res) => { setId(res.data.id);
-      
+    if (res.data.statusCode = 1){
+        
+    } 
     navigate('/identification')
     console.log(res)
   })
-  .catch(error =>{
-    if (error.responce){
-        console.log(error.response.status);
-    }
-    else if(error.request){
-        console.log(error.request);
-    }
-    else {
-        console.log(error.message);
-    }
-})
+  .catch((err) => console.log(err))
 
 }
   return (

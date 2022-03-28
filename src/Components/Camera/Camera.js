@@ -25,13 +25,16 @@ const  CameraJS = ({id}) => {
                     id: id
                 },
                 headers: {
+                  'Content-Type': 'application/json',
+                  'Accept':       'application/json',
+                  'Access-Control-Allow-Origins': '*',
                   'Access-Control-Allow-Headers': '*',
                   'Access-Control-Allow-Methods': '*',
                 },
                 mode: 'no-cors',
       
             })
-                .then(function(responce){
+                .then(function(responce){       
                     console.log(responce);
                     console.log(responce.data);
                     navigate('/Terms');
@@ -39,9 +42,6 @@ const  CameraJS = ({id}) => {
                 .catch(error =>{
                     if (error.responce){
                         console.log(error.response.status);
-                    }
-                    else if(error.request){
-                        console.log(error.request);
                     }
                     else {
                         console.log(error.message);
