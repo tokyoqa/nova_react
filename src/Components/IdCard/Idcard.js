@@ -52,7 +52,6 @@ const navigate = useNavigate()
 
       })
         .then(function (res) {
-            console.log(res);
             console.log(res.data);
             navigate('/Camera')
             

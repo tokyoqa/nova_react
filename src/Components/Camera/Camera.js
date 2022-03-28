@@ -35,11 +35,6 @@ const  CameraJS = ({id}) => {
                     "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
                     withCredentials: true,
                     mode: 'no-cors'
-                //   'Content-Type': 'application/json',
-                //   'Accept':       'application/json',
-                //   'Access-Control-Allow-Origins': '*',
-                //   'Access-Control-Allow-Headers': '*',
-                //   'Access-Control-Allow-Methods': '*',
                 },
                 mode: 'no-cors',
       

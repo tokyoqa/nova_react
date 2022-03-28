@@ -42,8 +42,8 @@ const Main = ({setId}) => {
     }
   ) 
   .then((res) => { setId(res.data.id);
-    if (res.data.statusCode = 1){
-        
+    if (res.data.statusCode = 0){
+        setErrorCode01(true)
     } 
     navigate('/identification')
     console.log(res)
