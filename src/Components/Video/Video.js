@@ -74,7 +74,6 @@ export default function App({id}) {
 				'Access-Control-Allow-Origin': '*',
 				'Access-Control-Allow-Headers': '*',
 				'Access-Control-Allow-Methods': '*',
-				withCredentials: true,
 				mode: 'no-cors'
 			  },
 			  config
