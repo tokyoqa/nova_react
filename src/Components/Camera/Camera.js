@@ -30,11 +30,8 @@ const  CameraJS = ({id}) => {
                   'Access-Control-Allow-Origin:': '*',
                   'Access-Control-Allow-Headers': '*',
                   'Access-Control-Allow-Methods': '*',
-                  "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
-                  "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
                 },
                 mode: 'no-cors',
-                enctype: "multipart/form-data"
       
             })
                 .then(function(responce){
@@ -46,6 +43,7 @@ const  CameraJS = ({id}) => {
                     console.log(error);
                     console.log(error.data);
                 })
+                console.log(dataUri)
                 
         }
 
