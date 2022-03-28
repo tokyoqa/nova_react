@@ -4,13 +4,14 @@ import { IMask, IMaskInput } from "react-imask";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import '../../Config';
+import { Backdrop, CircularProgress, Button } from '@mui/material';
 
 
 const Main = ({setId}) => {
   const PhoneMask = "{996}000000000";
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
-
+  const [open, setOpen] = React.useState(false); 
   let errorCode01 = false
   let errorCode02 = false
   let errorCode03 = false
@@ -18,6 +19,7 @@ const Main = ({setId}) => {
 
 
  async function postData(){
+  setOpen(!open); 
   axios
   (
     {
@@ -43,6 +45,7 @@ const Main = ({setId}) => {
     }
   ) 
   .then((res) => { setId(res.data.id);
+    setOpen(false); 
     if (res.data.statusCode == 1){
       errorCode01 = true
     }
@@ -53,26 +56,50 @@ const Main = ({setId}) => {
       errorCode03 = true
     }
     else{
-
-    // else if (res.data.statusCode = 2){
-    //   console.log(errorCode01)
-
-    // }
-    // else if(res.data.statusCode = 3){
-    //   console.log(errorCode01)
-    //   console.log("Time pout")
-      
-    // }
-    // else if(res.data.statusCode - 4){
-    // }
     navigate('/identification')
-    console.log(res)
+    console.log(res.data)
     }
   })
   .catch((err) => console.log(err))
 
 }
+if(errorCode01 == true)
+{
+  return(
+    <div>
+      Ошибка. Повторите еще раз.
+    </div>
+  )
+}
+
+else if(errorCode02 == true)
+{
+  return(
+    <div>
+      Ошибка. Технические неполадки. 
+    </div>
+  )
+}
+else if(errorCode03 == true)
+{
+  return(
+    <div>
+      Ошибка. Время ожидания вышло. 
+    </div>
+  )
+}
+else if(errorCode04 == true)
+{
+  return(
+    <div>
+      Ошибка. Такой номер уже зарегистрирован. 
+    </div>
+    )
+}
+else
+
   return (
+
     <div className="main_form">
       <div className="main_title">Front version: 4 </div>
       <IMaskInput
@@ -85,6 +112,12 @@ const Main = ({setId}) => {
       <button id="main-btn" className="main_submit" onClick={postData}>
         Продолжить
       </button>
+      <Backdrop 
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
+          open={open} 
+          > 
+      <CircularProgress color="inherit" /> 
+      </Backdrop> 
     </div>
   );
 

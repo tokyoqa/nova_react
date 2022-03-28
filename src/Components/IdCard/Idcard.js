@@ -2,17 +2,22 @@ import axios from "axios";
 import React, { Component, useState, } from "react";
 import { useNavigate } from "react-router";
 import "./Idcard.css"
+import { Backdrop, CircularProgress, Button } from '@mui/material';
 import '../../Config';
 
 
 axios.defaults.headers.post['Contect-Type'] = 'multipart';
 const Idcard = ({id}) => {
 const navigate = useNavigate()
+let errorCode01 = false
+let errorCode02 = false
+let errorCode03 = false
+let errorCode04 = false
 
 
     const [selectedFileFront, setSelectedFileFront] = useState();
     const [selectedFileBack, setSelectedFileBack] = useState()
-
+    const [open, setOpen] = React.useState(false); 
     const onFileChangeFront = (event) => {
         setSelectedFileFront(event.target.files[0])
         setSelectedFileFront (event.target.files[0])
@@ -24,6 +29,7 @@ const navigate = useNavigate()
     };
 
     const onFileUpload = () => {
+        setOpen(false); 
       const formData = new FormData();
 
       formData.append(
@@ -51,12 +57,23 @@ const navigate = useNavigate()
           enctype: "multipart/form-data"
 
       })
-        .then(function (res) {
-            alert(res.data.message);
-            navigate('/Camera')
-            
-            
-        })
+      .then((res) => {
+        setOpen(false); 
+        console.log(res.data)
+        if (res.data.statusCode == 1){
+          errorCode01 = true
+        }
+        else if(res.data.statusCode == 2){
+          errorCode02 = true
+        }
+        else if(res.data.statusCode == 3){
+          errorCode03 = true
+        }
+        else{
+        navigate('/camera')
+        console.log(res.data)
+        }
+      })
         .catch(error =>{
             if (error.responce){
                 console.log(error.response.status);
@@ -109,8 +126,16 @@ const navigate = useNavigate()
                         </div>
                         <button className="idcard__btn" onClick={onFileUpload}>Отправить</button>
                     </div>
+                    <Backdrop 
+                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
+                    open={open} 
+                    > 
+                <CircularProgress color="inherit" /> 
+                </Backdrop> 
                 </div>
+                
             )
+
         }
 
 

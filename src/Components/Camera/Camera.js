@@ -5,17 +5,23 @@ import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import { useNavigate } from "react-router";
 import '../../Config';
+import { Backdrop, CircularProgress, Button } from '@mui/material';
+
+
 
 
 const  CameraJS = ({id}) => {
     let navigate = useNavigate();
     const [dataUri, setDataUri] = useState('');
+    const [open, setOpen] = React.useState(false); 
+
+
+    
+    
 
         function handleTakePhoto (dataUri) {
             setDataUri(dataUri);
-            const config = {
-                
-            }
+           
             
             axios({
                 method: 'POST',
@@ -33,11 +39,11 @@ const  CameraJS = ({id}) => {
                     "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
                     mode: 'no-cors'
                 },
-      
             })
                 .then(function(responce){       
                     console.log(responce);
-                    alert(responce.data.message);
+                    console.log(responce.data.message);
+                    setOpen(false); 
                     navigate('/Terms');
                 })
                 .catch(error =>{
@@ -48,6 +54,8 @@ const  CameraJS = ({id}) => {
                         console.log(error.message);
                     }
                 })
+                    setOpen(!open); 
+
         }
 
         function handleTakePhotoAnimationDone (dataUri) {
@@ -62,6 +70,9 @@ const  CameraJS = ({id}) => {
 
         function handleCameraStop () {
         }
+
+        
+        
 
         return (
             <div>
@@ -82,6 +93,12 @@ const  CameraJS = ({id}) => {
             onCameraStart = { (stream) => { handleCameraStart(stream); } }
             onCameraStop = { () => { handleCameraStop(); } }
             />
+            <Backdrop 
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
+                open={open} 
+             > 
+            <CircularProgress color="inherit" /> 
+            </Backdrop> 
             </div>
         );
         }

@@ -20,7 +20,7 @@ function App(){
             <Route path='identification' element={<Identification id={id}/>}/>
             <Route path='idcard' element={<Idcard id={id}/>}/>
             <Route path='camera' element={<Camera id={id}/>}/>
-            <Route path='terms' element={<Terms/>}/>
+            <Route path='terms' element={<Terms id={id}/>}/>
             <Route path='video' element={<Video id={id}/>}/>
             <Route path="*" element={<NotFound/>}/>
         </Route>

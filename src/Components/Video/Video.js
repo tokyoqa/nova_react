@@ -3,6 +3,7 @@ import "./Video.css";
 import Webcam from "react-webcam";
 import axios from "axios";
 import '../../Config';
+import { Backdrop, CircularProgress, Button } from '@mui/material';
 
 export default function App({id}) {
 	const [selectedFile, setSelectedFile] = useState();
@@ -10,6 +11,7 @@ export default function App({id}) {
   	const mediaRecorderRef = useRef(null);
   	const [recordedChunks, setRecordedChunks] = useState([]);
   	const [videoSrc, setVideoSrc] = useState(null);
+	const [open, setOpen] = React.useState(false);
   	let options = {};
   	const formDate = new FormData();
 
@@ -45,6 +47,7 @@ export default function App({id}) {
 	};
 
 	const sendVideoFile = () => {
+		setOpen(!open); 
 		if (recordedChunks.length) {
 		const blob = new Blob(recordedChunks, {
 			type: options?.mimeType || ""
@@ -81,7 +84,7 @@ export default function App({id}) {
 			  enctype: "multipart/form-data"
 			}
 		  ) 
-			.then(res=>alert(res.data.message))
+			.then(res=>{console.log(res.data.message); setOpen(false)})
 			.catch(error =>{
 				if (error.responce){
 					console.log(error.response.status);
@@ -113,6 +116,12 @@ export default function App({id}) {
           <button onClick={handleStopCaptureClick}>stop record</button>
 		  <button onClick={sendVideoFile}>Send Video</button>
       </div>
+	  <Backdrop 
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
+          open={open} 
+          > 
+        <CircularProgress color="inherit" /> 
+        </Backdrop> 
     </>
   );
 }
