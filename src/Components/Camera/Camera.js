@@ -28,15 +28,11 @@ const  CameraJS = ({id}) => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-nHeaders': '*',
+                    'Access-Control-Allow-Headers': '*',
                     'Access-Control-Allow-Methods': '*',
                     "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
-                    "Access-Control-Allow-Credentials": "true",
-                    "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-                    withCredentials: true,
                     mode: 'no-cors'
                 },
-                mode: 'no-cors',
       
             })
                 .then(function(responce){       
@@ -86,14 +82,8 @@ const  CameraJS = ({id}) => {
             onCameraStart = { (stream) => { handleCameraStart(stream); } }
             onCameraStop = { () => { handleCameraStop(); } }
             />
-                {/* <button onClick={handleTakePhoto} >Send files to Nurdinus</button> */}
             </div>
         );
         }
 
 export default CameraJS;
-
-
-
-
-

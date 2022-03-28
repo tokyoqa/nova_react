@@ -44,39 +44,41 @@ export default function App({id}) {
 		}
 	};
 
-	const handleShowVideo = () => {
+	const sendVideoFile = () => {
 		if (recordedChunks.length) {
 		const blob = new Blob(recordedChunks, {
 			type: options?.mimeType || ""
 		});
 		const videoFile = new File([blob], {type:'video/mp4'}) 
-		const config = {
-			video: formDate,
-			id: id
-		}
 		
 		formDate.append(
 			'video',
-			blob,
+			videoFile,
+		)
+		formDate.append(
+			'id',
+			id
 		)
 
 		const urlObject = URL.createObjectURL(blob);
-		console.log(formDate)
+		console.log(videoFile)
+		console.log(id)
 		setVideoSrc(urlObject);
 		axios
 		(
 			{
 			  url: global.config.REST_API + 'api/video',
 			  method: 'POST',
+			  data: formDate,
 			  headers: {
-				'Content-Type': 'multipart/form-data',
-				'Accept': 'multipart/form-data',
-				'Access-Control-Allow-Origin': '*',
-				'Access-Control-Allow-Headers': '*',
-				'Access-Control-Allow-Methods': '*',
-				mode: 'no-cors'
+				'Content-Type': 'multipart/form-data'
+				// 'Accept': 'multipart/form-data',
+				// 'Access-Control-Allow-Origin': '*',
+				// 'Access-Control-Allow-Headers': '*',
+				// 'Access-Control-Allow-Methods': '*',
+				// mode: 'no-cors'
 			  },
-			  config
+			  enctype: "multipart/form-data"
 			}
 		  ) 
 			.then(res=>console.log(res))
@@ -109,7 +111,7 @@ export default function App({id}) {
       <div className="btn-form">
           <button onClick={handleStartCaptureClick}>start record</button>
           <button onClick={handleStopCaptureClick}>stop record</button>
-		  <button onClick={handleShowVideo}>Send Video</button>
+		  <button onClick={sendVideoFile}>Send Video</button>
       </div>
     </>
   );
