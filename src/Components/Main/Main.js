@@ -10,7 +10,11 @@ const Main = ({setId}) => {
   const PhoneMask = "{996}000000000";
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
-  const [errorCode01, setErrorCode01] = useState(false, 'null')
+  const [errorCode01, setErrorCode01] = useState(false)
+  const [errorCode02, setErrorCode02] = useState(false)
+  const [errorCode03, setErrorCode03] = useState(false)
+  const [errorCode04, setErrorCode04] = useState(false)
+
 
  async function postData(){
   axios
