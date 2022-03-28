@@ -25,8 +25,6 @@ const  CameraJS = ({id}) => {
                     id: id
                 },
                 headers: {
-                  'Content-Type': 'multipart/form-data',
-                  'Accept': 'multipart/form-data',
                   'Access-Control-Allow-Origin:': '*',
                   'Access-Control-Allow-Headers': '*',
                   'Access-Control-Allow-Methods': '*',
@@ -43,12 +41,9 @@ const  CameraJS = ({id}) => {
                     console.log(error);
                     console.log(error.data);
                 })
-                console.log(dataUri)
-                
         }
 
         function handleTakePhotoAnimationDone (dataUri) {
-            console.log('takePhoto');
         }
 
         function handleCameraError (error) {
