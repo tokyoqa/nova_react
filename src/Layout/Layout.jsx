@@ -27,7 +27,6 @@ export default function Layout () {
         <Container>
           <Toolbar>
             <a><img src={logo} alt="logo" style={{width: 200, heigth: 100}}/></a>
-            {/* <Typography>Айыл Банк</Typography> */}
           </Toolbar>
         </Container>
       </AppBar>
