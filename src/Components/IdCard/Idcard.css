@@ -1,3 +1,21 @@
+.imgPreview{
+
+    height: 200px;
+    width: 100%;
+    background-color: #FAFAFA;
+    border: 1px dashed #0092A1;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 15px;
+    position: relative;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center                
+
+}
+
+
 .container {
     width: 100%;
     max-width: 640px;
@@ -127,31 +145,6 @@
 
 .registration-form-2 .btn {
     margin-top: auto
-}
-
-
-.mb32 {
-    margin-bottom: 32px
-}
-
-.mb30 {
-    margin-bottom: 30px
-}
-
-.mb26 {
-    margin-bottom: 26px
-}
-
-.mb24 {
-    margin-bottom: 24px
-}
-
-.mb20 {
-    margin-bottom: 20px
-}
-
-.mb12 {
-    margin-bottom: 12px
 }
 
 .index-page {

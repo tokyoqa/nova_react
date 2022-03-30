@@ -52,7 +52,6 @@ const Main = ({setId, setNum}) => {
       }
     )
     .then((res) => {
-      setNum(number);
       setOpenLoading(false); 
       if (res.data.statusCode === 1){
         setError(true)

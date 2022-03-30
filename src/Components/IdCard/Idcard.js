@@ -160,6 +160,7 @@ return (
           <div className="photo-area">
             <div className="photo-item">
               <form id="front_passport_form" >
+                
                 <label className="photo-item-label" >
                   <input 
                       type="file" 
@@ -168,6 +169,7 @@ return (
                       id="front_passport" 
                       />
                 </label>
+
                 <div className="photo-item-title">Лицевая сторона</div>
               </form>
                 </div>
@@ -179,14 +181,29 @@ return (
                         onChange={onFileChangeBack}
                         name="back_passport" 
                         id="back_passport/file"
+                        style={{backgroundImage: `src(${previewBack})`}}
                         />
                       </label>
                       <div className="photo-item-title">Обратная сторона</div>
                     </form>
                   </div>
                </div>
-               {selectedFileFront &&  <img src={previewFront} /> }
-               {selectedFileBack &&  <img src={previewBack} /> }
+              <form>
+                <label
+                >
+                    <input
+                    type="file"
+                    className='imgPreview'
+                    onChange={onFileChangeFront}
+                    style={{
+                    }}
+                  />
+
+                </label>
+              </form>
+
+               {/* {selectedFileFront &&  <img src={previewFront} /> }  
+               {selectedFileBack &&  <img src={previewBack} /> } */}
               <button className="idcard__btn" onClick={onFileUpload}>Отправить</button>
           </div>
       <Backdrop 
