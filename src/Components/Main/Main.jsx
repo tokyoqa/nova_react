@@ -76,7 +76,6 @@ const Main = ({setId, setNum}) => {
       setError(true)
     })
   }
-
   }
   
 
