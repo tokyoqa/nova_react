@@ -98,9 +98,11 @@ export default function App({id}) {
 			setOpen(false); 
 			if (res.data.statusCode === 1){
 			  setError(true)
+			  console.log(error)
 			}
 			else if(res.data.statusCode === 2){
 			  setError(true)
+			  console.log()
 			}
 			else if(res.data.statusCode === 3){
 			  setWarning(true)

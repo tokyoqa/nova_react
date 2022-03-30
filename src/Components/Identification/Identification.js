@@ -6,6 +6,13 @@ import {Backdrop, CircularProgress, Stack, Alert, Snackbar} from '@mui/material'
 import MuiAlert from '@mui/material/Alert';
 import { useNavigate } from "react-router";
 import '../../Config';
+import { useEffect } from 'react';
+
+
+
+
+
+
 
 
 export const Identification  = ({id}) => {
@@ -15,15 +22,22 @@ export const Identification  = ({id}) => {
     const [secureCode, setCode] = useState("");
     const [openSuccess, setSuccess] = React.useState(false);
     const [openError, setError] = React.useState(false)
-    const [openError04, setError04] = React.useState(false)
+    const [openErrorCount, setErrorCount] = React.useState(false)
     const [openWarning, setWarning] = React.useState(false)
     const [openInfo, setInfo] = React.useState(false)
+    const [count, setCount] = useState(1);
+    const url = global.config.REST_API + 'api/reset?id='
     
+
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
 
     function postSecureCode(){
+      setCount(count + 1)
+    
+        console.log(count)
+
       if(!secureCode && secureCode < 4){
         setError(true)
       }
@@ -56,33 +70,13 @@ export const Identification  = ({id}) => {
             }
         )
     }
-      }
+    }
        
 
       const resendNumber = () => {
         setOpen(true)
         axios
-        (
-          {
-            url: global.config.REST_API + 'api/number',
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-nHeaders': '*',
-              'Access-Control-Allow-Methods': '*',
-              "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
-              "Access-Control-Allow-Credentials": "true",
-              "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-              withCredentials: true,
-              mode: 'no-cors'
-            },
-            data: { 
-              id: id 
-            }
-          }
-        )
+        .get(url + id)
           .then((res) => {
             setOpen(false); 
             if (res.data.statusCode === 1){
@@ -94,8 +88,9 @@ export const Identification  = ({id}) => {
             else if(res.data.statusCode === 3){
               setWarning(true)
             }
-            else if(res.data.statusCode === 4){
-              setError04(true)
+            else if(res.data.statusCode === 6){
+              console.log(res.data)
+              setErrorCount(true)
             }
             else{
             console.log(res.data)
@@ -106,6 +101,7 @@ export const Identification  = ({id}) => {
             setOpen(false)
             setError(true)
           })
+          console.log(id)
       
       }
 
@@ -122,6 +118,7 @@ export const Identification  = ({id}) => {
         return;
       }
       setError(false);
+      setErrorCount(false)
     };
     
     const closeWarning = (event, reason) => {
@@ -165,6 +162,12 @@ export const Identification  = ({id}) => {
       <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeSucces}>
         <Alert onClose={closeSucces} severity="success" sx={{ width: '100%' }}>
           This is a openSuccess message!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openErrorCount} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeSucces} severity="error" sx={{ width: '100%' }}>
+          Ошибка. Истечено количество попыток!
         </Alert>
       </Snackbar>
 

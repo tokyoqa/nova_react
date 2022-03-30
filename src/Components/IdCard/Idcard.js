@@ -25,32 +25,32 @@ import '../../Config';
         setSelectedFileFront(event.target.files[0])
         setSelectedFileFront (event.target.files[0])
     };
-  //   useEffect(() => {
-  //     if (!selectedFileFront) {
-  //         setPreviewFront(undefined)
-  //         return
-  //     }
+    useEffect(() => {
+      if (!selectedFileFront) {
+          setPreviewFront(undefined)
+          return
+      }
 
-  //     const objectUrlFront = URL.createObjectURL(selectedFileFront)
-  //     setPreviewFront(objectUrlFront)
+      const objectUrlFront = URL.createObjectURL(selectedFileFront)
+      setPreviewFront(objectUrlFront)
 
-  //     return () => URL.revokeObjectURL(objectUrlFront)
-  // }, [selectedFileFront])
-  //   const onFileChangeBack = (event) => {
-  //       setSelectedFileBack(event.target.files[0])
-  //       setSelectedFileBack (event.target.files[0])
-  //   };
+      return () => URL.revokeObjectURL(objectUrlFront)
+  }, [selectedFileFront])
+    const onFileChangeBack = (event) => {
+        setSelectedFileBack(event.target.files[0])
+        setSelectedFileBack (event.target.files[0])
+    };
     
-  //   useEffect(() => {
-  //     if (!selectedFileBack) {
-  //         setPreviewBack(undefined)
-  //         return
-  //     }
+    useEffect(() => {
+      if (!selectedFileBack) {
+          setPreviewBack(undefined)
+          return
+      }
 
-  //     const objectUrlBack = URL.createObjectURL(selectedFileBack)
-  //     setPreviewBack(objectUrlBack)
-  //     return () => URL.revokeObjectURL(objectUrlBack)
-  // }, [selectedFileBack])
+      const objectUrlBack = URL.createObjectURL(selectedFileBack)
+      setPreviewBack(objectUrlBack)
+      return () => URL.revokeObjectURL(objectUrlBack)
+  }, [selectedFileBack])
 
 
 
@@ -108,16 +108,11 @@ import '../../Config';
         })
 
           .catch(error =>{
-              if (error.responce){
-                  console.log(error.response.status);
-              }
-              else if(error.request){
-                  console.log(error.request);
-              }
-              else {
-                  console.log(error.message);
-              }
-          })
+            console.log(error)
+            setError(true)
+            setOpen(false)
+          }
+            )
       };
       }
       
@@ -161,7 +156,11 @@ return (
             <div className="photo-item">
               <form id="front_passport_form" >
                 
-                <label className="photo-item-label" >
+                <label className="photo-item-label">
+                  <img 
+                  className='front-preview'
+                  src={previewFront}
+                  />
                   <input 
                       type="file" 
                       onChange={onFileChangeFront}
@@ -176,9 +175,13 @@ return (
                   <div className="photo-item">
                     <form  id="back_passport_form" encType="multipart/form-data">
                       <label className="photo-item-label" >
+                        <img 
+                        className='back-preview'
+                        src={previewBack}
+                        />
                         <input 
                         type="file" 
-                        // onChange={onFileChangeBack}
+                        onChange={onFileChangeBack}
                         name="back_passport" 
                         id="back_passport/file"
                         style={{backgroundImage: `src(${previewBack})`}}
@@ -188,20 +191,6 @@ return (
                     </form>
                   </div>
                </div>
-              <form>
-                <label
-                  
-                >
-                    <input
-                    type="file"
-                    className='imgPreview'
-                    onChange={onFileChangeFront}
-                    style={{
-                    }}
-                  />
-
-                </label>
-              </form>
 
                {/* {selectedFileFront &&  <img src={previewFront} /> }  
                {selectedFileBack &&  <img src={previewBack} /> } */}
