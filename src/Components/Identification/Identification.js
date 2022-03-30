@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import '../../Config';
 
 
-export const Identification  = ({ id}) => {
+export const Identification  = ({id}) => {
     const [open, setOpen] = React.useState(false); 
     const codeMask = "0000"; 
     let navigate = useNavigate();

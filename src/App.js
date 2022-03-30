@@ -21,10 +21,6 @@ function App(){
             <Route 
               index element={<Main
               setId={setId}
-              // openError={openError}
-              // openInfo={openInfo}
-              // openSuccess={openSuccess}
-              // openWarning={openWarning}
               />}
               />
 
@@ -32,10 +28,6 @@ function App(){
               path='identification' 
               element={<Identification 
               id={id}
-              // openError={openError}
-              // openInfo={openInfo}
-              // openSuccess={openSuccess}
-              // openWarning={openWarning}
               />}
               />
 
@@ -43,10 +35,6 @@ function App(){
               path='idcard' 
               element={<Idcard 
               id={id}
-              // openError={openError}
-              // openInfo={openInfo}
-              // openSuccess={openSuccess}
-              // openWarning={openWarning}
               />}
               />
 
@@ -54,10 +42,6 @@ function App(){
               path='camera' 
               element={<Camera 
               id={id}
-              // openError={openError}
-              // openInfo={openInfo}
-              // openSuccess={openSuccess}
-              // openWarning={openWarning}
               />}
               />
 

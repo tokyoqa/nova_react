@@ -25,32 +25,32 @@ import '../../Config';
         setSelectedFileFront(event.target.files[0])
         setSelectedFileFront (event.target.files[0])
     };
-    useEffect(() => {
-      if (!selectedFileFront) {
-          setPreviewFront(undefined)
-          return
-      }
+  //   useEffect(() => {
+  //     if (!selectedFileFront) {
+  //         setPreviewFront(undefined)
+  //         return
+  //     }
 
-      const objectUrlFront = URL.createObjectURL(selectedFileFront)
-      setPreviewFront(objectUrlFront)
+  //     const objectUrlFront = URL.createObjectURL(selectedFileFront)
+  //     setPreviewFront(objectUrlFront)
 
-      return () => URL.revokeObjectURL(objectUrlFront)
-  }, [selectedFileFront])
-    const onFileChangeBack = (event) => {
-        setSelectedFileBack(event.target.files[0])
-        setSelectedFileBack (event.target.files[0])
-    };
+  //     return () => URL.revokeObjectURL(objectUrlFront)
+  // }, [selectedFileFront])
+  //   const onFileChangeBack = (event) => {
+  //       setSelectedFileBack(event.target.files[0])
+  //       setSelectedFileBack (event.target.files[0])
+  //   };
     
-    useEffect(() => {
-      if (!selectedFileBack) {
-          setPreviewBack(undefined)
-          return
-      }
+  //   useEffect(() => {
+  //     if (!selectedFileBack) {
+  //         setPreviewBack(undefined)
+  //         return
+  //     }
 
-      const objectUrlBack = URL.createObjectURL(selectedFileBack)
-      setPreviewBack(objectUrlBack)
-      return () => URL.revokeObjectURL(objectUrlBack)
-  }, [selectedFileBack])
+  //     const objectUrlBack = URL.createObjectURL(selectedFileBack)
+  //     setPreviewBack(objectUrlBack)
+  //     return () => URL.revokeObjectURL(objectUrlBack)
+  // }, [selectedFileBack])
 
 
 
@@ -178,7 +178,7 @@ return (
                       <label className="photo-item-label" >
                         <input 
                         type="file" 
-                        onChange={onFileChangeBack}
+                        // onChange={onFileChangeBack}
                         name="back_passport" 
                         id="back_passport/file"
                         style={{backgroundImage: `src(${previewBack})`}}

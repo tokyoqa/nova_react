@@ -11,14 +11,14 @@ import {useNavigate} from "react-router";
 
 
 export default function Layout () {
-  let navigate = useNavigate(); 
-  useEffect(() => {
-    if (performance.navigation.type === 1) {
-        navigate('/')
-    } else {
+  // let navigate = useNavigate(); 
+  // useEffect(() => {
+  //   if (performance.navigation.type === 1) {
+  //       navigate('/')
+  //   } else {
 
-    }
-  });
+  //   }
+  // });
 
   return (
     <div className={styles.layout}>

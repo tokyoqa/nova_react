@@ -52,6 +52,7 @@ const Main = ({setId, setNum}) => {
       }
     )
     .then((res) => {
+      setId(res.data.id);
       setOpenLoading(false); 
       if (res.data.statusCode === 1){
         setError(true)
@@ -76,6 +77,7 @@ const Main = ({setId, setNum}) => {
       setError(true)
     })
   }
+
   }
   
 
