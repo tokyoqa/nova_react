@@ -1,19 +1,31 @@
 import React, { useRef, useState, useCallback } from "react";
+import {Backdrop, CircularProgress, Stack, Alert, Snackbar} from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 import "./Video.css";
 import Webcam from "react-webcam";
 import axios from "axios";
+import {useNavigate} from "react-router";
 import '../../Config';
-import { Backdrop, CircularProgress, Button } from '@mui/material';
 
 export default function App({id}) {
 	const [selectedFile, setSelectedFile] = useState();
   	const webcamRef = useRef(null);
   	const mediaRecorderRef = useRef(null);
+	let navigate = useNavigate(); 
   	const [recordedChunks, setRecordedChunks] = useState([]);
   	const [videoSrc, setVideoSrc] = useState(null);
 	const [open, setOpen] = React.useState(false);
   	let options = {};
   	const formDate = new FormData();
+	const [openSuccess, setSuccess] = React.useState(false);
+	const [openError, setError] = React.useState(false)
+	const [openError04, setError04] = React.useState(false)
+	const [openWarning, setWarning] = React.useState(false)
+	const [openInfo, setInfo] = React.useState(false)
+
+  	const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
 	if (MediaRecorder.isTypeSupported("video/webm")) {
 		options = { mimeType: "video/webm" };
@@ -46,6 +58,8 @@ export default function App({id}) {
 		}
 	};
 
+
+
 	const sendVideoFile = () => {
 		setOpen(!open); 
 		if (recordedChunks.length) {
@@ -53,7 +67,6 @@ export default function App({id}) {
 			type: options?.mimeType || ""
 		});
 		const videoFile = new File([blob], {type:'video/mp4'}) 
-		
 		formDate.append(
 			'video',
 			videoFile,
@@ -62,10 +75,7 @@ export default function App({id}) {
 			'id',
 			id
 		)
-
 		const urlObject = URL.createObjectURL(blob);
-		console.log(videoFile)
-		console.log(id)
 		setVideoSrc(urlObject);
 		axios
 		(
@@ -84,21 +94,63 @@ export default function App({id}) {
 			  enctype: "multipart/form-data"
 			}
 		  ) 
-			.then(res=>{console.log(res.data.message); setOpen(false)})
+		  .then((res) => {
+			setOpen(false); 
+			if (res.data.statusCode === 1){
+			  setError(true)
+			}
+			else if(res.data.statusCode === 2){
+			  setError(true)
+			}
+			else if(res.data.statusCode === 3){
+			  setWarning(true)
+			}
+			else if(res.data.statusCode === 4){
+			  setError04(true)
+			}
+			else{
+			navigate('/identification')
+			console.log(res.data)
+			}
+		  })
 			.catch(error =>{
-				if (error.responce){
-					console.log(error.response.status);
-				}
-				else if(error.request){
-					console.log(error.request);
-				}
-				else {
-					console.log(error.message);
-				}
+			console.error(error)
+			setOpen(false)
+			setError(true)
 			})
 		}
 
 	};
+
+	
+const closeSucces = (event, reason) => {
+	if (reason === 'clickaway') {
+	  return;
+	}
+	setSuccess(false);
+  };
+  
+  const closeError = (event, reason) => {
+	if (reason === 'clickaway') {
+	  return;
+	}
+	setError(false);
+	setError04(false)
+  };
+  
+  const closeWarning = (event, reason) => {
+	if (reason === 'clickaway') {
+	  return;
+	}
+	setWarning(false);
+  };
+  
+  const closeInfo = (event, reason) => {
+	if (reason === 'clickaway') {
+	  return;
+	}
+	setInfo(false);
+  };
 
   return (
     <>
@@ -109,6 +161,7 @@ export default function App({id}) {
 			height={500}
 			videoConstraints={{ facingMode: "user" }}
 			mirrored={true}
+			audioConstraints={true}
 			/> 
       </div>
       <div className="btn-form">
@@ -122,6 +175,37 @@ export default function App({id}) {
           > 
         <CircularProgress color="inherit" /> 
         </Backdrop> 
+		<Stack spacing={2} sx={{ width: '100%' }}>
+      <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeSucces}>
+        <Alert onClose={closeSucces} severity="success" sx={{ width: '100%' }}>
+          This is a openSuccess message!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+          Ошибка! Повторите заново!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openError04} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+          Ошибка сервиса. 
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeWarning}>
+        <Alert onClose={closeWarning} severity="warning" sx={{ width: '100%' }}>
+          Пожалуйста ожидайте!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openInfo} autoHideDuration={6000} onClose={closeInfo}>
+        <Alert onClose={closeInfo} severity="info" sx={{ width: '100%' }}>
+          This is a info message!
+        </Alert>
+      </Snackbar>
+    </Stack>
     </>
   );
 }
