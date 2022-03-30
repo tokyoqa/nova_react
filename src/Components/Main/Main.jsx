@@ -8,7 +8,7 @@ import '../../Config';
 import axios from "axios";
 import '../Alerts/Alerts'
 
-const Main = ({setId}) => {
+const Main = ({setId, setNum}) => {
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
   const [openLoading, setOpenLoading] = React.useState(false); 
@@ -24,7 +24,6 @@ const Main = ({setId}) => {
   });
 
  async function postData(){
-
   if(!number.length || number.length < 12){
     setError(true)
   }
@@ -52,7 +51,8 @@ const Main = ({setId}) => {
         }
       }
     )
-    .then((res) => {setId(res.data.id);
+    .then((res) => {
+      setNum(number);
       setOpenLoading(false); 
       if (res.data.statusCode === 1){
         setError(true)

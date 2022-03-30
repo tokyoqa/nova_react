@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import '../../Config';
 
 
-export const Identification  = ({ id }) => {
+export const Identification  = ({ id}) => {
     const [open, setOpen] = React.useState(false); 
     const codeMask = "0000"; 
     let navigate = useNavigate();
@@ -18,10 +18,10 @@ export const Identification  = ({ id }) => {
     const [openError04, setError04] = React.useState(false)
     const [openWarning, setWarning] = React.useState(false)
     const [openInfo, setInfo] = React.useState(false)
+    
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
-  
 
     function postSecureCode(){
       if(!secureCode && secureCode < 4){
@@ -33,12 +33,15 @@ export const Identification  = ({ id }) => {
         .then((res) => {  
           setOpen(false); 
             if (res.data.statusCode == 1){
+              console.log(res.data)
               setError(true)
             }
             else if(res.data.statusCode == 2){
+              console.log(res.data)
               setError(true)
             }
             else if(res.data.statusCode == 3){
+              console.log(res.data)
               setWarning(true)
             }
             else{
@@ -47,8 +50,7 @@ export const Identification  = ({ id }) => {
             }
           })
         .catch(error =>{
-            console.error(error.data);
-            console.log(error.message);
+            console.error(error);
             setError(true);
             setOpen(false)
             }
@@ -56,6 +58,56 @@ export const Identification  = ({ id }) => {
     }
       }
        
+
+      const resendNumber = () => {
+        setOpen(true)
+        axios
+        (
+          {
+            url: global.config.REST_API + 'api/number',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-nHeaders': '*',
+              'Access-Control-Allow-Methods': '*',
+              "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
+              "Access-Control-Allow-Credentials": "true",
+              "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
+              withCredentials: true,
+              mode: 'no-cors'
+            },
+            data: { 
+              id: id 
+            }
+          }
+        )
+          .then((res) => {
+            setOpen(false); 
+            if (res.data.statusCode === 1){
+              setError(true)
+            }
+            else if(res.data.statusCode === 2){
+              setError(true)
+            }
+            else if(res.data.statusCode === 3){
+              setWarning(true)
+            }
+            else if(res.data.statusCode === 4){
+              setError04(true)
+            }
+            else{
+            console.log(res.data)
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+            setOpen(false)
+            setError(true)
+          })
+      
+      }
 
 
     const closeSucces = (event, reason) => {
@@ -100,7 +152,7 @@ export const Identification  = ({ id }) => {
             value={secureCode}
             />
             <button className="ident_submit" onClick={postSecureCode} >Далее</button>
-            <button className="ident_submit resend">Отправить код повторно</button>
+            <button className="ident_submit resend " onClick={resendNumber}>Отправить код повторно</button>
             <Backdrop 
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
           open={open} 
@@ -124,7 +176,7 @@ export const Identification  = ({ id }) => {
 
       <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeWarning}>
         <Alert onClose={closeWarning} severity="warning" sx={{ width: '100%' }}>
-          Пожалуйста ожидайте!
+          Время сессии прошло или сервис недоступен! Повторите попытку.
         </Alert>
       </Snackbar>
 

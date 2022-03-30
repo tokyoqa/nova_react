@@ -1,5 +1,6 @@
 import {Backdrop, CircularProgress, Stack, Alert, Snackbar} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
+import {useEffect} from 'react'
 import axios from "axios";
 import React, { Component, useState, } from "react";
 import { useNavigate } from "react-router";
@@ -17,15 +18,41 @@ import '../../Config';
     const [openError, setError] = React.useState(false)
     const [openErrorFiles, setErrorFiles] = React.useState(false)
     const [openWarning, setWarning] = React.useState(false)
+    const [previewFront, setPreviewFront] = useState()
+    const [previewBack, setPreviewBack] = useState()
     const [openInfo, setInfo] = React.useState(false)
     const onFileChangeFront = (event) => {
         setSelectedFileFront(event.target.files[0])
         setSelectedFileFront (event.target.files[0])
     };
+    useEffect(() => {
+      if (!selectedFileFront) {
+          setPreviewFront(undefined)
+          return
+      }
+
+      const objectUrlFront = URL.createObjectURL(selectedFileFront)
+      setPreviewFront(objectUrlFront)
+
+      return () => URL.revokeObjectURL(objectUrlFront)
+  }, [selectedFileFront])
     const onFileChangeBack = (event) => {
         setSelectedFileBack(event.target.files[0])
         setSelectedFileBack (event.target.files[0])
     };
+    
+    useEffect(() => {
+      if (!selectedFileBack) {
+          setPreviewBack(undefined)
+          return
+      }
+
+      const objectUrlBack = URL.createObjectURL(selectedFileBack)
+      setPreviewBack(objectUrlBack)
+      return () => URL.revokeObjectURL(objectUrlBack)
+  }, [selectedFileBack])
+
+
 
     const onFileUpload = () => {
 
@@ -33,7 +60,7 @@ import '../../Config';
         setErrorFiles(true)
       }
       else{
-        setOpen(false); 
+        setOpen(true); 
         const formData = new FormData();
   
         formData.append(
@@ -63,12 +90,15 @@ import '../../Config';
         .then((res) => {
           setOpen(false); 
           if (res.data.statusCode == 1){
+            console.log(res.data)
             setError(true)
           }
           else if(res.data.statusCode == 2){
+            console.log(res.data)
             setError(true)
           }
           else if(res.data.statusCode == 3){
+            console.log(res.data)
             setWarning(true)
           }
           else{
@@ -155,6 +185,8 @@ return (
                     </form>
                   </div>
                </div>
+               {selectedFileFront &&  <img src={previewFront} /> }
+               {selectedFileBack &&  <img src={previewBack} /> }
               <button className="idcard__btn" onClick={onFileUpload}>Отправить</button>
           </div>
       <Backdrop 

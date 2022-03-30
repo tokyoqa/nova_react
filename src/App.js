@@ -12,11 +12,7 @@ import React, { useState } from "react";
 import { Alert } from '@mui/material';
 
 function App(){
-    const [id, setId] = useState(null); 
-    const [openSuccess, setSuccess] = React.useState(false);
-    const [openError, setError] = React.useState(false)
-    const [openWarning, setWarning] = React.useState(false)
-    const [openInfo, setInfo] = React.useState(false)
+    const [id, setId] = useState(null);
 
   return(
     <div>

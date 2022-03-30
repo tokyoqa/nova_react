@@ -49,29 +49,30 @@ const  CameraJS = ({id}) => {
                     },
                 })
                 .then((res) => {
-                    setOpen(false); 
                     if (res.data.statusCode === 1){
                         console.log(res.data)
                         setError(true)
-                        setOpen(!open)
+                        setOpen(false)
                     }
                     else if(res.data.statusCode === 2){
                       console.log(res.data)
                       setError(true)
-                      setOpen(!open)
+                      setOpen(false)
                     }
                     else if(res.data.statusCode === 3){
                       console.log(res.data)
                       setWarning(true)
-                      setOpen(!open)
+                      setOpen(false)
 
                     }
                     else if(res.data.statusCode === 4){
                       console.log(res.data)
                       setError04(true)
+                      setOpen(false)
                     }
                     else{
-                    navigate('/identification')
+                    setOpen(false); 
+                    navigate('/terms')
                     console.log(res.data)
                     }
                   })
