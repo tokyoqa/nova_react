@@ -98,7 +98,7 @@ export default function App({id}) {
 			setOpen(false); 
 			if (res.data.statusCode === 1){
 			  setError(true)
-			  console.log(error)
+			  console.log(res)
 			}
 			else if(res.data.statusCode === 2){
 			  setError(true)
