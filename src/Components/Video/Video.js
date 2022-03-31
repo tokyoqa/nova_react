@@ -164,8 +164,10 @@ const closeSucces = (event, reason) => {
 			videoConstraints={{ facingMode: "user" }}
 			mirrored={true}
 			audioConstraints={true}
-			/> 
+			/>
+		<img src={base64}/> 
       </div>
+
       <div className="btn-form">
           <button onClick={handleStartCaptureClick}>start record</button>
           <button onClick={handleStopCaptureClick}>stop record</button>

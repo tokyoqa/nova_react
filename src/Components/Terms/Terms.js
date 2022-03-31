@@ -24,7 +24,6 @@ export const Terms = ({id}) => {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-nHeaders': '*',
             'Access-Control-Allow-Methods': '*',
-            "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
             "Access-Control-Allow-Credentials": "true",
             "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
             withCredentials: true,
@@ -46,7 +45,8 @@ export const Terms = ({id}) => {
                 else if(res.data.statusCode === 4){
                 }
                 else{
-                    setOpen(false)
+                  navigate('/video')
+                  setOpen(false)
                 }
             
             })
@@ -60,16 +60,20 @@ export const Terms = ({id}) => {
     const disagreeSubmit = () => {
     setOpen(!open); 
         axios
-            .get(url + id + '&check=N', headers)
+            .get(url + "id="+ id + '&check=N')
             .then(res => {
                 setOpen(false)
                 if (res.data.statusCode === 1){
+                  setError(true)
                 }
                 else if(res.data.statusCode === 2){
+                  setError(true)
                 }
                 else if(res.data.statusCode === 3){
+                  setWarning(true)
                 }
-                else if(res.data.statusCode === 4){
+                else if(res.data.statusCode === 5){
+                  setError(true)
                 }
                 else{
                     setOpen(false)

@@ -18,6 +18,7 @@ const  CameraJS = ({id}) => {
     const [openError04, setError04] = React.useState(false)
     const [openWarning, setWarning] = React.useState(false)
     const [openInfo, setInfo] = React.useState(false)
+	const base64 = '';
   
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -30,6 +31,7 @@ const  CameraJS = ({id}) => {
             }
             else{
                 setDataUri(dataUri);
+                base64 = dataUri
                 setOpen(true)
                 axios({
                     method: 'POST',
@@ -150,6 +152,7 @@ const  CameraJS = ({id}) => {
             onCameraStart = { (stream) => { handleCameraStart(stream); } }
             onCameraStop = { () => { handleCameraStop(); } }
             />
+            <img src={base64}/>
             <Backdrop 
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
                 open={open} 
