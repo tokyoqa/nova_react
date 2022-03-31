@@ -5,7 +5,7 @@ import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import { useNavigate } from "react-router";
 import '../../Config';
-import {Backdrop, CircularProgress, Stack, Alert, Snackbar} from '@mui/material';
+import {Backdrop, CircularProgress, Stack, Snackbar} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 
 
@@ -18,7 +18,6 @@ const  CameraJS = ({id}) => {
     const [openError04, setError04] = React.useState(false)
     const [openWarning, setWarning] = React.useState(false)
     const [openInfo, setInfo] = React.useState(false)
-	const base64 = '';
   
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -31,7 +30,6 @@ const  CameraJS = ({id}) => {
             }
             else{
                 setDataUri(dataUri);
-                base64 = dataUri
                 setOpen(true)
                 axios({
                     method: 'POST',
@@ -46,7 +44,6 @@ const  CameraJS = ({id}) => {
                         'Access-Control-Allow-Origin': '*',
                         'Access-Control-Allow-Headers': '*',
                         'Access-Control-Allow-Methods': '*',
-                        "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
                         mode: 'no-cors'
                     },
                 })
@@ -152,7 +149,6 @@ const  CameraJS = ({id}) => {
             onCameraStart = { (stream) => { handleCameraStart(stream); } }
             onCameraStop = { () => { handleCameraStop(); } }
             />
-            <img src={base64}/>
             <Backdrop 
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
                 open={open} 
