@@ -165,7 +165,6 @@ const closeSucces = (event, reason) => {
 			mirrored={true}
 			audioConstraints={true}
 			/>
-		<img src={base64}/> 
       </div>
 
       <div className="btn-form">
