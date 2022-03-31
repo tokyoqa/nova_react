@@ -1,5 +1,5 @@
-import React, { useRef, useState, useCallback } from "react";
-import {Backdrop, CircularProgress, Stack, Alert, Snackbar} from '@mui/material';
+import React, { useRef, useState } from "react";
+import {Backdrop, CircularProgress, Stack, Snackbar} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import "./Video.css";
 import Webcam from "react-webcam";
@@ -9,14 +9,14 @@ import '../../Config';
 
 export default function App({id}) {
 	const [selectedFile, setSelectedFile] = useState();
-  	const webcamRef = useRef(null);
-  	const mediaRecorderRef = useRef(null);
+	const webcamRef = useRef(null);
+	const mediaRecorderRef = useRef(null);
 	let navigate = useNavigate(); 
-  	const [recordedChunks, setRecordedChunks] = useState([]);
-  	const [videoSrc, setVideoSrc] = useState(null);
+	const [recordedChunks, setRecordedChunks] = useState([]);
+	const [videoSrc, setVideoSrc] = useState(null);
 	const [open, setOpen] = React.useState(false);
-  	let options = {};
-  	const formDate = new FormData();
+	let options = {};
+	const formDate = new FormData();
 	const [openSuccess, setSuccess] = React.useState(false);
 	const [openError, setError] = React.useState(false)
 	const [openError04, setError04] = React.useState(false)
@@ -102,17 +102,19 @@ export default function App({id}) {
 			}
 			else if(res.data.statusCode === 2){
 			  setError(true)
-			  console.log()
+			  console.log(res)
 			}
 			else if(res.data.statusCode === 3){
 			  setWarning(true)
+				console.log(res)
 			}
 			else if(res.data.statusCode === 4){
 			  setError04(true)
+				console.log(res)
 			}
 			else{
-			navigate('/identification')
-			console.log(res.data)
+				alert('Success!')
+				console.log(res.data)
 			}
 		  })
 			.catch(error =>{
@@ -160,10 +162,11 @@ const closeSucces = (event, reason) => {
 			<Webcam
 			className="camera-item"
 			ref={webcamRef}
+			audio={true}
 			height={500}
 			videoConstraints={{ facingMode: "user" }}
 			mirrored={true}
-			audioConstraints={true}
+
 			/>
       </div>
 
