@@ -67,7 +67,7 @@ const Data = ({id})  => {
         surname : surname,
         patronymic: patronymic,
         gender : gender,
-        date: dateBirth,
+        dateBirth: dateBirth,
         docId : docId,
         dateStart: dateStart,
         dateEnd: dateEnd,
