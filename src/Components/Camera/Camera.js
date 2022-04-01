@@ -23,15 +23,15 @@ const  CameraJS = ({id}) => {
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
-    useEffect(() => {
-        if (performance.navigation.type === 1 ) {
-          navigate('/')
-        }
+    // useEffect(() => {
+    //     if (performance.navigation.type === 1 ) {
+    //       navigate('/')
+    //     }
   
-        if(!id){
-          navigate('/')
-        }
-      });
+    //     if(!id){
+    //       navigate('/')
+    //     }
+    //   });
 
         function handleTakePhoto (dataUri) {
             if(!dataUri){
