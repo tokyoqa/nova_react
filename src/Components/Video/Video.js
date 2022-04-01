@@ -156,20 +156,18 @@ const closeSucces = (event, reason) => {
 	setInfo(false);
   };
 
+
   return (
     <>
       <div className="camera-form">	
 			<Webcam
 			className="camera-item"
 			ref={webcamRef}
-			audio={true}
 			height={500}
 			videoConstraints={{ facingMode: "user" }}
 			mirrored={true}
-
-			/>
+		/>
       </div>
-
       <div className="btn-form">
           <button onClick={handleStartCaptureClick}>start record</button>
           <button onClick={handleStopCaptureClick}>stop record</button>

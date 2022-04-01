@@ -59,7 +59,7 @@ export const Identification  = ({id}) => {
               setWarning(true)
             }
             else{
-            navigate('/idcard')
+            navigate('/data')
             console.log(res.data)
             }
           })

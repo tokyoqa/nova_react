@@ -6,7 +6,7 @@ import {useNavigate} from "react-router";
 import "./Main.css";
 import '../../Config';
 import axios from "axios";
-import '../Alerts/Alerts'
+
 
 const Main = ({setId, setNum}) => {
   let navigate = useNavigate(); 
