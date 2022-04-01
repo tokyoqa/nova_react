@@ -29,15 +29,15 @@ export default function App({id}) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-	// useEffect(() => {
-	// 	if (performance.navigation.type === 1 ) {
-	// 		navigate('/')
-	// 	}
+	useEffect(() => {
+		if (performance.navigation.type === 1 ) {
+			navigate('/')
+		}
 
-	// 	if(!id){
-	// 		navigate('/')
-	// 	}
-	// });
+		if(!id){
+			navigate('/')
+		}
+	});
 
 
 

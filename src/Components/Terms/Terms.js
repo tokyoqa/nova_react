@@ -34,15 +34,15 @@ export const Terms = ({id}) => {
             withCredentials: true,
             mode: 'no-cors'
     }
-    // useEffect(() => {
-    //   if (performance.navigation.type === 1 ) {
-    //     navigate('/')
-    //   }
+    useEffect(() => {
+      if (performance.navigation.type === 1 ) {
+        navigate('/')
+      }
 
-    //   if(!id){
-    //     navigate('/')
-    //   }
-    // });
+      if(!id){
+        navigate('/')
+      }
+    });
 
 
     const agreeSubmit = () => {

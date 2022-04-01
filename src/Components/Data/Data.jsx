@@ -34,15 +34,15 @@ const Data = ({id})  => {
   const [dateEnd, setDateEnd] = React.useState('')
 
 
-  // useEffect(() => {
-  //   if (performance.navigation.type === 1 ) {
-  //     navigate('/')
-  //   }
+  useEffect(() => {
+    if (performance.navigation.type === 1 ) {
+      navigate('/')
+    }
 
-  //   if(!id){
-  //     navigate('/')
-  //   }
-  // });
+    if(!id){
+      navigate('/')
+    }
+  });
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });

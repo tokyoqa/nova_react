@@ -53,15 +53,15 @@ import '../../Config';
       return () => URL.revokeObjectURL(objectUrlBack)
   }, [selectedFileBack])
 
-  // useEffect(() => {
-  //   if (performance.navigation.type === 1 ) {
-  //     navigate('/')
-  //   }
+  useEffect(() => {
+    if (performance.navigation.type === 1 ) {
+      navigate('/')
+    }
 
-  //   if(!id){
-  //     navigate('/')
-  //   }
-  // });
+    if(!id){
+      navigate('/')
+    }
+  });
 
     const onFileUpload = () => {
 
