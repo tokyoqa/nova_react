@@ -1,6 +1,6 @@
 import {Backdrop, CircularProgress, Stack, Alert, Snackbar} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-import React, {useState, useRef} from "react";
+import React, {useState} from "react";
 import {IMask, IMaskInput} from "react-imask";
 import {useNavigate} from "react-router";
 import "./Main.css";
@@ -8,7 +8,7 @@ import '../../Config';
 import axios from "axios";
 
 
-const Main = ({setId, setNum}) => {
+const Main = ({setId}) => {
   let navigate = useNavigate(); 
   const [number, setNumber] = useState("");
   const [openLoading, setOpenLoading] = React.useState(false); 
@@ -40,7 +40,6 @@ const Main = ({setId, setNum}) => {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-nHeaders': '*',
           'Access-Control-Allow-Methods': '*',
-          "Access-Control-Allow-Origin": "https://ident.ab.kg:9443/",
           "Access-Control-Allow-Credentials": "true",
           "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization",
           withCredentials: true,

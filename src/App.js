@@ -48,10 +48,6 @@ function App(){
               path='terms' 
               element={<Terms 
               id={id}
-              // openError={openError}
-              // openInfo={openInfo}
-              // openSuccess={openSuccess}
-              // openWarning={openWarning}
               />}
               />
 
@@ -59,10 +55,6 @@ function App(){
               path='video' 
               element={<Video 
               id={id}
-              // openError={openError}
-              // openInfo={openInfo}
-              // openSuccess={openSuccess}
-              // openWarning={openWarning}
               />}
               />
 
@@ -70,11 +62,6 @@ function App(){
               path="*" 
               element={<NotFound/>}
             />
-
-            <Route
-              path='alert'
-              element={<Alert/>}
-              />
             <Route
               path='data'
               element={<Data 

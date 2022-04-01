@@ -24,8 +24,9 @@ export default function App({id}) {
 	const [openWarning, setWarning] = React.useState(false)
 	const [openInfo, setInfo] = React.useState(false)
 
-  	const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+  	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
 	useEffect(() => {
@@ -42,19 +43,20 @@ export default function App({id}) {
 
 	if (MediaRecorder.isTypeSupported("video/webm")) {
 		options = { mimeType: "video/webm" };
-	} else if (MediaRecorder.isTypeSupported("video/mp4")) {
+	}
+	else if (MediaRecorder.isTypeSupported("video/mp4")) {
 		options = { mimeType: "video/mp4" };
 	}
 
 	const handleDataAvailable = ({ data }) => {
 		if (data.size > 0) {
-		setRecordedChunks((prev) => prev.concat(data));
+			setRecordedChunks((prev) => prev.concat(data));
 		}
 	};
 
 	const handleStartCaptureClick = () => {
 		if (window.MediaRecorder) {
-		mediaRecorderRef.current = new window.MediaRecorder(
+			mediaRecorderRef.current = new window.MediaRecorder(
 			webcamRef.current.stream,
 			options
 		);

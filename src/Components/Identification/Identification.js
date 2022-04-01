@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 
 export const Identification  = ({id}) => {
     const [open, setOpen] = React.useState(false); 
-    const codeMask = "0000"; 
+    const codeMask = "0000";  
     let navigate = useNavigate();
     const [secureCode, setCode] = useState("");
     const [openSuccess, setSuccess] = React.useState(false);
@@ -49,15 +49,15 @@ export const Identification  = ({id}) => {
         axios.get( global.config.REST_API + 'api/code?id=' + id + '&code='  + secureCode )
         .then((res) => {  
           setOpen(false); 
-            if (res.data.statusCode == 1){
+            if (res.data.statusCode === 1){
               console.log(res.data)
               setError(true)
             }
-            else if(res.data.statusCode == 2){
+            else if(res.data.statusCode === 2){
               console.log(res.data)
               setError(true)
             }
-            else if(res.data.statusCode == 3){
+            else if(res.data.statusCode === 3){
               console.log(res.data)
               setWarning(true)
             }
@@ -194,7 +194,5 @@ export const Identification  = ({id}) => {
         </div>
     )
 }
-
-
 
 export default Identification;
