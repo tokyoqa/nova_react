@@ -26,15 +26,15 @@ export const Identification  = ({id}) => {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
 
-    useEffect(() => {
-      if (performance.navigation.type === 1 ) {
-        navigate('/')
-      }
+    // useEffect(() => {
+    //   if (performance.navigation.type === 1 ) {
+    //     navigate('/')
+    //   }
 
-      if(!id){
-        navigate('/')
-      }
-    });
+    //   if(!id){
+    //     navigate('/')
+    //   }
+    // });
 
     function postSecureCode(){
       setCount(count + 1)
