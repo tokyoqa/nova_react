@@ -30,10 +30,6 @@ export default function App({id}) {
   });
 
 	useEffect(() => {
-		if (performance.navigation.type === 1 ) {
-			navigate('/')
-		}
-
 		if(!id){
 			navigate('/')
 		}

@@ -54,10 +54,6 @@ import '../../Config';
   }, [selectedFileBack])
 
   useEffect(() => {
-    if (performance.navigation.type === 1 ) {
-      navigate('/')
-    }
-
     if(!id){
       navigate('/')
     }

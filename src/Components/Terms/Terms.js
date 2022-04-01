@@ -35,10 +35,6 @@ export const Terms = ({id}) => {
             mode: 'no-cors'
     }
     useEffect(() => {
-      if (performance.navigation.type === 1 ) {
-        navigate('/')
-      }
-
       if(!id){
         navigate('/')
       }
