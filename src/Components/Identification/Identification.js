@@ -62,8 +62,10 @@ export const Identification  = ({id}) => {
               setWarning(true)
             }
             else{
-            navigate('/data')
             console.log(res.data)
+            navigate('/data')
+            
+
             }
           })
         .catch(error =>{
