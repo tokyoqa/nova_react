@@ -8,13 +8,6 @@ import { useNavigate } from "react-router";
 import '../../Config';
 import { useEffect } from 'react';
 
-
-
-
-
-
-
-
 export const Identification  = ({id}) => {
     const [open, setOpen] = React.useState(false); 
     const codeMask = "0000"; 
@@ -31,6 +24,16 @@ export const Identification  = ({id}) => {
 
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    useEffect(() => {
+      if (performance.navigation.type === 1 ) {
+        navigate('/')
+      }
+
+      if(!id){
+        navigate('/')
+      }
     });
 
     function postSecureCode(){
@@ -135,7 +138,6 @@ export const Identification  = ({id}) => {
       setInfo(false);
     };
     
-
 
     return(
         <div className="ident_form">

@@ -1,6 +1,5 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import {useEffect } from 'react';
 import { AppBar, Container, Toolbar, Typography, ImageList, ImageListItem } from "@mui/material";
 import styles from "./Layout.module.scss";
 import logo from '../assets/img/bank-logo.jpg'
@@ -11,14 +10,7 @@ import {useNavigate} from "react-router";
 
 
 export default function Layout () {
-  let navigate = useNavigate(); 
-  useEffect(() => {
-    if (performance.navigation.type === 1) {
-      
-    } 
-
-
-  });
+ 
 
   return (
     <div className={styles.layout}>

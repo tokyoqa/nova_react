@@ -16,6 +16,7 @@ import '../../Config';
     const [open, setOpen] = React.useState(false); 
     const [openSuccess, setSuccess] = React.useState(false);
     const [openError, setError] = React.useState(false)
+    const [openError05, setError05] = React.useState(false)
     const [openErrorFiles, setErrorFiles] = React.useState(false)
     const [openWarning, setWarning] = React.useState(false)
     const [previewFront, setPreviewFront] = useState()
@@ -52,7 +53,15 @@ import '../../Config';
       return () => URL.revokeObjectURL(objectUrlBack)
   }, [selectedFileBack])
 
+  useEffect(() => {
+    if (performance.navigation.type === 1 ) {
+      navigate('/')
+    }
 
+    if(!id){
+      navigate('/')
+    }
+  });
 
     const onFileUpload = () => {
 
@@ -89,17 +98,21 @@ import '../../Config';
 
         .then((res) => {
           setOpen(false); 
-          if (res.data.statusCode == 1){
+          if (res.data.statusCode === 1){
             console.log(res.data)
             setError(true)
           }
-          else if(res.data.statusCode == 2){
+          else if(res.data.statusCode === 2){
             console.log(res.data)
             setError(true)
           }
-          else if(res.data.statusCode == 3){
+          else if(res.data.statusCode === 3){
             console.log(res.data)
             setWarning(true)
+          }
+          else if (res.data.statusCode === 5){
+            console.log(res.data)
+            setError05(true)
           }
           else{
           navigate('/camera')
@@ -144,7 +157,7 @@ import '../../Config';
       const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
       });
- 
+
 return (
   <div className="registration-form-2">
     <div className="form-box mb32">
@@ -159,6 +172,7 @@ return (
                 <label className="photo-item-label">
                   <img 
                   className='front-preview'
+                  alt='back-'
                   src={previewFront}
                   />
                   <input 
@@ -177,6 +191,7 @@ return (
                       <label className="photo-item-label" >
                         <img 
                         className='back-preview'
+                        alt='back-preview'
                         src={previewBack}
                         />
                         <input 
@@ -207,6 +222,12 @@ return (
       <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeSucces}>
         <Alert onClose={closeSucces} severity="success" sx={{ width: '100%' }}>
           This is a openSuccess message!
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openError05} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+          Ошибка! Отправьте фото снова!
         </Alert>
       </Snackbar>
 

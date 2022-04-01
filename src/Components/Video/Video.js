@@ -6,6 +6,7 @@ import Webcam from "react-webcam";
 import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
+import {useEffect } from 'react';
 
 export default function App({id}) {
 	const [selectedFile, setSelectedFile] = useState();
@@ -26,6 +27,18 @@ export default function App({id}) {
   	const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
+
+	useEffect(() => {
+		if (performance.navigation.type === 1 ) {
+			navigate('/')
+		}
+
+		if(!id){
+			navigate('/')
+		}
+	});
+
+
 
 	if (MediaRecorder.isTypeSupported("video/webm")) {
 		options = { mimeType: "video/webm" };

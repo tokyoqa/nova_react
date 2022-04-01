@@ -1,4 +1,5 @@
 import React from "react"
+import {useEffect } from 'react';
 import './Data.css'
 import {TextField } from '@mui/material'; 
 import MuiAlert from '@mui/material/Alert';
@@ -10,6 +11,8 @@ import '../../Config';
 
 
 const Data = ({id})  => {
+
+
 
   // Variables 
   const navigate = useNavigate()
@@ -30,11 +33,23 @@ const Data = ({id})  => {
   const [dateStart, setDateStart] = React.useState('')
   const [dateEnd, setDateEnd] = React.useState('')
 
+
+  useEffect(() => {
+    if (performance.navigation.type === 1 ) {
+      navigate('/')
+    }
+
+    if(!id){
+      navigate('/')
+    }
+  });
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
+
   const sendData = () =>{
+    setOpen(true)
     axios
     ({
       url: global.config.REST_API + 'api/data',
@@ -134,9 +149,12 @@ const Data = ({id})  => {
         <h2>Заполните пожалуйста поля:</h2>
         <form className="send-form">
           <div className="fio">
-            <TextField fullWidth label="Имя:" id="fullWidth"      onChange={e => setName(e.target.value)}/>
-            <TextField fullWidth label="Фамилия:" id="fullWidth"  onChange={e => setSurname(e.target.value)}/>
-            <TextField fullWidth label="Отчество:" id="fullWidth" onChange={e => setPatronymic(e.target.value)}/>
+            <TextField
+            fullWidth label="Имя:" id="fullWidth"      onChange={e => setName(e.target.value)}/>
+            <TextField 
+            fullWidth label="Фамилия:" id="fullWidth"  onChange={e => setSurname(e.target.value)}/>
+            <TextField 
+            fullWidth label="Отчество:" id="fullWidth" onChange={e => setPatronymic(e.target.value)}/>
           </div>
 
           <Box sx={{ minWidth: 120 }}>

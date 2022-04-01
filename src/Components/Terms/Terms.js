@@ -4,6 +4,8 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import {Backdrop, CircularProgress, Stack, Alert, Snackbar} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
+import {useEffect } from 'react';
+
 
 export const Terms = ({id}) => {
     let navigate = useNavigate();
@@ -15,6 +17,9 @@ export const Terms = ({id}) => {
     const [openWarning, setWarning] = React.useState(false)
     const [openInfo, setInfo] = React.useState(false)
   
+
+    
+
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
@@ -29,6 +34,16 @@ export const Terms = ({id}) => {
             withCredentials: true,
             mode: 'no-cors'
     }
+    useEffect(() => {
+      if (performance.navigation.type === 1 ) {
+        navigate('/')
+      }
+
+      if(!id){
+        navigate('/')
+      }
+    });
+
 
     const agreeSubmit = () => {
     setOpen(!open); 
