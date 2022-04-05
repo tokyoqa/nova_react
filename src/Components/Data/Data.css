@@ -12,6 +12,16 @@ body {
 .container{
   display: flex;
   max-width: 400px;
+  background: #fff;
+  padding: 4em 4em 2em;
+  max-width: 400px;
+  margin: 50px auto 0;
+  box-shadow: 0 0 1em #222;
+  border-radius: 2px;
+}
+
+.form__item{
+  margin-bottom: 10px;
 }
 
 
@@ -25,11 +35,13 @@ body {
 /* Removes the clear button from date inputs */
 input[type="date"]::-webkit-clear-button {
   display: none;
+  padding: .8em .5em;
 }
 
 /* Removes the spin button */
 input[type="date"]::-webkit-inner-spin-button { 
   display: none;
+  padding: .8em .5em;
 }
 
 /* Always display the drop down caret */
@@ -41,7 +53,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 input[type="date"] {
   appearance: none;
   -webkit-appearance: none;
-  color: #95a5a6;
+  color: rgb(0, 0, 0);
   font-family: "Helvetica", arial, sans-serif;
   font-size: 18px;
   border:1px solid #ecf0f1;
@@ -56,4 +68,17 @@ input[type="date"], focus {
   box-shadow: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
+}
+
+input[type="input"]{
+  margin: 10px 5px 20px
+}
+
+.item__id{
+  display: inline-block;
+}
+
+.type-id{
+  width: 130px;
+ 
 }

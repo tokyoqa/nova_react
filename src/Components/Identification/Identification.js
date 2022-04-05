@@ -35,9 +35,7 @@ export const Identification  = ({id}) => {
     function postSecureCode(){
       setCount(count + 1)
     
-        console.log(count)
-
-      if(!secureCode && secureCode < 4){
+        if(!secureCode && secureCode < 4){
         setError(true)
       }
       else{

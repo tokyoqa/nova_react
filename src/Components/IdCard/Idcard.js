@@ -53,11 +53,11 @@ import '../../Config';
       return () => URL.revokeObjectURL(objectUrlBack)
   }, [selectedFileBack])
 
-  useEffect(() => {
-    if(!id){
-      navigate('/')
-    }
-  });
+  // useEffect(() => {
+  //   if(!id){
+  //     navigate('/')
+  //   }
+  // });
 
     const onFileUpload = () => {
 
@@ -168,7 +168,6 @@ return (
                 <label className="photo-item-label">
                   <img 
                   className='front-preview'
-                  alt='back-'
                   src={previewFront}
                   />
                   <input 
@@ -187,7 +186,6 @@ return (
                       <label className="photo-item-label" >
                         <img 
                         className='back-preview'
-                        alt='back-preview'
                         src={previewBack}
                         />
                         <input 

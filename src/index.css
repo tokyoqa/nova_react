@@ -12,6 +12,9 @@ body {
   touch-action: manipulation
 }
 
+a{
+  text-decoration: none;
+}
 
 
 .form {
