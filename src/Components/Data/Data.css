@@ -20,6 +20,19 @@ body {
   border-radius: 2px;
 }
 
+@media screen and (min-width:320px) and (max-width:640px) {
+  .container{
+    display: flex;
+    width: 85%;
+    background: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 10px;
+
+  }
+  
+}
+
+
 .form__item{
   margin-bottom: 10px;
 }

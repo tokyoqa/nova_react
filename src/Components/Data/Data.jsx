@@ -197,8 +197,13 @@ const Data = ({id})  => {
 
           </div>
           <div className="form__item" >
-            <label htmlFor="birthday">Срок действия:</label> <br/>
+            <label htmlFor="birthday">Дата окончания</label> <br/>
             <input type="date" id="birthday"  onChange={e => setDateEnd(e.target.value)}/>
+          </div>
+          
+          <div className="form__item">
+            <label htmlFor="date-start">Дата выдачи</label><br/>
+            <input type="date" id="date-start"  onChange={e => setDateStart(e.target.value)}/>
           </div>
           <div className="form__item item__id type-id">
           <Box sx={{ minWidth: 120 }}>
@@ -229,10 +234,6 @@ const Data = ({id})  => {
            <TextField fullWidth label="Орган выдачи:" inputProps={{maxLength: 9}} id="fullWidth" onChange={e => setAuthority(e.target.value)}/>
           </div>
 
-          <div className="form__item">
-            <label htmlFor="date-start">Дата выдачи</label><br/>
-            <input type="date" id="date-start"  onChange={e => setDateStart(e.target.value)}/>
-          </div>
 
           <div className="form__item">
             <TextField 

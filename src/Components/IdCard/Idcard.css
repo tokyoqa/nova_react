@@ -142,30 +142,6 @@
 }
 
 
-.mb32 {
-    margin-bottom: 32px
-}
-
-.mb30 {
-    margin-bottom: 30px
-}
-
-.mb26 {
-    margin-bottom: 26px
-}
-
-.mb24 {
-    margin-bottom: 24px
-}
-
-.mb20 {
-    margin-bottom: 20px
-}
-
-.mb12 {
-    margin-bottom: 12px
-}
-
 .index-page {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -348,3 +324,12 @@
     font-size: 14px;
     font-weight: 600;
 }
+
+@media screen and (min-width:320px) and (max-width:640px) {
+    .form-box{
+        width: 85%;
+        border-radius: 10px;
+    }
+    
+  }
+   

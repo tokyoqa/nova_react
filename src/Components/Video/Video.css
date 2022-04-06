@@ -7,3 +7,13 @@
 	margin-top: 30px ;
 	text-align: center;
 }
+
+@media screen and (min-width:320px) and (max-width:640px) {
+	.camera-item{
+    width: 95%;
+    background: rgb(255, 255, 255);
+    border-radius: 10px;
+		height: 120%;
+  }
+  
+}

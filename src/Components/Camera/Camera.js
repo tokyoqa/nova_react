@@ -53,8 +53,9 @@ const  CameraJS = ({id}) => {
             setError(true)
         }
         else{
-            setDataUri(dataUri);
+            setError(false)
             setOpen(true)
+            setDataUri(dataUri);
             axios({
                 method: 'POST',
                 url: global.config.REST_API + 'api/selfie',
@@ -159,7 +160,6 @@ return (
           isFullscreen={isFullscreen}
           idealFacingMode={FACING_MODES.USER}
           onTakePhoto = {(dataUri) => { handleTakePhoto(dataUri); } }
-          // onTakePhotoAnimationDone = { (dataUri) => { handleTakePhotoAnimationDone(dataUri); } }
           onCameraError = { (error) => { handleCameraError(error); } }
           idealResolution = {{width: 300, height: 300}}
           imageType = {IMAGE_TYPES.PNG}
@@ -172,19 +172,22 @@ return (
           onCameraStart = { (stream) => { handleCameraStart(stream); } }
           onCameraStop = { () => { handleCameraStop(); } }
         />
+        
     }
+  
   <div className='photo-send-btn'>
     <Button variant="contained" color="success" onClick={sendPhoto} >
       Продолжить
     </Button>
   </div>
-   
   <Backdrop 
-      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
-      opesn={open} 
-  > 
-  <CircularProgress color="inherit" /> 
+    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
+    opesn={open} 
+    > 
+    <CircularProgress color="inherit" /> 
   </Backdrop> 
+   
+ 
   <Stack spacing={2} sx={{ width: '100%' }}>
     <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeSucces}>
       <Alert onClose={closeSucces} severity="success" sx={{ width: '100%' }}>
