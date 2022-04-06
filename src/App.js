@@ -4,7 +4,8 @@ import Main from './Components/Main/Main'
 import Idcard from './Components/IdCard/Idcard';
 // import Terms from './Components/Terms/Terms'
 import Data from './Components/Data/Data'
-// import Video from './Components/Video/Video'
+import Video from './Components/Video/Video'
+import PhotoID from './Components/PhotoID/PhotoID'
 import Camera from './Components/Camera/Camera'
 import Layout from './Layout/Layout';
 import NotFound from './Components/NotFound/NotFound.jsx';
@@ -43,6 +44,13 @@ function App(){
               />}
               />
 
+            <Route 
+            path='photoid' 
+            element={<PhotoID 
+            id={id}
+            />}
+            />  
+
             {/* <Route
               path='terms' 
               element={<Terms 
@@ -50,12 +58,12 @@ function App(){
               />}
               /> */}
 
-            {/* <Route 
+            <Route 
               path='video' 
               element={<Video 
               id={id}
               />}
-              /> */}
+              />
 
             <Route 
               path="*" 

@@ -7,11 +7,10 @@ import { useNavigate } from "react-router";
 // import {useEffect } from 'react';
 import '../../Config';
 import axios from 'axios';
-import './Camera.css'
 
 
 
-const  CameraJS = ({id}) => {
+const  PhotoID = ({id}) => {
     let navigate = useNavigate();
     const [dataUri, setDataUri] = useState('');
     const [open, setOpen] = React.useState(false); 
@@ -57,7 +56,7 @@ const  CameraJS = ({id}) => {
             setOpen(true)
             axios({
                 method: 'POST',
-                url: global.config.REST_API + 'api/selfie',
+                url: global.config.REST_API + 'api/selfie-passport',
                 data:{ 
                     base64: dataUri,
                     id: id
@@ -95,7 +94,7 @@ const  CameraJS = ({id}) => {
                 }
                 else{
                 setOpen(false); 
-                navigate('/photoid')
+                navigate('/video')
                 console.log(res.data)
                 }
               })
@@ -216,4 +215,4 @@ return (
 );
 }
 
-export default CameraJS;
+export default PhotoID;

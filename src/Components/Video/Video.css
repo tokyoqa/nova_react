@@ -2,3 +2,8 @@
 	display: flex;
 	margin: 0 auto;
 }
+
+.btn-items{
+	margin-top: 30px ;
+	text-align: center;
+}

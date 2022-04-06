@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import {Backdrop, CircularProgress, Stack, Snackbar} from '@mui/material';
+import {Backdrop, CircularProgress, Stack, Snackbar, ButtonGroup, Button} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import "./Video.css";
 import Webcam from "react-webcam";
@@ -29,11 +29,11 @@ export default function App({id}) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-	useEffect(() => {
-		if(!id){
-			navigate('/')
-		}
-	});
+	// useEffect(() => {
+	// 	if(!id){
+	// 		navigate('/')
+	// 	}
+	// });
 
 
 
@@ -177,13 +177,18 @@ const closeSucces = (event, reason) => {
 			height={500}
 			videoConstraints={{ facingMode: "user" }}
 			mirrored={true}
-		/>
+			audio={true}
+			/>
       </div>
-      <div className="btn-form">
-          <button onClick={handleStartCaptureClick}>start record</button>
-          <button onClick={handleStopCaptureClick}>stop record</button>
-		  <button onClick={sendVideoFile}>Send Video</button>
-      </div>
+			<div className="btn-items">
+				<ButtonGroup variant="outlined" aria-label="outlined button group">
+					<Button onClick={handleStartCaptureClick}>Запись</Button>
+					<Button onClick={handleStopCaptureClick}>Стоп</Button>
+					<Button onClick={sendVideoFile}>Отправить</Button>
+				</ButtonGroup>
+			</div>
+			
+     
 	  <Backdrop 
           sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
           open={open} 

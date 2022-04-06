@@ -11,13 +11,13 @@ import MuiAlert from '@mui/material/Alert';
 const Data = ({id})  => {
   // Variables 
   const navigate = useNavigate()
-  const [name, setName] = React.useState();
-  const [surname, setSurname] = React.useState();
-  const [patronymic , setPatronymic ] = React.useState();
-  const [docId, setDocId] = React.useState();
-  const [inn, setInn] = React.useState();
+  const [name, setName] = React.useState('Данияр');
+  const [surname, setSurname] = React.useState("Болотбеков");
+  const [patronymic , setPatronymic ] = React.useState("Кубанычбекович");
+  const [docId, setDocId] = React.useState("0567702");
+  const [inn, setInn] = React.useState("21004200150070");
   const [gender, setGender] = React.useState('')
-  const [authority, setAuthority] = React.useState();
+  const [authority, setAuthority] = React.useState("МКК219051");
   const [openSuccess, setSuccess] = React.useState(false);
   const [openError, setError] = React.useState(false)
   const [openError04, setError04] = React.useState(false)
@@ -212,7 +212,7 @@ const Data = ({id})  => {
                 onChange={handleChangeTypeId}
                 >
                 <MenuItem value={'ID'}>ID</MenuItem>
-                <MenuItem value={'IN'}>IN</MenuItem>
+                <MenuItem value={'AN'}>AN</MenuItem>
                 </Select>
             </FormControl>
           </Box>
