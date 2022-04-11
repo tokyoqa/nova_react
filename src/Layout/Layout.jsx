@@ -14,9 +14,10 @@ return (
       <div className={styles.header__logo }> 
         <a href="/"> <img src={logo} alt="img-logo"/> </a>
       </div>
-      <div className={styles.header__button}>
-        <a href="" className="href"></a>
-      </div>
+      {/* <div className={styles.header__phone}>
+        <span>Справочная служба</span>
+        <a href="tel:+996556680000">+996 (556) 68 00 00</a>
+      </div> */}
     </div>
   </div>
 

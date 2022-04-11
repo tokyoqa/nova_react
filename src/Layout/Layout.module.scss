@@ -1,5 +1,6 @@
 .header{
     display: flex;
+    flex-direction: column;
     height: 120px;
     // overflow: hidden;
     background-color: #fff;
@@ -7,10 +8,38 @@
     border-bottom: solid #bbb 0.5px;
 }
 
+.header__section{
+    display: flex;
+    flex-grow: 1;
+    flex: 1 0 auto;
+    flex-direction: column;
+
+}
+
 .header__logo > a > img{
     margin-top: 44px;
-    margin-left: 339px;
+    margin-left: 61px;
     width: 175px
+}
+
+.header__phone{
+    width: 207px;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 18px;
+}
+
+.header__phone span{
+    display: block;
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+.header__phone a{
+    display: block;
+    font-size: 17px;
+    color: #000;
+    text-decoration: none;
 }
 
 @media screen and (min-width:320px) and (max-width:640px) {

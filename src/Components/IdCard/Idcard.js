@@ -137,6 +137,14 @@ import '../../Config';
         }
         setError(false);
         setErrorFiles(false)
+        setError05(false)
+      };
+      const closeErrorFiles = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setErrorFiles(false)
+        setError05(false)
       };
       const closeWarning = (event, reason) => {
         if (reason === 'clickaway') {
@@ -231,8 +239,8 @@ return (
         </Alert>
       </Snackbar>
 
-      <Snackbar open={openErrorFiles} autoHideDuration={6000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+      <Snackbar open={openErrorFiles} autoHideDuration={6000} onClose={closeErrorFiles}>
+        <Alert onClose={closeErrorFiles} severity="error" sx={{ width: '100%' }}>
           Ошибка! Загрузите фото паспорта!
         </Alert>
       </Snackbar>
