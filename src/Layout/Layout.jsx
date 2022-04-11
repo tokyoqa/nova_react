@@ -1,9 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { AppBar, Container, Toolbar, Typography, ImageList, ImageListItem } from "@mui/material";
 import styles from "./Layout.module.scss";
 import logo from '../assets/svg/logo.svg'
-import {useNavigate} from "react-router";
+// import {useNavigate} from "react-router";
 
 export default function Layout () {
 

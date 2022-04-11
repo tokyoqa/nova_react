@@ -23,3 +23,8 @@
   display: flex;
   justify-content: center;
 }
+.photo-reset-btn{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}

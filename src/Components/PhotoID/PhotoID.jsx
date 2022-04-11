@@ -147,6 +147,10 @@ const  PhotoID = ({id}) => {
             );
           };
           
+
+    const resetPhoto = () =>{
+      setDataUri(null)
+    }
 return (
   <div>
     {
@@ -177,6 +181,11 @@ return (
       Продолжить
     </Button>
   </div>
+  <div className="photo-reset-btn">
+    <Button variant="contained" color="success" onClick={resetPhoto} >
+      Reset photo
+    </Button>
+  </div> 
    
   <Backdrop 
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
