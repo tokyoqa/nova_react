@@ -12,11 +12,11 @@ body {
 .container{
   display: flex;
   max-width: 400px;
-  background: #fff;
+  background: rgb(255, 255, 255);
   padding: 4em 4em 2em;
   max-width: 400px;
   margin: 50px auto 0;
-  box-shadow: 0 0 1em #222;
+  box-shadow: 0 0 2px #222;
   border-radius: 2px;
 }
 
@@ -64,6 +64,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 /* A few custom styles for date inputs */
 input[type="date"] {
+  margin-top: 10px;
   appearance: none;
   -webkit-appearance: none;
   color: rgb(0, 0, 0);
@@ -92,6 +93,5 @@ input[type="input"]{
 }
 
 .type-id{
-  width: 130px;
- 
+  width: 120px;
 }

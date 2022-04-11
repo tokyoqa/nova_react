@@ -208,11 +208,11 @@ const Data = ({id})  => {
           <div className="form__item item__id type-id">
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Тип паспорта</InputLabel>
+              <InputLabel id="demo-simple-select-label">ID/AN</InputLabel>
                 <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                label="Тип паспорта"
+                label="ID/AN"
                 value={typeId}
                 onChange={handleChangeTypeId}
                 >

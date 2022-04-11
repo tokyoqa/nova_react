@@ -19,6 +19,7 @@ const  PhotoID = ({id}) => {
     const [openError04, setError04] = React.useState(false)
     const [openWarning, setWarning] = React.useState(false)
     const [openInfo, setInfo] = React.useState(false)
+    // const [secretWorld, setSeretWorld]
   
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -93,9 +94,9 @@ const  PhotoID = ({id}) => {
                   setOpen(false)
                 }
                 else{
+                console.log(res.data)
                 setOpen(false); 
                 navigate('/video')
-                console.log(res.data)
                 }
               })
                 .catch(error =>{
