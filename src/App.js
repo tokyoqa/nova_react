@@ -10,74 +10,86 @@ import Camera from './Components/Camera/Camera'
 import Layout from './Layout/Layout';
 import NotFound from './Components/NotFound/NotFound.jsx';
 import React, { useState } from "react";
+import Scan from './Components/VideoEngine/VideoEngine'
 function App(){
-    const [id, setId] = useState(null);
 
-  return(
-    <div>
-      <Routes>
-        <Route path="/" element={<Layout/>}>
-            <Route 
-              index element={<Main
-              setId={setId}
-              />}
-              />
+  //Variables
+  const [id, setId] = useState(null);
 
-            <Route 
-              path='identification' 
-              element={<Identification 
-              id={id}
-              />}
-              />
+return(
+  <div>
+    <Routes>
 
-            <Route 
-              path='idcard' 
-              element={<Idcard 
-              id={id}
-              />}
-              />
+      
+      <Route path="/" element={<Layout/>}>
+        <Route 
+          index element={<Main
+          setId={setId}
+          />}
+          />
 
-            <Route 
-              path='camera' 
-              element={<Camera 
-              id={id}
-              />}
-              />
+          <Route 
+          path='scan' 
+          index element={<Scan
+          setId={setId}
+          />}
+          />
 
-            <Route 
-            path='photoid' 
-            element={<PhotoID 
-            id={id}
-            />}
-            />  
+        <Route 
+          path='identification' 
+          element={<Identification 
+          id={id}
+          />}
+          />
 
-            {/* <Route
-              path='terms' 
-              element={<Terms 
-              id={id}
-              />}
-              /> */}
+        <Route 
+          path='idcard' 
+          element={<Idcard 
+          id={id}
+          />}
+          />
 
-            <Route 
-              path='video' 
-              element={<Video 
-              id={id}
-              />}
-              />
+        <Route 
+          path='camera' 
+          element={<Camera 
+          id={id}
+          />}
+          />
 
-            <Route 
-              path="*" 
-              element={<NotFound/>}
-            />
-            <Route
-              path='data'
-              element={<Data 
-              id={id}/>}
-            />
-            </Route>
-      </Routes>
-    </div>
-  )
+        <Route 
+        path='photoid' 
+        element={<PhotoID 
+        id={id}
+        />}
+        />  
+
+        {/* <Route
+          path='terms' 
+          element={<Terms 
+          id={id}
+          />}
+          /> */}
+
+        <Route 
+          path='video' 
+          element={<Video 
+          id={id}
+          />}
+          />
+
+        <Route 
+          path="*" 
+          element={<NotFound/>}
+        />
+        <Route
+          path='data'
+          element={<Data 
+          id={id}/>}
+        />
+        </Route>
+    </Routes>
+  </div>
+)
 }
 
 export default App;

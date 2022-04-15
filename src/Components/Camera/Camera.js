@@ -9,150 +9,147 @@ import '../../Config';
 import axios from 'axios';
 import './Camera.css'
 
-
-
 const  CameraJS = ({id}) => {
-    let navigate = useNavigate();
-    const [dataUri, setDataUri] = useState('');
-    const [open, setOpen] = React.useState(false); 
-    const [openSuccess, setSuccess] = React.useState(false);
-    const [openError, setError] = React.useState(false)
-    const [openError04, setError04] = React.useState(false)
-    const [openWarning, setWarning] = React.useState(false)
-    const [openInfo, setInfo] = React.useState(false)
-  
-    const Alert = React.forwardRef(function Alert(props, ref) {
-      return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
+  let navigate = useNavigate();
+  const [dataUri, setDataUri] = useState('');
+  const [open, setOpen] = React.useState(false); 
+  const [openSuccess, setSuccess] = React.useState(false);
+  const [openError, setError] = React.useState(false)
+  const [openError04, setError04] = React.useState(false)
+  const [openWarning, setWarning] = React.useState(false)
+  const [openInfo, setInfo] = React.useState(false)
+
+   
     // useEffect(() => {
     //     if(!id){
     //       navigate('/')
     //     }
     //   });
 
-        function handleTakePhoto (dataUri) {
-          setDataUri(dataUri)  
-        }
-            
-        function handleTakePhotoAnimationDone (dataUri) { 
-          
-        }
+function handleTakePhoto (dataUri) {
+  setDataUri(dataUri)  
+}
+    
+function handleTakePhotoAnimationDone (dataUri) { 
+  
+}
 
-        function handleCameraError (error) {
-            console.log('Error - ', error);
-        }
+function handleCameraError (error) {
+    console.log('Error - ', error);
+}
 
-        function handleCameraStart (stream) {
-        }
+function handleCameraStart (stream) {
+}
 
-        function handleCameraStop () {
-        }
+function handleCameraStop () {
+}
 
-        const sendPhoto = () => {
-          if(!dataUri){
-            setError(true)
-        }
-        else{
-            setError(false)
-            setOpen(true)
-            setDataUri(dataUri);
-            axios({
-                method: 'POST',
-                url: global.config.REST_API + 'api/selfie',
-                data:{ 
-                    base64: dataUri,
-                    id: id
-                },
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Headers': '*',
-                    'Access-Control-Allow-Methods': '*',
-                    mode: 'no-cors'
-                },
-            })
-            .then((res) => {
-                if (res.data.statusCode === 1){
-                    console.log(res.data)
-                    setError(true)
-                    setOpen(false)
-                }
-                else if(res.data.statusCode === 2){
-                  console.log(res.data)
-                  setError(true)
-                  setOpen(false)
-                }
-                else if(res.data.statusCode === 3){
-                  console.log(res.data)
-                  setWarning(true)
-                  setOpen(false)
-
-                }
-                else if(res.data.statusCode === 4){
-                  console.log(res.data)
-                  setError04(true)
-                  setOpen(false)
-                }
-                else{
-                setOpen(false); 
-                navigate('/photoid')
-                console.log(res.data)
-                }
-              })
-                .catch(error =>{
-                    setError(true);
-                    setOpen(false);
-                    console.log(error)
-                })
-
-        }
-        }
-        
-        const closeSucces = (event, reason) => {
-          if (reason === 'clickaway') {
-          return;
-          }
-          setSuccess(false);
-        };
-        
-        const closeError = (event, reason) => {
-          if (reason === 'clickaway') {
-          return;
-          }
-          setError(false);
-          setError04(false)
-        };
-        
-        const closeWarning = (event, reason) => {
-          if (reason === 'clickaway') {
-          return;
-          }
-          setWarning(false);
-        };
-        
-        const closeInfo = (event, reason) => {
-          if (reason === 'clickaway') {
-          return;
-          }
-          setInfo(false);
-        };
-
-        const isFullscreen = false
-        const ImagePreview = ({ dataUri, isFullscreen }) => {
-            let classNameFullscreen = isFullscreen ? 'demo-image-preview-fullscreen' : '';
-          
-            return (
-              <div className={'demo-image-preview ' + classNameFullscreen}>
-                <img src={dataUri}/>
-              </div>
-            );
-          };
-
-  const resetPhoto = () =>{
-    setDataUri(null)
+const sendPhoto = () => {
+  if(!dataUri){
+    setError(true)
+}
+else{
+setError(false)
+setOpen(true)
+setDataUri(dataUri);
+axios({
+    method: 'POST',
+    url: global.config.REST_API + 'api/selfie',
+    data:{ 
+        base64: dataUri,
+        id: id
+    },
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*',
+        mode: 'no-cors'
+    },
+})
+.then((res) => {
+  if (res.data.statusCode === 1){
+      console.log(res.data)
+      setError(true)
+      setOpen(false)
   }
-          
+  else if(res.data.statusCode === 2){
+    console.log(res.data)
+    setError(true)
+    setOpen(false)
+  }
+  else if(res.data.statusCode === 3){
+    console.log(res.data)
+    setWarning(true)
+    setOpen(false)
+
+  }
+  else if(res.data.statusCode === 4){
+    console.log(res.data)
+    setError04(true)
+    setOpen(false)
+  }
+  else{
+  setOpen(false); 
+  navigate('/photoid')
+  console.log(res.data)
+  }
+})
+  .catch(error =>{
+      setError(true);
+      setOpen(false);
+      console.log(error)
+  })
+}
+}
+const closeSucces = (event, reason) => {
+  if (reason === 'clickaway') {
+  return;
+  }
+  setSuccess(false);
+};
+
+const closeError = (event, reason) => {
+  if (reason === 'clickaway') {
+  return;
+  }
+  setError(false);
+  setError04(false)
+};
+
+const closeWarning = (event, reason) => {
+  if (reason === 'clickaway') {
+  return;
+  }
+  setWarning(false);
+};
+
+const closeInfo = (event, reason) => {
+  if (reason === 'clickaway') {
+  return;
+  }
+  setInfo(false);
+};
+
+const isFullscreen = false
+const ImagePreview = ({ dataUri, isFullscreen }) => {
+    let classNameFullscreen = isFullscreen ? 'demo-image-preview-fullscreen' : '';
+  
+    return (
+      <div className={'demo-image-preview ' + classNameFullscreen}>
+        <img src={dataUri}/>
+      </div>
+    );
+  };
+
+const resetPhoto = () =>{
+  setDataUri(null)
+}
+      
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
   
 return (
   <div>
@@ -177,7 +174,6 @@ return (
           onCameraStart = { (stream) => { handleCameraStart(stream); } }
           onCameraStop = { () => { handleCameraStop(); } }
         />
-        
     }
   
   <div className='photo-send-btn'>
@@ -197,7 +193,6 @@ return (
     <CircularProgress color="inherit" /> 
   </Backdrop> 
    
- 
   <Stack spacing={2} sx={{ width: '100%' }}>
     <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeSucces}>
       <Alert onClose={closeSucces} severity="success" sx={{ width: '100%' }}>
@@ -228,5 +223,4 @@ return (
 </div>
 );
 }
-
 export default CameraJS;

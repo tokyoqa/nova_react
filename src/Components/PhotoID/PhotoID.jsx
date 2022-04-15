@@ -11,42 +11,42 @@ import axios from 'axios';
 
 
 const  PhotoID = ({id}) => {
-    let navigate = useNavigate();
-    const [dataUri, setDataUri] = useState('');
-    const [open, setOpen] = React.useState(false); 
-    const [openSuccess, setSuccess] = React.useState(false);
-    const [openError, setError] = React.useState(false)
-    const [openError04, setError04] = React.useState(false)
-    const [openWarning, setWarning] = React.useState(false)
-    const [openInfo, setInfo] = React.useState(false)
-    // const [secretWorld, setSeretWorld]
+  let navigate = useNavigate();
+  const [dataUri, setDataUri] = useState('');
+  const [open, setOpen] = React.useState(false); 
+  const [openSuccess, setSuccess] = React.useState(false);
+  const [openError, setError] = React.useState(false)
+  const [openError04, setError04] = React.useState(false)
+  const [openWarning, setWarning] = React.useState(false)
+  const [openInfo, setInfo] = React.useState(false)
+  // const [secretWorld, setSeretWorld]
   
-    const Alert = React.forwardRef(function Alert(props, ref) {
-      return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-    });
-    // useEffect(() => {
-    //     if(!id){
-    //       navigate('/')
-    //     }
-    //   });
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  // useEffect(() => {
+  //     if(!id){
+  //       navigate('/')
+  //     }
+  //   });
 
-        function handleTakePhoto (dataUri) {
-          setDataUri(dataUri)  
-        }
-            
-        function handleTakePhotoAnimationDone (dataUri) { 
-          
-        }
+function handleTakePhoto (dataUri) {
+  setDataUri(dataUri)  
+}
+    
+function handleTakePhotoAnimationDone (dataUri) { 
+  
+}
 
-        function handleCameraError (error) {
-            console.log('Error - ', error);
-        }
+function handleCameraError (error) {
+    console.log('Error - ', error);
+}
 
-        function handleCameraStart (stream) {
-        }
+function handleCameraStart (stream) {
+}
 
-        function handleCameraStop () {
-        }
+function handleCameraStop () {
+}
 
         const sendPhoto = () => {
           if(!dataUri){
