@@ -1,47 +1,38 @@
 import { Route, Routes } from 'react-router-dom';
 import Identification from './Components/Identification/Identification';
 import Main from './Components/Main/Main'
+import Finish from './Components/Finish/Finish'
 import Idcard from './Components/IdCard/Idcard';
-// import Terms from './Components/Terms/Terms'
-import Data from './Components/Data/Data'
+import Terms from './Components/Terms/Terms'
 import Video from './Components/Video/Video'
-import PhotoID from './Components/PhotoID/PhotoID'
 import Camera from './Components/Camera/Camera'
 import Layout from './Layout/Layout';
-import NotFound from './Components/NotFound/NotFound.jsx';
+import NotFound from './Components/NotFound/NotFound';
 import React, { useState } from "react";
-import Scan from './Components/VideoEngine/VideoEngine'
 function App(){
 
   //Variables
   const [id, setId] = useState(null);
+  const [secretWord, setSecretWord] = useState(null)
+  const [identType, setIdentType] = useState(null)
 
 return(
   <div>
     <Routes>
 
-      
       <Route path="/" element={<Layout/>}>
         <Route 
           index element={<Main
           setId={setId}
           />}
-          />
-
-          <Route 
-          path='scan' 
-          index element={<Scan
-          setId={setId}
-          />}
-          />
-
+          />    
         <Route 
           path='identification' 
           element={<Identification 
           id={id}
           />}
           />
-
+          
         <Route 
           path='idcard' 
           element={<Idcard 
@@ -53,27 +44,23 @@ return(
           path='camera' 
           element={<Camera 
           id={id}
+          setSecretWord={setSecretWord}
           />}
           />
 
-        <Route 
-        path='photoid' 
-        element={<PhotoID 
-        id={id}
-        />}
-        />  
-
-        {/* <Route
+        <Route
           path='terms' 
           element={<Terms 
           id={id}
           />}
-          /> */}
+          />
 
         <Route 
           path='video' 
           element={<Video 
           id={id}
+          secretWord={secretWord}
+          setIdentType={setIdentType}
           />}
           />
 
@@ -81,12 +68,15 @@ return(
           path="*" 
           element={<NotFound/>}
         />
-        <Route
-          path='data'
-          element={<Data 
-          id={id}/>}
-        />
-        </Route>
+        <Route 
+          identType={setIdentType}
+          path='finish'
+          element={<Finish
+        />}
+        />   
+
+
+      </Route>
     </Routes>
   </div>
 )

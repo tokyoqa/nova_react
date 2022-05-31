@@ -333,3 +333,9 @@
     
   }
    
+
+.footer__menu li a {
+    color: #a0c0b1;
+    text-decoration: none;
+    outline: none;
+}

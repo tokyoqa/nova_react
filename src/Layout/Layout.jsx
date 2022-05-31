@@ -17,9 +17,9 @@ return (
       </nav>
       <div className={styles.header__links}>
         <div className={styles.header__links_grid}>
-          <a href="#" className={styles.header__link}>Контакты</a>
-          <a href="#" className={styles.header__link}>Качество обслуживания</a>
-          <a href="#" className={styles.header__link}>Филиалы и банкоматы</a>
+          <a href="https://ab.kg/feedback" className={styles.header__link}>Контакты</a>
+          <a href="https://ab.kg/service" className={styles.header__link}>Качество обслуживания</a>
+          <a href="https://ab.kg/survey" className={styles.header__link}>Филиалы и банкоматы</a>
           <a href="https://ab.kg/survey" className={styles.header__link}>Анкетирование</a>
           <a href="https://ab.kg/faq" className={styles.header__link}>FAQ</a>
         </div>
@@ -29,14 +29,14 @@ return (
   <main className={styles.oulet}>
     <Outlet />
   </main>
-  <footer className={styles.footer}>
+  {/* <footer className={styles.footer}>
       <div className={styles.wrapper__footer}>
-       <div class="footer__items">
-          <div class="footer__item">
-            <span class="copy">© ОАО «Айыл Банк», 1996–2022</span>
+       <div className="footer__items">
+          <div className="footer__item">
+            <span className="copy">© ОАО «Айыл Банк», 1996–2022</span>
           </div>
-          <div class="footer__item">
-            <ul class="footer__menu">
+          <div className="footer__item">
+            <ul className="footer__menu">
             <li>
               <a href="https://ab.kg/news">Новости</a>
             </li>
@@ -51,27 +51,27 @@ return (
             </li>
             </ul>
           </div>
-        <div class="footer__item">
-          <span class="footer__info">Реквизиты: ИНН: 01803199710084</span>
-          <span class="footer__info">Код и наименование РНИ: 999 УККН</span>
-          <span class="footer__info">БИК: 135001</span>
-          <span class="footer__info">Р/счет: 1352119911905306 </span>
-          <span class="footer__info">в ОАО "Айыл Банк"</span>
+        <div className="footer__item">
+          <span className="footer__info">Реквизиты: ИНН: 01803199710084</span>
+          <span className="footer__info">Код и наименование РНИ: 999 УККН</span>
+          <span className="footer__info">БИК: 135001</span>
+          <span className="footer__info">Р/счет: 1352119911905306 </span>
+          <span className="footer__info">в ОАО "Айыл Банк"</span>
         </div>
-        <div class="footer__item">
-          <div class="footer__phones">
-          <div class="footer-phones">
-            <div class="footer-phones__item">
-              <a class="footer-phones__link" href="tel:+996312680000">0 (312) 68 00 00</a>
+        <div className="footer__item">
+          <div className="footer__phones">
+          <div className="footer-phones">
+            <div className="footer-phones__item">
+              <a className="footer-phones__link" href="tel:+996312680000">0 (312) 68 00 00</a>
             </div>
-            <div class="footer-phones__item">
-              <a class="footer-phones__link" href="tel:+996556680000">0 (556) 68 00 00</a>
+            <div className="footer-phones__item">
+              <a className="footer-phones__link" href="tel:+996556680000">0 (556) 68 00 00</a>
             </div>
-            <div class="footer-phones__item">
-              <a class="footer-phones__link" href="tel:+996222680000">0 (222) 68 00 00</a>
+            <div className="footer-phones__item">
+              <a className="footer-phones__link" href="tel:+996222680000">0 (222) 68 00 00</a>
             </div>
-            <div class="footer-phones__item">
-              <a class="footer-phones__link" href="tel:+996707680000">0 (707) 68 00 00</a>
+            <div className="footer-phones__item">
+              <a className="footer-phones__link" href="tel:+996707680000">0 (707) 68 00 00</a>
             </div>
           </div>
           </div>
@@ -82,7 +82,7 @@ return (
       </div>
 
 
-  </footer>
+  </footer> */}
 </div>
   );
 }

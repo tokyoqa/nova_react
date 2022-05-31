@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { IMask, IMaskInput } from "react-imask";
+import {IMaskInput } from "react-imask";
 import "./Identification.css";
-import {Backdrop, CircularProgress, Stack, Alert, Snackbar} from '@mui/material';
+import {Backdrop, CircularProgress, Stack, Snackbar} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { useNavigate } from "react-router";
 import '../../Config';
@@ -19,18 +19,17 @@ export const Identification  = ({id}) => {
     const [openWarning, setWarning] = React.useState(false)
     const [openInfo, setInfo] = React.useState(false)
     const [count, setCount] = useState(1);
-    const url = global.config.REST_API + 'api/reset?id='
-    
+    const url = global.config.REST_API + 'api/reset?id=' 
 
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
 
-    useEffect(() => {
-      if(!id){
-        navigate('/')
-      }
-    });
+    // useEffect(() => {
+    //   if(!id){
+    //     navigate('/')
+    //   }
+    // });
 
     function postSecureCode(){
       setCount(count + 1)
@@ -56,10 +55,8 @@ export const Identification  = ({id}) => {
               setWarning(true)
             }
             else{
-            navigate('/data')
             console.log(res.data)
-            navigate('/data')
-            
+            navigate('/idcard')
 
             }
           })
@@ -71,7 +68,6 @@ export const Identification  = ({id}) => {
         )
     }
     }
-       
 
       const resendNumber = () => {
         setOpen(true)
@@ -98,7 +94,7 @@ export const Identification  = ({id}) => {
           })
           .catch((err) => {
             console.log(err)
-            setOpen(false)
+            setOpen(false) 
             setError(true)
           })
           console.log(id)
@@ -133,8 +129,7 @@ export const Identification  = ({id}) => {
         return;
       }
       setInfo(false);
-    };
-    
+    }; 
 
     return(
         <div className="ident_form">

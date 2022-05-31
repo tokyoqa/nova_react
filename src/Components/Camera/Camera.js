@@ -1,3 +1,49 @@
+// import React, { useEffect, useRef, useState } from "react";
+// import { useRecordWebcam } from 'react-record-webcam'
+// // import MediaStreamRecorder from "react-media-recorder";
+
+
+// export default function RecordVideo(props) {
+//    const [checked, setChecked] = useState(false);
+//    const options = {width: 500, height: 300};
+// //   recordingLength: 5, 
+//    const recordWebcam = useRecordWebcam(options);
+
+   
+// const saveFile = async () => {
+//   const videoBlob = await recordWebcam.getRecording();
+//   console.log(videoBlob); 
+// };
+
+// const stopVideo = async () => { 
+// const record = () =>{
+//    recordWebcam.stop();   
+//  } 
+//  console.log("stop video"); 
+//     // console.log(blob); 
+//  record()
+//  saveFile()
+//     };
+
+// return (
+//     <div>
+//       <p>Camera status: {recordWebcam.status}</p>
+//       {/* <button onClick={recordWebcam.open}>Open camera</button> */}
+//    <button onClick={recordWebcam.start}>Record camera</button>
+//    {/* <button onClick={recordWebcam.open}>Open camera</button> */}
+//       <button onClick={recordWebcam.start}>Start recording</button>
+//       {/* <button onClick={recordWebcam.stop}>Stop recording</button> */}
+//       {/* <button onClick={recordWebcam.retake}>Retake recording</button>
+//       <button onClick={recordWebcam.stop, saveFile}>Download recording</button>  */}
+//       <button onClick={stopVideo}>Save file to server</button>
+//       <video className="vid__container" ref={recordWebcam.webcamRef} autoPlay muted />
+//       <video className="vid__preview "ref={recordWebcam.previewRef} autoPlay muted loop />
+//     </div>
+ 
+//   )
+// }
+
+
 import React, { useState } from 'react';
 import 'react-html5-camera-photo/build/css/index.css';
 import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
@@ -9,7 +55,7 @@ import '../../Config';
 import axios from 'axios';
 import './Camera.css'
 
-const  CameraJS = ({id}) => {
+const  CameraJS = ({id, setSecretWord}) => {
   let navigate = useNavigate();
   const [dataUri, setDataUri] = useState('');
   const [open, setOpen] = React.useState(false); 
@@ -19,7 +65,6 @@ const  CameraJS = ({id}) => {
   const [openWarning, setWarning] = React.useState(false)
   const [openInfo, setInfo] = React.useState(false)
 
-   
     // useEffect(() => {
     //     if(!id){
     //       navigate('/')
@@ -69,6 +114,8 @@ axios({
     },
 })
 .then((res) => {
+  setSecretWord(res.data.secretWord)
+  console.log(res.data.secretWord)
   if (res.data.statusCode === 1){
       console.log(res.data)
       setError(true)
@@ -78,6 +125,7 @@ axios({
     console.log(res.data)
     setError(true)
     setOpen(false)
+    
   }
   else if(res.data.statusCode === 3){
     console.log(res.data)
@@ -91,8 +139,9 @@ axios({
     setOpen(false)
   }
   else{
-  setOpen(false); 
-  navigate('/photoid')
+  setOpen(false);
+  navigate('/terms')
+
   console.log(res.data)
   }
 })
@@ -138,7 +187,7 @@ const ImagePreview = ({ dataUri, isFullscreen }) => {
   
     return (
       <div className={'demo-image-preview ' + classNameFullscreen}>
-        <img src={dataUri}/>
+        <img src={dataUri} alt=""/> 
       </div>
     );
   };

@@ -1,5 +1,3 @@
-
-
 .header{
     display: flex;
     flex-direction: column; 
@@ -83,11 +81,23 @@
    } 
 }
 
+@media screen and (min-width: 1050px) and (max-width: 1400px){
+    .header__logo > a > img{
+        margin-top: 42px;
+        margin-left: 60px;  
+    }
+    .nav__phone{
+        margin-top: 37px;
+        margin-left: 63px;
+    }
+}
+
+
+
 .footer{
     background: #016436;
     padding: 46px 0;
-    display: flex;
-    flex-direction: column;
+
 }
 
 .wrapper__footer{
@@ -97,6 +107,18 @@
 
 }
 
+.footer_items{
+    overflow: hidden;
+}
+
+.footer_item{
+    width: 26%;
+    float: left;
+}
+.footer__item{
+    width: 25%;
+    float: left;
+}
 @media screen and (max-width: 768px){
     .footer{
         margin-top: 50px;
