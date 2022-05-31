@@ -1,4 +1,4 @@
-import {Backdrop, CircularProgress, Stack, Alert, Snackbar} from '@mui/material';
+import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, CardActions, Typography} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import {useEffect} from 'react'
 import axios from "axios";
@@ -226,7 +226,7 @@ import '../../Config';
 
 return (
   <div className="registration-form-2">
-    <div className="form-box mb32">
+    {/* <div className="form-box mb32">
       <div className="form-legend mb12">Идентификация</div>
         <p className="site-p mb20">  
         Фото вашего паспорта ID:
@@ -272,11 +272,67 @@ return (
                     </form>
                   </div>
                </div>
-
-               {/* {selectedFileFront &&  <img src={previewFront} /> }  
-               {selectedFileBack &&  <img src={previewBack} /> } */}
               <button className="idcard__btn" onClick={onFileUpload}>Отправить</button>
-          </div>
+          </div> */}
+
+
+<Card sx={{ height: "350px", width: "500px", margin: '0 auto',  marginTop: '20px', border: 1, borderColor: 'grey.300'}}>
+      <CardHeader  sx={{textAlign: "center", padding: 0, marginTop: 2}}
+        title="Удаленная идентификация"
+      />
+      <CardContent sx={{fontSize: "20px", textAlign: 'center'}}>
+        <Typography sx={{fontSize: "20px", textAlign: "center", marginBottom: "15px"}} variant="h5" color="text.secondary">
+          Фотографии паспорта
+        </Typography> 
+        <div className="photo-area">
+            <div className="photo-item">
+              <form id="front_passport_form" >
+                
+                <label className="photo-item-label">
+                  <img 
+                  className='front-preview'
+                  src={previewFront}
+                  alt=''
+                  />
+                  <input 
+                      type="file" 
+                      onChange={onFileChangeFront}
+                      name="front_passport" 
+                      id="front_passport" 
+                      />
+                </label>
+
+                <div className="photo-item-title">Лицевая сторона</div>
+              </form>
+                </div>
+                  <div className="photo-item">
+                    <form  id="back_passport_form" encType="multipart/form-data">
+                      <label className="photo-item-label" >
+                        <img 
+                        className='back-preview'
+                        src={previewBack}
+                        alt=''
+                        />
+                        <input 
+                        type="file" 
+                        onChange={onFileChangeBack}
+                        name="back_passport" 
+                        id="back_passport/file"
+                        style={{backgroundImage: `src(${previewBack})`}}
+                        />
+                      </label>
+                      <div className="photo-item-title">Обратная сторона</div>
+                    </form>
+                  </div>
+               </div>
+        <Button color="success" sx={{ justifyContent: 'center', marginTop: '10px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={onFileUpload} >
+            Продолжить
+        </Button>
+      </CardContent>
+    </Card>       
+
+
+
       <Backdrop 
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
       open={open} 

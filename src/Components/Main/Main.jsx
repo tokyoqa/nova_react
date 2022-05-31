@@ -1,19 +1,4 @@
-import {Backdrop, CircularProgress, Stack, Snackbar, Button} from '@mui/material';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, CardActions, Typography} from '@mui/material';
 import {IMask, IMaskInput} from "react-imask";
 import MuiAlert from '@mui/material/Alert';
 import {useNavigate} from "react-router";
@@ -31,7 +16,6 @@ const [openError, setError] = React.useState(false)
 const [openError04, setError04] = React.useState(false)
 const [openWarning, setWarning] = React.useState(false)
 const [openInfo, setInfo] = React.useState(false)
-
 const PhoneMask = "{996}000000000";
 let   navigate = useNavigate(); 
 
@@ -130,8 +114,6 @@ const closeInfo = (event, reason) => {
 return (
   <div >
 {/* className='main_form' */}
-
-    
   {/* //   <div className="main_title">Введите номер: </div>
   //     <IMaskInput
   //       mask={PhoneMask}
@@ -143,25 +125,22 @@ return (
   //   <button id="main-btn" className="main_submit" onClick={postData}>
   //     Продолжить
   //   </button> */}
-
-            
-    <Card sx={{ height: "350px", width: "500px", margin: '0 auto' }}>
-      <CardHeader  sx={{textAlign: "center"}}
+    <Card sx={{ height: "350px", width: "500px", margin: '0 auto',  marginTop: '20px',border: 1, borderColor: 'grey.300'}}>
+      <CardHeader  sx={{textAlign: "center", padding: 0, marginTop: 2}}
         title="Удаленная идентификация"
       />
-      <CardContent sx={{fontSize: "20px", margin: '0 autos'}}>
-        <Typography sx={{fontSize: "20px", margin: '0 auto', textAlign: "center"}} variant="h5" color="text.secondary">
+      <CardContent sx={{fontSize: "20px", textAlign: 'center'}}>
+        <Typography sx={{fontSize: "20px", textAlign: "center", marginBottom: "15px"}} variant="h5" color="text.secondary">
             Введите номер:
         </Typography> 
         <IMaskInput
-          style={{border: 'solid 1px #000'}}
           mask={PhoneMask}
           className="form-input-phone"
           onAccept={(value) => {setNumber(value)}}
           value={number}
           placeholder="+996 000 000 000"
-        />  
-        <Button className="main_submit" sx={{margin: '0 auto', marginTop: '30px', width: '70%'}} variant="contained" >
+        />
+        <Button color="success" className="main_submit" sx={{ justifyContent: 'center', marginTop: '30px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postData}>
             Продолжить 
         </Button>
       </CardContent>

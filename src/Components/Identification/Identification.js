@@ -1,12 +1,12 @@
+import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, CardActions, Typography} from '@mui/material';
+import {IMask, IMaskInput} from "react-imask";
 import axios from "axios";
 import React, { useState } from "react";
-import {IMaskInput } from "react-imask";
 import "./Identification.css";
-import {Backdrop, CircularProgress, Stack, Snackbar} from '@mui/material';
-import MuiAlert from '@mui/material/Alert';
 import { useNavigate } from "react-router";
 import '../../Config';
 import { useEffect } from 'react';
+import MuiAlert from '@mui/material/Alert';
 
 export const Identification  = ({id}) => {
     const [open, setOpen] = React.useState(false); 
@@ -131,8 +131,9 @@ export const Identification  = ({id}) => {
       setInfo(false);
     }; 
 
-    return(
-        <div className="ident_form">
+return(
+  <div className="ident_form">
+{/*           
             <div className="ident_title">Идентификация</div>
             <div className="ident_subtitle">Введите код из SMS</div>
             <IMaskInput
@@ -143,15 +144,39 @@ export const Identification  = ({id}) => {
             value={secureCode}
             />
             <button className="ident_submit" onClick={postSecureCode} >Далее</button>
-            <button className="ident_submit resend " onClick={resendNumber}>Отправить код повторно</button>
-            <Backdrop 
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
-          open={open} 
-          > 
-          <CircularProgress color="inherit" /> 
-        </Backdrop> 
-
-
+            <button className="ident_submit resend " onClick={resendNumber}>Отправить код повторно</button> */}
+           
+    <Card sx={{ height: "350px", width: "500px", margin: '0 auto',  marginTop: '20px', border: 1, borderColor: 'grey.300'}}>
+      <CardHeader  sx={{textAlign: "center", padding: 0, marginTop: 2}}
+        title="Удаленная идентификация"
+      />
+      <CardContent sx={{fontSize: "20px", textAlign: 'center'}}>
+        <Typography sx={{fontSize: "20px", textAlign: "center", marginBottom: "15px"}} variant="h5" color="text.secondary">
+          Введите код из SMS
+        </Typography> 
+          <IMaskInput
+            mask={codeMask}
+            id="firstname" 
+            className="ident_input"
+            onAccept={(value) =>{setCode(value)}}
+            value={secureCode}
+          />
+        <Button color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postSecureCode} >
+            Продолжить
+        </Button>
+        <Button color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={resendNumber}>
+            Отправить код снова
+        </Button>
+      </CardContent>
+    </Card>       
+           
+           
+      <Backdrop 
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
+        open={open} 
+        > 
+      <CircularProgress color="inherit" /> 
+      </Backdrop> 
         <Stack spacing={2} sx={{ width: '100%' }}>
       <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeSucces}>
         <Alert onClose={closeSucces} severity="success" sx={{ width: '100%' }}>
@@ -183,8 +208,8 @@ export const Identification  = ({id}) => {
         </Alert>
       </Snackbar>
     </Stack>
-        </div>
-    )
+  </div>
+)
 }
 
 export default Identification;

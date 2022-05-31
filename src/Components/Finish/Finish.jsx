@@ -70,7 +70,6 @@ const Finish = ({identType}) => {
   return (
     <div>
      <Card style={cardStyle}>
-        <CardActionArea>
           <CardContent>
             <Typography sx={{textAlign: 'center'}} gutterBottom variant="h5" component="p">
               Удаленная Идентификация
@@ -80,7 +79,6 @@ const Finish = ({identType}) => {
             </Typography>
             
           </CardContent>
-        </CardActionArea>
         <CardActions >
         </CardActions>
       </Card>

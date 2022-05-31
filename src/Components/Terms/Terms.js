@@ -34,8 +34,7 @@ export const Terms = ({ id, setIdentType }) => {
   const [openError04, setError04] = React.useState(false);
   const [openWarning, setWarning] = React.useState(false);
   const [openInfo, setInfo] = React.useState(false);
-  const [check, setChecked] = React.useState('N')
-
+  const [check, setChecked] = React.useState()
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
@@ -57,57 +56,103 @@ export const Terms = ({ id, setIdentType }) => {
   //   }
   // });
 
+  const handleChangeChecked = (event) => {
+    if(event.target.checked){
+      setChecked(true)
+      
+    }
+    else if (!event.checked){
+      setChecked(false)
+    }
+    // if (!event.target.checked) {
+    //   setChecked(true);
+    //   console.log(check)
+    //   console.log('not')
+
+    // } 
+    // else if(event.target.checked) {
+    //   console.log('checked')
+    //   setChecked(false);
+    //   console.log(check)
+    // }
+  };
+
+
   const agreeSubmit = () => {
-    setOpen(!open);
-    axios
-      .get(url + "id=" + id + "&check=" + check)
-      .then((res) => {
-        console.log(res.data);
-        setOpen(false);
-        if (res.data.statusCode === 1) {
-        } else if (res.data.statusCode === 2) {
-        } else if (res.data.statusCode === 3) {
-        } else if (res.data.statusCode === 4) {
-        } else {
-          navigate("/video");
-          setIdentType('Full')
-          setOpen(false);
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(true);
-        setOpen(false);
-      });
+    // setOpen(!true)
+    if(!check || check === undefined){
+      setOpen(false)
+      setError(true)
+      
+      
+    }
+    else{
+      navigate('/finish')
+
+    }
+
+    // axios
+    //   .get(url + "id=28check=Y")
+    //   // .get(url + "id=" + id + "&check=Y")
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     setOpen(false);
+    //     if (res.data.statusCode === 1) {
+    //     } else if (res.data.statusCode === 2) {
+    //     } else if (res.data.statusCode === 3) {
+    //     } else if (res.data.statusCode === 4) {
+    //     } else {
+    //       navigate("/video");
+    //       setIdentType('Full')
+    //       setOpen(false);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //     setError(true);
+    //     setOpen(false);
+    //   });
+    // navigate("/video");
   };
 
   const disagreeSubmit = () => {
-    setOpen(!open);
-     axios
-      .get(url + "id=" + id + "&check=" + check)
-      .then((res) => {
-        setOpen(false);
-        if (res.data.statusCode === 1) {
-          setError(true);
-        } else if (res.data.statusCode === 2) {
-          setError(true);
-        } else if (res.data.statusCode === 3) {
-          setWarning(true);
-        } else if (res.data.statusCode === 5) {
-          setError(true);
-        } else {
-          setOpen(false)
-          setIdentType('Lite')
-          console.log(setIdentType)
-          navigate("/finish");
-        }
-      })
+      navigate('/finish')
 
-      .catch((err) => {
-        console.error(err);
-        setError(true);
-        setOpen(false);
-      });
+    // setOpen(!true)
+    // if(check === "N"){
+    //   setError(true)
+      
+    // }
+    // else{
+    //   setError(false)
+    //   setOpen(false)
+    //   navigate('/finish')
+    // }
+    // //  axios
+    //   .get(url + "id=" + id + "&check=N")
+    //   .then((res) => {
+    //     setOpen(false);
+    //     if (res.data.statusCode === 1) {
+    //       setError(true);
+    //     } else if (res.data.statusCode === 2) {
+    //       setError(true);
+    //     } else if (res.data.statusCode === 3) {
+    //       setWarning(true);
+    //     } else if (res.data.statusCode === 5) {
+    //       setError(true);
+    //     } else {
+    //       setOpen(false)
+    //       setIdentType('Lite')
+    //       console.log(setIdentType)
+    //       navigate("/finish");
+    //     }
+    //   })
+
+    //   .catch((err) => {
+    //     console.error(err);
+    //     setError(true);
+    //     setOpen(false);
+    //   });
   };
 
   const closeSucces = (event, reason) => {
@@ -148,21 +193,12 @@ export const Terms = ({ id, setIdentType }) => {
     marginTop: "10px"
   };
 
-  const handleChangeChecked = (event) => {
-    if (event.target.checked) {
-      setChecked('N');
-      console.log(check)
-    } else {
-      setChecked('Y');
-      console.log(check)
-    }
-  };
+
 
 
   return (
     <div>
       <Card style={cardStyle}>
-        <CardActionArea>
           <CardContent>
             <Typography sx={{textAlign: 'center'}} gutterBottom variant="h5" component="p">
               Удаленная Идентификация
@@ -173,20 +209,19 @@ export const Terms = ({ id, setIdentType }) => {
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '5px'}}>
               Если хотите пройти Full идентификацию. Для этого нажмите на кнопку "Продолжить"
             </Typography>
-            <FormControlLabel  
+            <FormControlLabel sx={{marginTop: 2}}
             control={ 
               <Checkbox onChange={handleChangeChecked} name="" />
             }
             label={<Typography  variant="body2" color="textSecondary">Подтверждаю согласие на сбор, обработку и передачу персональных данных</Typography>}
           />
           </CardContent>
-        </CardActionArea>
         <CardActions >
-          <Button sx={{margin: '0 auto', marginTop: '30px'}} variant="contained" 
+          <Button sx={{margin: '0 auto', marginTop: '20px'}} variant="contained" 
                   endIcon={<AssignmentOutlinedIcon />} onClick={disagreeSubmit}>
             Закончить
           </Button>
-          <Button  sx={{margin: '0 auto', marginTop: '30px'}} variant="contained" 
+          <Button  sx={{margin: '0 auto', marginTop: '20px'}} variant="contained" 
                   endIcon={<AssignmentTurnedInOutlinedIcon />} onClick={agreeSubmit}>
             Продолжить 
           </Button>
