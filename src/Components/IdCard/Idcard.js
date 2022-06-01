@@ -234,7 +234,7 @@ import '../../Config';
       };
 
 return (
-  <div>
+  <div className='idcard_box'>
     {/* <div className="form-box mb32">
       <div className="form-legend mb12">Идентификация</div>
         <p className="site-p mb20">  
