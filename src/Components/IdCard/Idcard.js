@@ -224,8 +224,17 @@ import '../../Config';
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
       });
 
+      const cardStyle = {
+        display: "block",
+        transitionDuration: "0.3s",
+        height: "350px",
+        width: "500px",
+        margin: "0 auto",
+        marginTop: "10px"
+      };
+
 return (
-  <div className="registration-form-2">
+  <div>
     {/* <div className="form-box mb32">
       <div className="form-legend mb12">Идентификация</div>
         <p className="site-p mb20">  
@@ -276,7 +285,7 @@ return (
           </div> */}
 
 
-<Card sx={{ height: "350px", width: "500px", margin: '0 auto',  marginTop: '20px', border: 1, borderColor: 'grey.300'}}>
+<Card styles={cardStyle} sx={{margin: '0 auto',  marginTop: '20px', border: 1, borderColor: 'grey.300'}}>
       <CardHeader  sx={{textAlign: "center", padding: 0, marginTop: 2}}
         title="Удаленная идентификация"
       />

@@ -9,7 +9,7 @@
     box-sizing: border-box;
     padding: 20px;
   } */
-
+/* 
   @media screen and (min-width:320px) and (max-width:640px) {
     .ident_form{
       margin: 0 auto;
@@ -22,7 +22,7 @@
       padding: 20px;
     }
     
-  }
+  } */
    
   
   .ident_title {

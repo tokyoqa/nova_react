@@ -131,6 +131,15 @@ export const Identification  = ({id}) => {
       setInfo(false);
     }; 
 
+    const cardStyle = {
+      display: "block",
+      transitionDuration: "0.3s",
+      height: "350px",
+      width: "500px",
+      margin: "0 auto",
+      marginTop: "10px"
+    };
+
 return(
   <div className="ident_form">
 {/*           
@@ -146,7 +155,7 @@ return(
             <button className="ident_submit" onClick={postSecureCode} >Далее</button>
             <button className="ident_submit resend " onClick={resendNumber}>Отправить код повторно</button> */}
            
-    <Card sx={{ height: "350px", width: "500px", margin: '0 auto',  marginTop: '20px', border: 1, borderColor: 'grey.300'}}>
+    <Card style={cardStyle} sx={{  margin: '0 auto',  marginTop: '20px', border: 1, borderColor: 'grey.300'}}>
       <CardHeader  sx={{textAlign: "center", padding: 0, marginTop: 2}}
         title="Удаленная идентификация"
       />
