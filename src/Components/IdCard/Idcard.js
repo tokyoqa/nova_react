@@ -16,7 +16,8 @@ import '../../Config';
     const [open, setOpen] = React.useState(false); 
     const [openSuccess, setSuccess] = React.useState(false);
     const [openError, setError] = React.useState(false)
-    const [openError05, setError05] = React.useState(false)
+    const [openErrorFront, setErrorFront] = useState(false)
+    const [openErrorBack, setErrorBack] = useState(false)
     const [openErrorFiles, setErrorFiles] = React.useState(false)
     const [openWarning, setWarning] = React.useState(false)
     const [previewFront, setPreviewFront] = useState()
@@ -105,7 +106,6 @@ import '../../Config';
               'Access-Control-Allow-Methods': '*',
             }
         })
-          
         .then((res) => {
           setOpen(false); 
           if (res.data.statusCode === 1){
@@ -122,7 +122,7 @@ import '../../Config';
           }
           else if (res.data.statusCode === 5){
             console.log(res.data)
-            setError05(true)
+            setErrorBack(true)
           }
           else{
           console.log(res.data)
@@ -155,7 +155,7 @@ import '../../Config';
               }
               else if (res.data.statusCode === 5){
                 console.log(res.data)
-                setError05(true)
+                setErrorFront(true)
               }
               else{
               navigate('/camera')
@@ -182,16 +182,18 @@ import '../../Config';
       };
       }
       
-
-
-
       
-        
       const closeSucces = (event, reason) => {
         if (reason === 'clickaway') {
           return;
         }
         setSuccess(false);
+        setError(false);
+        setErrorFiles(false)
+        setErrorFiles(false)
+        setErrorFront(false)
+        setErrorBack(false)
+        setErrorFiles(false)
       };
       const closeError = (event, reason) => {
         if (reason === 'clickaway') {
@@ -199,14 +201,19 @@ import '../../Config';
         }
         setError(false);
         setErrorFiles(false)
-        setError05(false)
+        setSuccess(false);
+        setError(false);
+        setErrorFiles(false)
+        setErrorFiles(false)
+        setErrorFront(false)
+        setErrorBack(false)
+        setErrorFiles(false)
       };
       const closeErrorFiles = (event, reason) => {
         if (reason === 'clickaway') {
           return;
         }
         setErrorFiles(false)
-        setError05(false)
       };
       const closeWarning = (event, reason) => {
         if (reason === 'clickaway') {
@@ -356,9 +363,15 @@ return (
         </Alert>
       </Snackbar>
 
-      <Snackbar open={openError05} autoHideDuration={6000} onClose={closeError}>
+      <Snackbar open={openErrorBack} autoHideDuration={6000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ошибка! Отправьте фото снова!
+          Плохое качество фото. Загрузите фото лицевой стороны снова.  
+        </Alert>
+      </Snackbar>
+
+      <Snackbar open={openErrorFront} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+          Плохое качество фото. Загрузите фото обраной стороны снова.  
         </Alert>
       </Snackbar>
 

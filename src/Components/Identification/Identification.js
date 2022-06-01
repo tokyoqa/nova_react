@@ -132,12 +132,7 @@ export const Identification  = ({id}) => {
     }; 
 
     const cardStyle = {
-      display: "block",
-      transitionDuration: "0.3s",
-      height: "350px",
-      width: "500px",
-      margin: "0 auto",
-      marginTop: "10px"
+
     };
 
 return(
@@ -155,7 +150,7 @@ return(
             <button className="ident_submit" onClick={postSecureCode} >Далее</button>
             <button className="ident_submit resend " onClick={resendNumber}>Отправить код повторно</button> */}
            
-    <Card style={cardStyle} sx={{  margin: '0 auto',  marginTop: '20px', border: 1, borderColor: 'grey.300'}}>
+    <Card className={"card-container-ident"}>
       <CardHeader  sx={{textAlign: "center", padding: 0, marginTop: 2}}
         title="Удаленная идентификация"
       />
@@ -166,7 +161,7 @@ return(
           <IMaskInput
             mask={codeMask}
             id="firstname" 
-            className="ident_input"
+            className="ident_code"
             onAccept={(value) =>{setCode(value)}}
             value={secureCode}
           />
@@ -174,7 +169,7 @@ return(
             Продолжить
         </Button>
         <Button color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={resendNumber}>
-            Отправить код снова
+            Отправить снова
         </Button>
       </CardContent>
     </Card>       

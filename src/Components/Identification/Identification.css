@@ -42,18 +42,7 @@
 
   }
   
-  .ident_input {
-    background-color: #fff;
-    border-radius: 12px;
-    border: 1 solid ;
-    border-color: rgb(240, 239, 239);
-    box-sizing: border-box;
-    color: #000;
-    padding-left: 10px;
-    font-size: 18px;
-    height: 50px;
-    width: 70%;
-  }
+
   
   .ident_submit {
     background-color: #ffffff;
@@ -73,3 +62,49 @@
   .submit:active {
     background-color: #c9dcaf;
   }
+
+
+.card-container-ident{
+  display: block;
+  transition-duration: 0.3s;
+  height: 350px;
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 10px;
+  border: 1; 
+  border-color: 'grey.300';
+}
+
+.ident_code {
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1 solid ;
+  border-color: rgb(240, 239, 239);
+  box-sizing: border-box;
+  color: #000;
+  padding-left: 10px;
+  font-size: 18px;
+  height: 50px;
+  width: 70%;
+}
+
+@media screen and (min-width:320px) and (max-width:640px) {
+  .ident_form{
+    width: 100%;
+  }
+  .card-container-ident{
+    width: 98%;
+    height: 500px;
+  }
+  .ident_code {
+    width: 95%;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1 solid ;
+    border-color: rgb(240, 239, 239);
+    box-sizing: border-box;
+    color: #000;
+    padding-left: 10px;
+    font-size: 18px;
+  }
+}

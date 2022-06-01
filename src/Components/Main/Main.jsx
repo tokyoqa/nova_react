@@ -1,4 +1,4 @@
-import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, CardActions, Typography} from '@mui/material';
+import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, Typography} from '@mui/material';
 import {IMask, IMaskInput} from "react-imask";
 import MuiAlert from '@mui/material/Alert';
 import {useNavigate} from "react-router";
@@ -10,48 +10,32 @@ import './Main.css';
 const Main = ({setId}) => {
 // Values
 const [number, setNumber] = useState("");
+const [email, setEmail] = useState("");
+// const [mail, setMail] = React.useState("Dsa");
 const [openLoading, setOpenLoading] = React.useState(false); 
 const [openSuccess, setSuccess] = React.useState(false);
-const [openError, setError] = React.useState(false)
-const [openError04, setError04] = React.useState(false)
-const [openWarning, setWarning] = React.useState(false)
-const [openInfo, setInfo] = React.useState(false)
+const [openError, setError] = React.useState(false);
+const [openError04, setError04] = React.useState(false);
+const [openWarning, setWarning] = React.useState(false);
+const [openInfo, setInfo] = React.useState(false);
 const PhoneMask = "{996}000000000";
+const MailMask = /^\S*@?\S*$/;
 let   navigate = useNavigate(); 
 
-
-// Alerts functions
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-
-const closeSucces = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
-  setSuccess(false);
-};
 
 const closeError = (event, reason) => {
   if (reason === 'clickaway') {
     return;
   }
+  setSuccess(false);
   setError(false);
   setError04(false)
-};
-
-const closeWarning = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
   setWarning(false);
-};
-
-const closeInfo = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
   setInfo(false);
+
 };
 
 
@@ -59,8 +43,12 @@ const closeInfo = (event, reason) => {
   if(!number.length || number.length < 12){
     setError(true)
   }
+  else if(!email.length){
+    setError(true)
+  }
   else
   {
+    setError(false)
     setOpenLoading(!openLoading); 
     axios
     (
@@ -79,7 +67,9 @@ const closeInfo = (event, reason) => {
           mode: 'no-cors'
         },
         data: { 
-          number: number
+          number: number,
+          email: email
+
         }
       }
     )
@@ -109,27 +99,16 @@ const closeInfo = (event, reason) => {
       setError(true)
     })
   }
+
 }
 
 return (
-  <div >
-{/* className='main_form' */}
-  {/* //   <div className="main_title">Введите номер: </div>
-  //     <IMaskInput
-  //       mask={PhoneMask}
-  //       className="form-input-phone"
-  //       onAccept={(value) => {setNumber(value)}}
-  //       value={number}
-  //       placeholder="+996 000 000 000"
-  //     />
-  //   <button id="main-btn" className="main_submit" onClick={postData}>
-  //     Продолжить
-  //   </button> */}
-    <Card sx={{ height: "350px", width: "500px", margin: '0 auto',  marginTop: '20px',border: 1, borderColor: 'grey.300'}}>
+  <div className='container-main'>
+    <Card className='card-container-main' >
       <CardHeader  sx={{textAlign: "center", padding: 0, marginTop: 2}}
         title="Удаленная идентификация"
       />
-      <CardContent sx={{fontSize: "20px", textAlign: 'center'}}>
+      <CardContent  sx={{fontSize: "20px", textAlign: 'center'}}>
         <Typography sx={{fontSize: "20px", textAlign: "center", marginBottom: "15px"}} variant="h5" color="text.secondary">
             Введите номер:
         </Typography> 
@@ -139,6 +118,13 @@ return (
           onAccept={(value) => {setNumber(value)}}
           value={number}
           placeholder="+996 000 000 000"
+        />
+        <IMaskInput
+          mask={MailMask}
+          className="form-input-mail"
+          onAccept={(valueEmail) => {setEmail(valueEmail)}}
+          value={email}
+          placeholder="email@exampe.com"
         />
         <Button color="success" className="main_submit" sx={{ justifyContent: 'center', marginTop: '30px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postData}>
             Продолжить 
@@ -154,8 +140,8 @@ return (
     </Backdrop> 
     <Stack spacing={2} sx={{ width: '100%' }}>
 
-    <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeSucces}>
-      <Alert onClose={closeSucces} severity="success" sx={{ width: '100%' }}>
+    <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeError}>
+      <Alert onClose={closeError} severity="success" sx={{ width: '100%' }}>
         This is a openSuccess message!
       </Alert>
     </Snackbar>
@@ -172,14 +158,14 @@ return (
       </Alert>
     </Snackbar>
 
-    <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeWarning}>
-      <Alert onClose={closeWarning} severity="warning" sx={{ width: '100%' }}>
+    <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeError}>
+      <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
         Пожалуйста ожидайте!
       </Alert>
     </Snackbar>
 
-    <Snackbar open={openInfo} autoHideDuration={6000} onClose={closeInfo}>
-      <Alert onClose={closeInfo} severity="info" sx={{ width: '100%' }}>
+    <Snackbar open={openInfo} autoHideDuration={6000} onClose={closeError}>
+      <Alert onClose={closeError} severity="info" sx={{ width: '100%' }}>
         This is a info message!
       </Alert>
     </Snackbar>
