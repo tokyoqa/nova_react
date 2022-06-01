@@ -4,13 +4,13 @@
 }
 
 .demo-image-preview > img {
-  width: 750px;
+  width: 90%;
 }
 
 
 @media screen and (min-width:320px) and (max-width:640px) {
   .demo-image-preview {
-    width: 100%;
+    width: 95%;
   }
 }
 
@@ -27,4 +27,8 @@
   margin-top: 10px;
   display: flex;
   justify-content: center;
+}
+
+@media screen and (min-width:320px) and (max-width:640px) {
+
 }

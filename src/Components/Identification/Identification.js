@@ -131,10 +131,6 @@ export const Identification  = ({id}) => {
       setInfo(false);
     }; 
 
-    const cardStyle = {
-
-    };
-
 return(
   <div className="ident_form">
 {/*           

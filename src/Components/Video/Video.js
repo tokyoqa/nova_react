@@ -201,7 +201,8 @@ const closeSucces = (event, reason) => {
 			height={500}
 			videoConstraints={{ facingMode: "user" }}
 			mirrored={true}
-			audio={false}
+			audio={true}
+			muted={true}
 			/>
       </div>
 			<div className="btn-items">
