@@ -11,6 +11,10 @@
 @media screen and (min-width:320px) and (max-width:640px) {
   .demo-image-preview {
     width: 95%;
+    height: 80%;
+  }
+  .demo-image-preview-fullscreen > img{
+    width: 95px;
   }
 }
 

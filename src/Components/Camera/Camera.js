@@ -225,10 +225,10 @@ return (
         />
     }
   
-    <Button sx={{display: 'block', width: '150px', margin: '0 auto', marginTop: 2}} variant="contained" color="success" onClick={sendPhoto} >
+    <Button sx={{display: 'block', width: '60%', margin: '0 auto', marginTop: 2}} variant="contained" color="success" onClick={sendPhoto} >
       Отправить
     </Button>
-    <Button sx={{display: 'block', width: '150px', margin: '0 auto', marginTop: 2}} variant="contained" color="success" onClick={resetPhoto} >
+    <Button sx={{display: 'block', width: '60%', margin: '0 auto', marginTop: 2}} variant="contained" color="success" onClick={resetPhoto} >
       Reset photo
     </Button>
 

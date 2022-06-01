@@ -10,8 +10,7 @@ import './Main.css';
 const Main = ({setId}) => {
 // Values
 const [number, setNumber] = useState("");
-const [email, setEmail] = useState("");
-// const [mail, setMail] = React.useState("Dsa");
+// const [email, setEmail] = useState("");
 const [openLoading, setOpenLoading] = React.useState(false); 
 const [openSuccess, setSuccess] = React.useState(false);
 const [openError, setError] = React.useState(false);
@@ -19,7 +18,7 @@ const [openError04, setError04] = React.useState(false);
 const [openWarning, setWarning] = React.useState(false);
 const [openInfo, setInfo] = React.useState(false);
 const PhoneMask = "{996}000000000";
-const MailMask = /^\S*@?\S*$/;
+// const MailMask = /^\S*@?\S*$/;
 let   navigate = useNavigate(); 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -41,11 +40,12 @@ const closeError = (event, reason) => {
 
  async function postData(){
   if(!number.length || number.length < 12){
+
     setError(true)
   }
-  else if(!email.length){
-    setError(true)
-  }
+  // else if(!email.length){
+  //   setError(true)
+  // }
   else
   {
     setError(false)
@@ -67,8 +67,7 @@ const closeError = (event, reason) => {
           mode: 'no-cors'
         },
         data: { 
-          number: number,
-          email: email
+          number: number
 
         }
       }
@@ -119,13 +118,13 @@ return (
           value={number}
           placeholder="+996 000 000 000"
         />
-        <IMaskInput
+        {/* <IMaskInput
           mask={MailMask}
           className="form-input-mail"
           onAccept={(valueEmail) => {setEmail(valueEmail)}}
           value={email}
           placeholder="email@exampe.com"
-        />
+        /> */}
         <Button color="success" className="main_submit" sx={{ justifyContent: 'center', marginTop: '30px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postData}>
             Продолжить 
         </Button>

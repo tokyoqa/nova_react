@@ -87,7 +87,7 @@ export const Terms = ({ id, setIdentType }) => {
       
     }
     else{
-      navigate('/video')
+      navigate('/finish')
 
     }
 
