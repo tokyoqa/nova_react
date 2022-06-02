@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, CardActions, Typography, ButtonGroup} from '@mui/material';
+import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, Typography, ButtonGroup} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import "./Video.css";
 import Webcam from "react-webcam";
@@ -26,6 +26,7 @@ export  default function App({id, secretWord}) {
 	const formDate = new FormData();
 	const [openSuccess, setSuccess] = React.useState(false);
 	const [openError, setError] = React.useState(false)
+	const [openErrorNull, setErrorNull] = React.useState(false)
 	const [openError04, setError04] = React.useState(false)
 	const [openWarning, setWarning] = React.useState(false)
 	const [openInfo, setInfo] = React.useState(false)
@@ -91,73 +92,71 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
    mediaRecorderRef.current.stop(); 
     }, 5000); 
  }; 
- 
- const sendVideoFile = () => { 
-  setOpen(!open);  
-  if (recordedChunks.length) { 
-  const blob = new Blob(recordedChunks, { 
-   type: options?.mimeType || "" 
-  }); 
-  console.log(blob);   
-  formDate.append( 
-  'video', 
-   blob 
-  ) 
-  formDate.append( 
-  'id',
-	id 
-  ) 
-  const urlObject = URL.createObjectURL(blob); 
-  setVideoSrc(urlObject); 
-  axios 
-  ( 
-   { 
-     url: global.config.REST_API + 'api/video', 
-     method: 'POST', 
-     data: formDate, 
-     headers: { 
-    'Content-Type': 'multipart/form-data' 
-    // 'Accept': 'multipart/form-data', 
-    // 'Access-Control-Allow-Origin': '*', 
-    // 'Access-Control-Allow-Headers': '*', 
-    // 'Access-Control-Allow-Methods': '*', 
-    // mode: 'no-cors' 
-     }, 
-     enctype: "multipart/form-data" 
-   } 
-    )  
-    .then((res) => { 
-   setOpen(false);  
-   if (res.data.statusCode === 1){ 
-     setError(true) 
-     console.log(res) 
-   } 
-   else if(res.data.statusCode === 2){ 
-     setError(true) 
-     console.log(res) 
-   } 
-   else if(res.data.statusCode === 3){ 
-     setWarning(true) 
-    console.log(res) 
-   } 
-   else if(res.data.statusCode === 4){ 
-     setError04(true) 
-    console.log(res) 
-   } 
-   else{ 
-    alert('Success!') 
-    console.log(res.data) 
-   } 
-    }) 
-   .catch(error =>{ 
-   console.error(error) 
-   setOpen(false) 
-   setError(true) 
-   }) 
-   
-  } 
- 
- }; 
+
+  // --** SEND FILE **-- //
+  const sendVideoFile = () => { 
+    setOpen(!open);  
+    if(!recordedChunks.length) { 
+    setErrorNull(true)
+    setOpen(false)
+  }
+  else{
+    const blob = new Blob(recordedChunks, { 
+      type: options?.mimeType || "" 
+    }); 
+    console.log(blob);   
+    formDate.append( 
+    'video', 
+      blob 
+    ) 
+    formDate.append( 
+    'id',
+    id 
+    ) 
+    const urlObject = URL.createObjectURL(blob); 
+    setVideoSrc(urlObject); 
+      axios 
+    ( 
+      { 
+        url: global.config.REST_API + 'api/video', 
+        method: 'POST', 
+        data: formDate, 
+        headers: { 
+      'Content-Type': 'multipart/form-data' 
+        }, 
+        enctype: "multipart/form-data" 
+      } 
+      )  
+      .then((res) => { 
+      setOpen(false);  
+      if (res.data.statusCode === 1){ 
+        setError(true) 
+        console.log(res) 
+      } 
+      else if(res.data.statusCode === 2){ 
+        setError(true) 
+        console.log(res) 
+      } 
+      else if(res.data.statusCode === 3){ 
+        setWarning(true) 
+      console.log(res) 
+      } 
+      else if(res.data.statusCode === 4){ 
+        setError04(true) 
+      console.log(res) 
+      } 
+      else{ 
+      alert('Success!') 
+      console.log(res.data) 
+      } 
+      }) 
+      .catch(error =>{ 
+      console.error(error) 
+      setOpen(false) 
+      setError(true) 
+      }) 
+    }
+  }
 
 const closeError = (event, reason) => { 
   if (reason === 'clickaway') { 
@@ -168,6 +167,7 @@ const closeError = (event, reason) => {
   setSuccess(false);
   setWarning(false);
   setInfo(false); 
+  setErrorNull(false)
 
 
 }; 
@@ -287,6 +287,11 @@ const closeError = (event, reason) => {
       <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Ошибка! Повторите заново!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openErrorNull} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+          Ошибка! Нету данных для отправки
         </Alert>
       </Snackbar>
 
