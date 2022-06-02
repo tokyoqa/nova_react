@@ -115,6 +115,7 @@ axios({
 })
 .then((res) => {
   setSecretWord(res.data.secretWord)
+  setDataUri(null)
   console.log(res.data.secretWord)
   if (res.data.statusCode === 1){
       console.log(res.data)
