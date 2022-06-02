@@ -162,40 +162,19 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
   } 
  
  }; 
- 
-  
-  
-const closeSucces = (event, reason) => { 
- if (reason === 'clickaway') { 
-   return; 
- } 
-  }; 
-   
+
 const closeError = (event, reason) => { 
   if (reason === 'clickaway') { 
    return; 
   } 
   setError(false); 
   setError04(false) 
-  setSuccess(false); 
-}; 
-   
-  const
+  setSuccess(false);
+  setWarning(false);
+  setInfo(false); 
 
-closeWarning = (event, reason) => { 
- if (reason === 'clickaway') { 
-   return; 
- } 
- setWarning(false); 
-  }; 
-   
-  const closeInfo = (event, reason) => { 
- if (reason === 'clickaway') { 
-   return; 
- } 
- setInfo(false); 
-  }; 
- 
+
+}; 
  
  const custVideoConstraints = { 
   width: 640, 
@@ -288,7 +267,7 @@ closeWarning = (event, reason) => {
             Запись
           </Button>
 					<Button id="send-btn" color='success' sx={{display: 'block', marginTop: '10px', width: "40%", marginRight:"5px"}} variant="contained" onClick={sendVideoFile}>
-            Готово
+            Отправить
           </Button>
 					<Button id="reset-btn" color='success' sx={{display: 'block', marginTop: '10px', width: "40%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
             Переснять 
@@ -304,8 +283,8 @@ closeWarning = (event, reason) => {
       <CircularProgress color="inherit" /> 
     </Backdrop> 
 		<Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeSucces}>
-        <Alert onClose={closeSucces} severity="success" sx={{ width: '100%' }}>
+      <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="success" sx={{ width: '100%' }}>
           This is a openSuccess message!
         </Alert>
       </Snackbar>
@@ -322,14 +301,14 @@ closeWarning = (event, reason) => {
         </Alert>
       </Snackbar>
 
-      <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeWarning}>
-        <Alert onClose={closeWarning} severity="warning" sx={{ width: '100%' }}>
+      <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
           Пожалуйста ожидайте!
         </Alert>
       </Snackbar>
 
-      <Snackbar open={openInfo} autoHideDuration={6000} onClose={closeInfo}>
-        <Alert onClose={closeInfo} severity="info" sx={{ width: '100%' }}>
+      <Snackbar open={openInfo} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="info" sx={{ width: '100%' }}>
           This is a info message!
         </Alert>
       </Snackbar>
