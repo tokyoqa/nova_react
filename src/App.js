@@ -14,7 +14,6 @@ function App(){
   //Variables
   const [id, setId] = useState(null);
   const [secretWord, setSecretWord] = useState(null)
-  const [identType, setIdentType] = useState(null)
 
 return(
   <div>
@@ -60,7 +59,6 @@ return(
           element={<Video 
           id={id}
           secretWord={secretWord}
-          setIdentType={setIdentType}
           />}
           />
 
@@ -69,7 +67,6 @@ return(
           element={<NotFound/>}
         />
         <Route 
-          identType={setIdentType}
           path='finish'
           element={<Finish
         />}

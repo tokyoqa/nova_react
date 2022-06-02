@@ -15,17 +15,14 @@ import {
   Button,
   Card,
   CardContent,
-  CardMedia,
   Typography,
-  CardActionArea,
   CardActions,
-  checkboxClasses
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import { useEffect } from "react";
 import { fontSize } from '@mui/system';
 
-export const Terms = ({ id, setIdentType }) => {
+export const Terms = ({ id }) => {
   let navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const url = global.config.REST_API + "api/submission?";
@@ -34,7 +31,7 @@ export const Terms = ({ id, setIdentType }) => {
   const [openError04, setError04] = React.useState(false);
   const [openWarning, setWarning] = React.useState(false);
   const [openInfo, setInfo] = React.useState(false);
-  const [check, setChecked] = React.useState()
+  const [check, setChecked] = React.useState('')
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
@@ -57,102 +54,78 @@ export const Terms = ({ id, setIdentType }) => {
   // });
 
   const handleChangeChecked = (event) => {
-    if(event.target.checked){
-      setChecked(true)
-      
-    }
-    else if (!event.checked){
-      setChecked(false)
-    }
-    // if (!event.target.checked) {
-    //   setChecked(true);
-    //   console.log(check)
-    //   console.log('not')
 
-    // } 
-    // else if(event.target.checked) {
-    //   console.log('checked')
-    //   setChecked(false);
-    //   console.log(check)
-    // }
   };
 
 
-  const agreeSubmit = () => {
-    // setOpen(!true)
-    if(!check || check === undefined){
-      setOpen(false)
-      setError(true)
-      
-      
+  const agreeSubmit = (event) => {
+    if(!event.target.checked){
+      setChecked("0")
+
+      setOpen(true)
+      if(!check || check === undefined){
+        setOpen(false)
+        setError(true)
+      } else { 
+        axios
+        .get(url + "id=" + id + "&check=" + check)
+        .then((res) => {
+          console.log(res.data);
+          setOpen(false);
+          if (res.data.statusCode === 1) {
+          } else if (res.data.statusCode === 2) {
+          } else if (res.data.statusCode === 3) {
+          } else if (res.data.statusCode === 4) {
+          } else {
+            navigate("/video");
+            setOpen(false);
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          setError(true);
+          setOpen(false);
+        });
+        navigate('/video')
+      }
     }
     else{
-      navigate('/video')
-
+      setError(true)
     }
 
-    // axios
-    //   .get(url + "id=28check=Y")
-    //   // .get(url + "id=" + id + "&check=Y")
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setOpen(false);
-    //     if (res.data.statusCode === 1) {
-    //     } else if (res.data.statusCode === 2) {
-    //     } else if (res.data.statusCode === 3) {
-    //     } else if (res.data.statusCode === 4) {
-    //     } else {
-    //       navigate("/video");
-    //       setIdentType('Full')
-    //       setOpen(false);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //     setError(true);
-    //     setOpen(false);
-    //   });
-    // navigate("/video");
+   
   };
 
   const disagreeSubmit = () => {
+      setError(false)
+      setOpen(false)
+      setChecked("1")
+      axios
+      .get(url + "id=" + id + "&check=1")
+      .then((res) => {
+        setOpen(false);
+        if (res.data.statusCode === 1) {
+          setError(true);
+        } else if (res.data.statusCode === 2) {
+          setError(true);
+        } else if (res.data.statusCode === 3) {
+          setWarning(true);
+        } else if (res.data.statusCode === 5) {
+          setError(true);
+        } else {
+          setOpen(false)
+          navigate("/finish");
+        }
+      })
+
+      .catch((err) => {
+        console.error(err);
+        setError(true);
+        setOpen(false);
+      });
       navigate('/finish')
+    
 
-    // setOpen(!true)
-    // if(check === "N"){
-    //   setError(true)
-      
-    // }
-    // else{
-    //   setError(false)
-    //   setOpen(false)
-    //   navigate('/finish')
-    // }
-    // //  axios
-    //   .get(url + "id=" + id + "&check=N")
-    //   .then((res) => {
-    //     setOpen(false);
-    //     if (res.data.statusCode === 1) {
-    //       setError(true);
-    //     } else if (res.data.statusCode === 2) {
-    //       setError(true);
-    //     } else if (res.data.statusCode === 3) {
-    //       setWarning(true);
-    //     } else if (res.data.statusCode === 5) {
-    //       setError(true);
-    //     } else {
-    //       setOpen(false)
-    //       setIdentType('Lite')
-    //       console.log(setIdentType)
-    //       navigate("/finish");
-    //     }
-    //   })
-
-    //   .catch((err) => {
-    //     console.error(err);
-    //     setError(true);
-    //     setOpen(false);
-    //   });
   };
 
   const closeSucces = (event, reason) => {
