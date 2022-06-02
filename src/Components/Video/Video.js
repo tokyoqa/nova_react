@@ -94,6 +94,7 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
 //  }; 
  
  const handleStartCaptureClick = () => { 
+  onClickReset(); 
   if (window.MediaRecorder) { 
    setStatusVideo('Запись') 
    mediaRecorderRef.current = new window.MediaRecorder( 
@@ -130,6 +131,7 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
  }; 
  
  const sendVideoFile = () => { 
+  const  tempID = 1
   setOpen(!open);  
   if (recordedChunks.length) { 
   const blob = new Blob(recordedChunks, { 
