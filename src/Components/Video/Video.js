@@ -44,237 +44,269 @@ export  default function App({id, secretWord}) {
 	// });
 
 
-	if (MediaRecorder.isTypeSupported("video/webm")) {
-		options = { mimeType: "video/webm;codecs=vp8,opus",   
-		            audioBitsPerSecond: 128000,
-		            videoBitsPerSecond: 2500000,
-					// recordingLength: 5000,
-
-					video: {
-						width: { min: 640, ideal: 1920 },
-						height: { min: 400, ideal: 1080 },
-						aspectRatio: { ideal: 1.7777777778 },
-						frameRate: { max: 30 }
-					  },
-					  
-					  audio: {
-						sampleSize: 16,
-						channelCount: 2
-					  }
-					
-					};
-	}
-	else if (MediaRecorder.isTypeSupported("video/mp4")) {
-		options = { mimeType: "video/webm",
-		            audioBitsPerSecond : 128000,
-		            videoBitsPerSecond : 2500000 };
-	}
-	
-	const handleDataAvailable = ({ data }) => {
-		if (data.size > 0) {
-			setRecordedChunks((prev) => prev.concat(data));
-		}
-	};
-
-	const handleStartCaptureClick = () => {
-		if (window.MediaRecorder) {
-			setStatusVideo('Запись')
-			mediaRecorderRef.current = new window.MediaRecorder(
-			webcamRef.current.stream,
-			options
-		);
-		mediaRecorderRef.current.addEventListener(
-			"dataavailable",
-			handleDataAvailable
-		);	
-		mediaRecorderRef.current.start(5);
-		}
-		onClickReset();
-		
-
-		
-		setTimeout(event => {
-			console.log("stopping");
-			mediaRecorderRef.current.stop();
-		  }, 5000);
-	};
-
-	const sendVideoFile = () => {
-		// const tempId = 3
-		setOpen(!open); 
-		if (recordedChunks.length) {
-		const blob = new Blob(recordedChunks, {
-			type: options?.mimeType || ""
-		});
-		console.log(blob);
-		const videoFile = new File([blob], {type:'video/mp4'}); 
-		console.log(videoFile); 
-		formDate.append(
-		'video',
-		// videoFile
-		blob
-		)
-		formDate.append(
-		'id',
-		// tempId
-		id
-		)
-		const urlObject = URL.createObjectURL(blob);
-		setVideoSrc(urlObject);
-		axios
-		(
-			{
-			  url: global.config.REST_API + 'api/video',
-			  method: 'POST',
-			  data: formDate,
-			  headers: {
-				'Content-Type': 'multipart/form-data'
-				// 'Accept': 'multipart/form-data',
-				// 'Access-Control-Allow-Origin': '*',
-				// 'Access-Control-Allow-Headers': '*',
-				// 'Access-Control-Allow-Methods': '*',
-				// mode: 'no-cors'
-			  },
-			  enctype: "multipart/form-data"
-			}
-		  ) 
-		  .then((res) => {
-			setOpen(false); 
-			if (res.data.statusCode === 1){
-			  setError(true)
-			  console.log(res)
-			}
-			else if(res.data.statusCode === 2){
-			  setError(true)
-			  console.log(res)
-			}
-			else if(res.data.statusCode === 3){
-			  setWarning(true)
-				console.log(res)
-			}
-			else if(res.data.statusCode === 4){
-			  setError04(true)
-				console.log(res)
-			}
-			else{
-				alert('Success!')
-				console.log(res.data)
-			}
-		  })
-			.catch(error =>{
-			console.error(error)
-			setOpen(false)
-			setError(true)
-			})
-		
-		}
-
-	};
-
-	
-	
-const closeSucces = (event, reason) => {
-	if (reason === 'clickaway') {
-	  return;
-	}
-	setSuccess(false);
-  };
+if (MediaRecorder.isTypeSupported("video/webm")) { 
+  options = { mimeType: "video/webm;codecs=avc1",    
+              audioBitsPerSecond: 128000, 
+              videoBitsPerSecond: 2500000, 
+     // recordingLength: 5000, 
+      width: { min: 640, ideal: 1920 }, 
+      height: { min: 400, ideal: 1080 }, 
+      aspectRatio: { ideal: 1.7777777778 }, 
+      frameRate: { max: 30 }, 
+      sampleSize: 16, 
+      channelCount: 2 
+      
+     }; 
+ } 
+ else if (MediaRecorder.isTypeSupported("video/mp4")) { 
+  options = { mimeType: "video/webm", 
+              audioBitsPerSecond : 128000, 
+              videoBitsPerSecond : 2500000 }; 
+ } 
+ 
+ 
+//  if (MediaRecorder.isTypeSupported("audio/webm")) { 
+//   audioOptions = { mimeType: "audio/webm;codecs=opus",    
+//                    audioBitsPerSecond: 128000, 
+//        aspectRatio: { ideal: 1.7777777778 }, 
+//       // frameRate: { max: 30 }, 
+//        sampleSize: 16, 
+//        channelCount: 2 
+      
+//      }; 
+//  } 
+//  else if (MediaRecorder.isTypeSupported("audio/mpeg")) { 
+//   audioOptions = { mimeType: "audio/webm;codecs=opus", 
+//               audioBitsPerSecond : 128000 }; 
+//  } 
   
-  const closeError = (event, reason) => {
-	if (reason === 'clickaway') {
-	  return;
-	}
-	setError(false);
-	setError04(false)
-  };
-  
-  const closeWarning = (event, reason) => {
-	if (reason === 'clickaway') {
-	  return;
-	}
-	setWarning(false);
-  };
-  
-  const closeInfo = (event, reason) => {
-	if (reason === 'clickaway') {
-	  return;
-	}
-	setInfo(false);
-  };
-
-
-	const custVideoConstraints = {
-		width: 640,
-		height: 480,
-		facingMode: "user",
-	};
-		
-	const custAudioConstraints = {
-		suppressLocalAudioPlayback: true,
-		noiseSuppression: true,
-		echoCancellation: true,
-	};
-
-
-	// Timer function 
-
-	const getTimeRemaining = (e) => {
-        const total = Date.parse(e) - Date.parse(new Date());
-        const seconds = Math.floor((total / 1000) % 60);
-        const minutes = Math.floor((total / 1000 / 60) % 60);
-        const hours = Math.floor((total / 1000 / 60 / 60) % 24);
-        return {
-            total, hours, minutes, seconds
-        };
-    }
+ const handleDataAvailable = ({ data }) => { 
+  if (data.size > 0) { 
+   setRecordedChunks((prev) => prev.concat(data)); 
+  } 
+ 
+ }; 
+//  const handleAudioDataAvailable = ({ data }) => { 
+//   if (data.size > 0) { 
+//    setAudioChunks((prev) => prev.concat(data)); 
+//   } 
+ 
+//  }; 
+ 
+ const handleStartCaptureClick = () => { 
+  if (window.MediaRecorder) { 
+   setStatusVideo('Запись') 
+   mediaRecorderRef.current = new window.MediaRecorder( 
+   webcamRef.current.stream, 
+   options 
+      ); 
+ 
+  //     audioRecorderRef.current = new window.MediaRecorder( 
+  //  webcamRef.current.stream,  
+  //  audioOptions 
+  //  ); 
+ 
+  mediaRecorderRef.current.addEventListener( 
+   "dataavailable", 
+   handleDataAvailable 
+  ); 
+  // audioRecorderRef.current.addEventListener( 
+  //           "dataavailable",  
+  //  handleAudioDataAvailable  
+  // );  
+ 
+  mediaRecorderRef.current.start(); 
+  // audioRecorderRef.current.start(); 
+ 
+  } 
+ 
+  onClickReset(); 
+   
+  setTimeout(event => { 
+   mediaRecorderRef.current.stop(); 
+  //  audioRecorderRef.current.stop(); 
+   console.log("stopping"); 
+    }, 5000); 
+ }; 
+ 
+ const sendVideoFile = () => { 
+  const tempId = 3 
+  setOpen(!open);  
+  if (recordedChunks.length) { 
+  const blob = new Blob(recordedChunks, { 
+   type: options?.mimeType || "" 
+  }); 
+  // const audioBlob = new Blob(audioChunks, { 
+  //  type: audioOptions.mimeType  
+  // }); 
+  console.log(blob); 
+  // console.log(audioBlob); 
+  // const videoFile = new File([audioBlob], {type:'audio/webm'});    
+  formDate.append( 
+  'video', 
+  // videoFile 
+  blob 
+  // audioBlob 
+  ) 
+  formDate.append( 
+  'id', 
+  // tempId
+	id 
+  ) 
+  const urlObject = URL.createObjectURL(blob); 
+  setVideoSrc(urlObject); 
+  axios 
+  ( 
+   { 
+     url: global.config.REST_API + 'api/video', 
+     method: 'POST', 
+     data: formDate, 
+     headers: { 
+    'Content-Type': 'multipart/form-data' 
+    // 'Accept': 'multipart/form-data', 
+    // 'Access-Control-Allow-Origin': '*', 
+    // 'Access-Control-Allow-Headers': '*', 
+    // 'Access-Control-Allow-Methods': '*', 
+    // mode: 'no-cors' 
+     }, 
+     enctype: "multipart/form-data" 
+   } 
+    )  
+    .then((res) => { 
+   setOpen(false);  
+   if (res.data.statusCode === 1){ 
+     setError(true) 
+     console.log(res) 
+   } 
+   else if(res.data.statusCode === 2){ 
+     setError(true) 
+     console.log(res) 
+   } 
+   else if(res.data.statusCode === 3){ 
+     setWarning(true) 
+    console.log(res) 
+   } 
+   else if(res.data.statusCode === 4){ 
+     setError04(true) 
+    console.log(res) 
+   } 
+   else{ 
+    alert('Success!') 
+    console.log(res.data) 
+   } 
+    }) 
+   .catch(error =>{ 
+   console.error(error) 
+   setOpen(false) 
+   setError(true) 
+   }) 
+   
+  } 
+ 
+ }; 
+ 
   
   
-    const startTimer = (e) => {
-        let { total, hours, minutes, seconds } 
-                    = getTimeRemaining(e);
-        if (total >= 0) {
-            setTimer(
-				(seconds > 9 ? seconds :  seconds)
-            )
-        }
-	    if( seconds == 0){
-		const handleStopCaptureClick = () => {
-			if (mediaRecorderRef.current && mediaRecorderRef.current.stop) {
-			mediaRecorderRef.current.stop();
-			}
-		};
-		// handleStopCaptureClick();
-		setStatusVideo('Записано')
-		// console.log("video stopped");
-		}
-    }
-  
-    const clearTimer = (e) => {  
-        setTimer('5');
-        if (Ref.current) clearInterval(Ref.current);
-        const id = setInterval(() => {
-            startTimer(e);
-        }, 1000)
-        Ref.current = id;
-    }
-  
-    const getDeadTime = () => {
-        let deadline = new Date();
-        deadline.setSeconds(deadline.getSeconds() + 5);
-        return deadline;
-    }
-  
-    const onClickReset = () => {
-        clearTimer(getDeadTime());
-    }
-		const remakeVideo = () => {
-			onClickReset();
-	
-		}
+const closeSucces = (event, reason) => { 
+ if (reason === 'clickaway') { 
+   return; 
+ } 
+ setSuccess(false); 
+  }; 
+   
+  const closeError = (event, reason) => { 
+ if (reason === 'clickaway') { 
+   return; 
+ } 
+ setError(false); 
+ setError04(false) 
+  }; 
+   
+  const
 
-		
+closeWarning = (event, reason) => { 
+ if (reason === 'clickaway') { 
+   return; 
+ } 
+ setWarning(false); 
+  }; 
+   
+  const closeInfo = (event, reason) => { 
+ if (reason === 'clickaway') { 
+   return; 
+ } 
+ setInfo(false); 
+  }; 
+ 
+ 
+ const custVideoConstraints = { 
+  width: 640, 
+  height: 480, 
+  facingMode: "user", 
+ }; 
+   
+ const custAudioConstraints = { 
+  suppressLocalAudioPlayback: true, 
+  noiseSuppression: true, 
+  echoCancellation: true, 
+ }; 
+ 
+ 
+ // Timer function  
+ 
+ const getTimeRemaining = (e) => { 
+        const total = Date.parse(e) - Date.parse(new Date()); 
+        const seconds = Math.floor((total / 1000) % 60); 
+        const minutes = Math.floor((total / 1000 / 60) % 60); 
+        const hours = Math.floor((total / 1000 / 60 / 60) % 24); 
+        return { 
+            total, hours, minutes, seconds 
+        }; 
+    } 
+   
+   
+    const startTimer = (e) => { 
+        let { total, hours, minutes, seconds }  
+                    = getTimeRemaining(e); 
+        if (total >= 0) { 
+            setTimer( 
+    (seconds > 9 ? seconds :  seconds) 
+            ) 
+        } 
+     if( seconds == 0){ 
+  const handleStopCaptureClick = () => { 
+   if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
+   mediaRecorderRef.current.stop(); 
+   } 
+  }; 
+  // handleStopCaptureClick(); 
+  setStatusVideo('Записано') 
+  // console.log("video stopped"); 
+  } 
+    } 
+   
+    const clearTimer = (e) => {   
+        setTimer('5'); 
+        if (Ref.current) clearInterval(Ref.current); 
+        const id = setInterval(() => { 
+            startTimer(e); 
+        }, 1000) 
+        Ref.current = id; 
+    } 
+   
+    const getDeadTime = () => { 
+        let deadline = new Date(); 
+        deadline.setSeconds(deadline.getSeconds() + 5); 
+        return deadline; 
+    } 
+   
+    const onClickReset = () => { 
+        clearTimer(getDeadTime()); 
+    } 
+		const remakeVideo = () => { 
+		onClickReset(); 
 			
-
+  } 
   return (
     <>
       <div className="camera-form">	

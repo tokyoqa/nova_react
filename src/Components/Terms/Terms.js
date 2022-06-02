@@ -54,33 +54,36 @@ export const Terms = ({ id }) => {
   // });
 
   const handleChangeChecked = (event) => {
-
+    if(!event.target.checked){
+      setChecked()
+    }
+    else{
+      setChecked('0')
+    }
   };
 
 
   const agreeSubmit = (event) => {
-    if(!event.target.checked){
-      setChecked("0")
-
-      setOpen(true)
+  
       if(!check || check === undefined){
         setOpen(false)
         setError(true)
       } else { 
-        axios
-        .get(url + "id=" + id + "&check=" + check)
-        .then((res) => {
-          console.log(res.data);
-          setOpen(false);
-          if (res.data.statusCode === 1) {
-          } else if (res.data.statusCode === 2) {
-          } else if (res.data.statusCode === 3) {
-          } else if (res.data.statusCode === 4) {
-          } else {
-            navigate("/video");
+          axios
+          .get(url + "id=" + id + "&check=" + check)
+          .then((res) => {
+            console.log(res.data);
             setOpen(false);
+            if (res.data.statusCode === 1) {
+            } else if (res.data.statusCode === 2) {
+            } else if (res.data.statusCode === 3) {
+            } else if (res.data.statusCode === 4) {
+            } else {
+              navigate("/video");
+              setOpen(false);
+              
           }
-        })
+        } )
         .catch((err) => {
           console.error(err);
           setError(true);
@@ -88,13 +91,7 @@ export const Terms = ({ id }) => {
         });
         navigate('/video')
       }
-    }
-    else{
-      setError(true)
-    }
-
-   
-  };
+    };
 
   const disagreeSubmit = () => {
       setError(false)
