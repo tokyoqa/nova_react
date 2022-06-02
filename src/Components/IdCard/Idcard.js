@@ -371,7 +371,7 @@ return (
 
       <Snackbar open={openErrorFront} autoHideDuration={6000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Плохое качество фото. Загрузите фото обраной стороны снова.  
+          Плохое качество фото. Загрузите фото обратной стороны снова.  
         </Alert>
       </Snackbar>
 

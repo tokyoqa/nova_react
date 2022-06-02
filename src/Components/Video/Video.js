@@ -130,7 +130,6 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
  }; 
  
  const sendVideoFile = () => { 
-  const tempId = 3 
   setOpen(!open);  
   if (recordedChunks.length) { 
   const blob = new Blob(recordedChunks, { 
@@ -150,7 +149,6 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
   ) 
   formDate.append( 
   'id', 
-  // tempId
 	id 
   ) 
   const urlObject = URL.createObjectURL(blob); 
@@ -303,8 +301,9 @@ closeWarning = (event, reason) => {
     const onClickReset = () => { 
         clearTimer(getDeadTime()); 
     } 
-		const remakeVideo = () => { 
-		onClickReset(); 
+		const remakeVideo = () => {
+      
+  		onClickReset(); 
 			
   } 
   return (
@@ -324,13 +323,12 @@ closeWarning = (event, reason) => {
 			<div className="video-status">Status: {statusVideo}</div>
 			<div className="btn-items">
 					<Button  color='success' sx={{marginTop: '10px', width: "25%", marginRight:"5px"}} variant="contained" onClick={handleStartCaptureClick}>
-            Запись 
+            Запись
           </Button>
 					<Button color='success' sx={{marginTop: '10px', width: "25%", marginRight:"5px"}} variant="contained" onClick={sendVideoFile}>
             Готово
           </Button>
 					<Button color='success' sx={{marginTop: '10px', width: "25%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
-
             Переснять 
           </Button>
 				<div> `Произнесите слово "{secretWord}" четко и громко для прохождения идентификации ` </div>

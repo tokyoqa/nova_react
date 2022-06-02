@@ -225,6 +225,7 @@ return (
         />
     }
     <div className="btn-group-camera">
+      
     <Button sx={{width: '120px', marginRight: "5px", marginTop: 1}} variant="contained" color="success" onClick={resetPhoto} >
       Переснять
     </Button>
