@@ -184,21 +184,14 @@ export const Terms = ({ id, setIdentType }) => {
     setInfo(false);
   };
   // CSS Styles
-  const cardStyle = {
-    display: "block",
-    transitionDuration: "0.3s",
-    height: "350px",
-    width: "500px",
-    margin: "0 auto",
-    marginTop: "10px"
-  };
+
 
 
 
 
   return (
     <div>
-      <Card style={cardStyle}>
+      <Card className="cardStyle">
           <CardContent>
             <Typography sx={{textAlign: 'center'}} gutterBottom variant="h5" component="p">
               Удаленная Идентификация
