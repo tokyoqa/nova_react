@@ -74,60 +74,20 @@ const  CameraJS = ({id, setSecretWord}) => {
 function handleTakePhoto (dataUri) {
   setDataUri(dataUri)  
 }
+    
+function handleTakePhotoAnimationDone (dataUri) { 
+  
+}
 
 function handleCameraError (error) {
     console.log('Error - ', error);
 }
 
-const closeSucces = (event, reason) => {
-  if (reason === 'clickaway') {
-  return;
-  }
-  setSuccess(false);
-};
-
-const closeError = (event, reason) => {
-  if (reason === 'clickaway') {
-  return;
-  }
-  setError(false);
-  setError04(false)
-};
-
-const closeWarning = (event, reason) => {
-  if (reason === 'clickaway') {
-  return;
-  }
-  setWarning(false);
-};
-
-const closeInfo = (event, reason) => {
-  if (reason === 'clickaway') {
-  return;
-  }
-  setInfo(false);
-};
-
-const isFullscreen = false
-const ImagePreview = ({ dataUri, isFullscreen }) => {
-    let classNameFullscreen = isFullscreen ? 'demo-image-preview-fullscreen' : '';
-  
-    return (
-      <div className={'demo-image-preview ' + classNameFullscreen}>
-        <img src={dataUri} alt=""/> 
-      </div>
-    );
-  };
-
-const resetPhoto = () =>{
-  setDataUri(null)
+function handleCameraStart (stream) {
 }
-      
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
 
-
+function handleCameraStop () {
+}
 
 const sendPhoto = () => {
   if(!dataUri){
@@ -193,7 +153,54 @@ axios({
   })
 }
 }
+const closeSucces = (event, reason) => {
+  if (reason === 'clickaway') {
+  return;
+  }
+  setSuccess(false);
+};
 
+const closeError = (event, reason) => {
+  if (reason === 'clickaway') {
+  return;
+  }
+  setError(false);
+  setError04(false)
+};
+
+const closeWarning = (event, reason) => {
+  if (reason === 'clickaway') {
+  return;
+  }
+  setWarning(false);
+};
+
+const closeInfo = (event, reason) => {
+  if (reason === 'clickaway') {
+  return;
+  }
+  setInfo(false);
+};
+
+const isFullscreen = false
+const ImagePreview = ({ dataUri, isFullscreen }) => {
+    let classNameFullscreen = isFullscreen ? 'demo-image-preview-fullscreen' : '';
+  
+    return (
+      <div className={'demo-image-preview ' + classNameFullscreen}>
+        <img src={dataUri} alt=""/> 
+      </div>
+    );
+  };
+
+const resetPhoto = () =>{
+  setDataUri(null)
+}
+      
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+  
 return (
   <div className="camera-container">
     {

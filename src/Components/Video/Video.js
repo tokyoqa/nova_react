@@ -89,13 +89,10 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
   onClickReset(); 
   setTimeout(event => { 
    mediaRecorderRef.current.stop(); 
-  //  audioRecorderRef.current.stop(); 
-   console.log("stopping"); 
     }, 5000); 
  }; 
  
  const sendVideoFile = () => { 
-  const  tempID = 1
   setOpen(!open);  
   if (recordedChunks.length) { 
   const blob = new Blob(recordedChunks, { 
@@ -108,8 +105,7 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
   ) 
   formDate.append( 
   'id',
-  tempID
-	// id 
+	id 
   ) 
   const urlObject = URL.createObjectURL(blob); 
   setVideoSrc(urlObject); 
@@ -240,7 +236,6 @@ const closeError = (event, reason) => {
     } 
 		const remakeVideo = () => {
       setRecordedChunks([])
-      console.log('cleaned')
       startVideo()
     } 
   
