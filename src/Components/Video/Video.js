@@ -31,7 +31,6 @@ export  default function App({id, secretWord}) {
 	const [openWarning, setWarning] = React.useState(false)
 	const [openInfo, setInfo] = React.useState(false)
 	let 	audioOptions = {};
-	const [show, toggleShow] = React.useState(true);
 
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -91,7 +90,6 @@ export  default function App({id, secretWord}) {
 		mediaRecorderRef.current.start(5);
 		}
 		onClickReset();
-		toggleShow(!show)
 		
 
 		
@@ -296,12 +294,11 @@ const closeSucces = (event, reason) => {
 					<Button  color='success' sx={{marginTop: '10px', width: "25%", marginRight:"5px"}} variant="contained" onClick={handleStartCaptureClick}>
             Запись 
           </Button>
-					toggle: {show ? 'show' : 'hide'}
 					<Button color='success' sx={{marginTop: '10px', width: "25%", marginRight:"5px"}} variant="contained" onClick={sendVideoFile}>
             Готово
           </Button>
-					{show && <div>Hi there</div>}
 					<Button color='success' sx={{marginTop: '10px', width: "25%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
+
             Переснять 
           </Button>
 				<div> `Произнесите слово "{secretWord}" четко и громко для прохождения идентификации ` </div>

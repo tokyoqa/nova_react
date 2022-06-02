@@ -229,7 +229,7 @@ return (
       Переснять
     </Button>
     <Button sx={{width: '120px', marginTop: 1}} variant="contained" color="success" onClick={sendPhoto} >
-      Отправить
+      Готово
     </Button>
     </div>
     

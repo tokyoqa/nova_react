@@ -234,7 +234,7 @@ import '../../Config';
       const cardStyle = {
         display: "block",
         transitionDuration: "0.3s",
-        height: "350px",
+        height: "500px",
         width: "500px",
         margin: "0 auto",
         marginTop: "10px"
