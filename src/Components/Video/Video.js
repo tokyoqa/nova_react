@@ -134,8 +134,8 @@ export  default function App({id, secretWord}) {
     ) 
     formDate.append( 
     'id',
-    // id
-    tempID
+    id
+    // tempID
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
@@ -156,7 +156,7 @@ export  default function App({id, secretWord}) {
       .then((res) => { 
       setOpen(false);  
       if (res.data.statusCode === 1){ 
-        setError(true) 
+        setError(true)
         console.log(res) 
       } 
       else if(res.data.statusCode === 2){ 
@@ -293,7 +293,7 @@ const closeError = (event, reason) => {
 					<Button id="reset-btn" color='success' sx={{display: 'block', marginTop: '10px', width: "40%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
             Переснять 
           </Button>
-				<div> `Произнесите слово "{secretWord}" четко и громко для прохождения идентификации ` </div>
+				<div> Произнесите слово [ <strong>{secretWord}</strong> ] четко и громко для прохождения идентификации </div>
 				<h2 className="timer-Console">{timer}</h2>
 			</div>
 			
@@ -306,7 +306,7 @@ const closeError = (event, reason) => {
 		<Stack spacing={2} sx={{ width: '100%' }}>
       <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeError}>
         <Alert onClose={closeError} severity="success" sx={{ width: '100%' }}>
-          This is a openSuccess message!
+          Ошибка! Вы не прошли проверку. Повторите 
         </Alert>
       </Snackbar>
 

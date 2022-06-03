@@ -1,5 +1,5 @@
 import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, Typography} from '@mui/material';
-import {IMask, IMaskInput} from "react-imask";
+import {IMaskInput} from "react-imask";
 import MuiAlert from '@mui/material/Alert';
 import {useNavigate} from "react-router";
 import React, {useState} from "react";
@@ -12,14 +12,13 @@ const Main = ({setId}) => {
 const [number, setNumber] = useState("");
 // const [email, setEmail] = useState("");
 const [openLoading, setOpenLoading] = React.useState(false); 
-const [openSuccess, setSuccess] = React.useState(false);
+const [openNumberError, setNumberError] = React.useState(false);
 const [openError, setError] = React.useState(false);
 const [openError04, setError04] = React.useState(false);
 const [openWarning, setWarning] = React.useState(false);
-const [openInfo, setInfo] = React.useState(false);
+let   navigate = useNavigate(); 
 const PhoneMask = "{996}000000000";
 // const MailMask = /^\S*@?\S*$/;
-let   navigate = useNavigate(); 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -29,23 +28,17 @@ const closeError = (event, reason) => {
   if (reason === 'clickaway') {
     return;
   }
-  setSuccess(false);
+  setNumberError(false);
   setError(false);
   setError04(false)
   setWarning(false);
-  setInfo(false);
-
 };
-
 
  async function postData(){
   if(!number.length || number.length < 12){
 
-    setError(true)
+    setNumberError(true)
   }
-  // else if(!email.length){
-  //   setError(true)
-  // }
   else
   {
     setError(false)
@@ -68,7 +61,6 @@ const closeError = (event, reason) => {
         },
         data: { 
           number: number
-
         }
       }
     )
@@ -98,7 +90,6 @@ const closeError = (event, reason) => {
       setError(true)
     })
   }
-
 }
 
 return (
@@ -118,58 +109,38 @@ return (
           value={number}
           placeholder="+996 000 000 000"
         />
-        {/* <IMaskInput
-          mask={MailMask}
-          className="form-input-mail"
-          onAccept={(valueEmail) => {setEmail(valueEmail)}}
-          value={email}
-          placeholder="email@exampe.com"
-        /> */}
         <Button color="success" className="main_submit" sx={{ justifyContent: 'center', marginTop: '30px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postData}>
             Продолжить 
         </Button>
       </CardContent>
     </Card>       
-
-    <Backdrop 
+    <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
-        open={openLoading} 
-    > 
-    <CircularProgress color="inherit" /> 
-    </Backdrop> 
-    <Stack spacing={2} sx={{ width: '100%' }}>
-
-    <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeError}>
-      <Alert onClose={closeError} severity="success" sx={{ width: '100%' }}>
-        This is a openSuccess message!
+        open={openLoading}> 
+      <CircularProgress color="inherit" /> 
+      </Backdrop>
+  <Stack spacing={2} sx={{ width: '100%' }}>
+    <Snackbar open={openNumberError} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
+        Введите правильный номер!
       </Alert>
     </Snackbar>
-
-    <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
+    <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-        Ошибка! Повторите заново!
+        Ошибка! Повторите снова!
       </Alert>
     </Snackbar>
-
-    <Snackbar open={openError04} autoHideDuration={6000} onClose={closeError}>
+    <Snackbar open={openError04} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
         Ошибка! Такой пользователей существует!
       </Alert>
     </Snackbar>
-
-    <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeError}>
+    <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
         Пожалуйста ожидайте!
       </Alert>
     </Snackbar>
-
-    <Snackbar open={openInfo} autoHideDuration={6000} onClose={closeError}>
-      <Alert onClose={closeError} severity="info" sx={{ width: '100%' }}>
-        This is a info message!
-      </Alert>
-    </Snackbar>
   </Stack>
-
   </div>
 );
 }
