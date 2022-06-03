@@ -44,25 +44,27 @@ export  default function App({id, secretWord}) {
 	// });
 
 
-if (MediaRecorder.isTypeSupported("video/webm")) {
-  options = { mimeType: "video/webm",
-              audioBitsPerSecond: 128000, 
-              videoBitsPerSecond: 2500000, 
-              // recordingLength: 5000, 
-              width: { min: 640, ideal: 1920 }, 
-              height: { min: 400, ideal: 1080 }, 
-              aspectRatio: { ideal: 1.7777777778 }, 
-              frameRate: { max: 30 }, 
-              sampleSize: 16,   
-              channelCount: 2 
+
+
+// if (MediaRecorder.isTypeSupported("video/webm")) {
+//   options = { mimeType: "video/webm",
+//               audioBitsPerSecond: 128000, 
+//               videoBitsPerSecond: 2500000, 
+//               // recordingLength: 5000, 
+//               width: { min: 640, ideal: 1920 }, 
+//               height: { min: 400, ideal: 1080 }, 
+//               aspectRatio: { ideal: 1.7777777778 }, 
+//               frameRate: { max: 30 }, 
+//               sampleSize: 16,   
+//               channelCount: 2 
       
-     }; 
- } 
- else if (MediaRecorder.isTypeSupported("video/mp4")) { 
-  options = { type: "video/webm;codecs=h.264", 
-              audioBitsPerSecond : 128000, 
-              videoBitsPerSecond : 2500000 }; 
- } 
+//      }; 
+//  } 
+//  else if (MediaRecorder.isTypeSupported("video/mp4")) { 
+//   options = { type: "video/webm;codecs=h.264", 
+//               audioBitsPerSecond : 128000, 
+//               videoBitsPerSecond : 2500000 }; 
+//  } 
   
  const handleDataAvailable = ({ data }) => { 
    
@@ -75,26 +77,46 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
  const startVideo = () => {
   hideBtn()
   onClickReset(); 
-  if (window.MediaRecorder) { 
-   setStatusVideo('Запись') 
-   mediaRecorderRef.current = new window.MediaRecorder( 
-   webcamRef.current.stream, 
-   options 
-      ); 
+  try {
+    mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, { mimeType: 'audio/webm' });
+}
+  catch (err1) {
+  try {
+    // Fallback for iOS
+    mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, { mimeType: 'video/mp4' });
+  }
+  catch (err2) {
+    // If fallback doesn't work either. Log / process errors.
+    console.error({err1});
+    console.error({err2})
+  }
+}
+
   mediaRecorderRef.current.addEventListener( 
    "dataavailable", 
    handleDataAvailable 
   ); 
   mediaRecorderRef.current.start(); 
-  } 
+   
   onClickReset(); 
   setTimeout(event => { 
    mediaRecorderRef.current.stop(); 
     }, 5000); 
- }; 
+      // if (window.MediaRecorder) { 
+  //  setStatusVideo('Запись') 
+  //  mediaRecorderRef.current = new window.MediaRecorder( 
+  //  webcamRef.current.stream, 
+  //  options 
+  //     ); 
+ };
 
   // --** SEND FILE **-- //
-  const sendVideoFile = () => { 
+  const sendVideoFile = () => {
+    const tempID = 1
+    
+
+
+
     setOpen(!open);  
 
     if(!recordedChunks.length){
@@ -112,7 +134,8 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
     ) 
     formDate.append( 
     'id',
-    id
+    // id
+    tempID
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
