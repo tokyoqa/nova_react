@@ -45,7 +45,7 @@ export  default function App({id, secretWord}) {
 
 
 if (MediaRecorder.isTypeSupported("video/webm")) { 
-  options = { mimeType: "video/webm",    
+  options = { mimeType: "video/webm;codecs=h.264",    
               audioBitsPerSecond: 128000, 
               videoBitsPerSecond: 2500000, 
      // recordingLength: 5000, 
