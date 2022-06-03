@@ -59,7 +59,7 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
      }; 
  } 
  else if (MediaRecorder.isTypeSupported("video/mp4")) { 
-  options = { mimeType: "video/webm", 
+  options = { mimeType: "video/webm;codecs=h.264", 
               audioBitsPerSecond : 128000, 
               videoBitsPerSecond : 2500000 }; 
  } 
@@ -101,10 +101,14 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
     setErrorNull(true)
     setOpen(false)
   }
-  else{
-    const blob = new Blob(recordedChunks, { 
+    else if(!recordedChunks.length){
+      setErrorNull(true)
+      setOpen(false)
+    }
+    else{
+    const blob = new Blob(recordedChunks, {
       type: options?.mimeType || "" 
-    }); 
+    });
     console.log(blob);   
     formDate.append( 
     'video', 

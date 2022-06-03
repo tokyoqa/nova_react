@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import '../../Config';
 import { useEffect } from 'react';
 import MuiAlert from '@mui/material/Alert';
-
+  
 export const Identification  = ({id}) => {
     const [open, setOpen] = React.useState(false); 
     const codeMask = "0000";  
