@@ -45,7 +45,7 @@ export  default function App({id, secretWord}) {
 
 
 if (MediaRecorder.isTypeSupported("video/webm")) { 
-  options = { mimeType: "video/webm;codecs=avc1",    
+  options = { mimeType: "video/webm",    
               audioBitsPerSecond: 128000, 
               videoBitsPerSecond: 2500000, 
      // recordingLength: 5000, 
@@ -97,7 +97,7 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
   const sendVideoFile = () => { 
     setOpen(!open);  
     const tempID = 1
-    if(!recordedChunks.length) { 
+    if(!recordedChunks) { 
     setErrorNull(true)
     setOpen(false)
   }
