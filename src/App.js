@@ -9,7 +9,7 @@ import Camera from './Components/Camera/Camera'
 import Layout from './Layout/Layout';
 import NotFound from './Components/NotFound/NotFound';
 import React, { useState } from "react";
-import { browserName, browserVersion } from "react-device-detect";
+import { browserName, browserVersion } from "react-device-detect"
 function App(){
 
   //Variables
