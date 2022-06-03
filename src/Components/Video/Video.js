@@ -44,7 +44,7 @@ export  default function App({id, secretWord}) {
 	// });
 
 
-if (MediaRecorder.isTypeSupported("video/mp4;avc1.4D401E, mp4a.40.2")) {
+if (MediaRecorder.isTypeSupported("video/webm")) {
   options = { mimeType: "video/webm",
               audioBitsPerSecond: 128000, 
               videoBitsPerSecond: 2500000, 
@@ -58,8 +58,8 @@ if (MediaRecorder.isTypeSupported("video/mp4;avc1.4D401E, mp4a.40.2")) {
       
      }; 
  } 
- else if (MediaRecorder.isTypeSupported("video/webm")) { 
-  options = { mimeType: "video/webm;vp8.0, vorbis", 
+ else if (MediaRecorder.isTypeSupported("video/mp4")) { 
+  options = { type: "video/webm;codecs=h.264", 
               audioBitsPerSecond : 128000, 
               videoBitsPerSecond : 2500000 }; 
  } 
@@ -96,12 +96,8 @@ if (MediaRecorder.isTypeSupported("video/mp4;avc1.4D401E, mp4a.40.2")) {
   // --** SEND FILE **-- //
   const sendVideoFile = () => { 
     setOpen(!open);  
-    const tempID = 1
-    if(!recordedChunks) { 
-    setErrorNull(true)
-    setOpen(false)
-  }
-    else if(!recordedChunks.length){
+
+    if(!recordedChunks.length){
       setErrorNull(true)
       setOpen(false)
     }
@@ -116,8 +112,7 @@ if (MediaRecorder.isTypeSupported("video/mp4;avc1.4D401E, mp4a.40.2")) {
     ) 
     formDate.append( 
     'id',
-    // id
-    tempID
+    id
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
