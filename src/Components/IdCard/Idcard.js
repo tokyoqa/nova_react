@@ -126,7 +126,7 @@ import '../../Config';
           else{
           console.log(res.data)
             // Send backside of idcard
-          setOpen(true); 
+          // setOpen(true); 
           axios({
             method: 'POST',
             url: global.config.REST_API + 'api/passport-back',
