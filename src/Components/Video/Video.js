@@ -44,22 +44,22 @@ export  default function App({id, secretWord}) {
 	// });
 
 
-if (MediaRecorder.isTypeSupported("video/webm")) {
-  options = { mimeType: "video/webm",    
+if (MediaRecorder.isTypeSupported("video/mp4;avc1.4D401E, mp4a.40.2")) {
+  options = { mimeType: "video/webm",
               audioBitsPerSecond: 128000, 
               videoBitsPerSecond: 2500000, 
-     // recordingLength: 5000, 
-      width: { min: 640, ideal: 1920 }, 
-      height: { min: 400, ideal: 1080 }, 
-      aspectRatio: { ideal: 1.7777777778 }, 
-      frameRate: { max: 30 }, 
-      sampleSize: 16, 
-      channelCount: 2 
+              // recordingLength: 5000, 
+              width: { min: 640, ideal: 1920 }, 
+              height: { min: 400, ideal: 1080 }, 
+              aspectRatio: { ideal: 1.7777777778 }, 
+              frameRate: { max: 30 }, 
+              sampleSize: 16,   
+              channelCount: 2 
       
      }; 
  } 
- else if (MediaRecorder.isTypeSupported("video/mp4")) { 
-  options = { mimeType: "video/webm;codecs=h.264", 
+ else if (MediaRecorder.isTypeSupported("video/webm")) { 
+  options = { mimeType: "video/webm;vp8.0, vorbis", 
               audioBitsPerSecond : 128000, 
               videoBitsPerSecond : 2500000 }; 
  } 
