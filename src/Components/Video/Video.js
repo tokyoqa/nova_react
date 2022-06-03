@@ -96,6 +96,7 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
   // --** SEND FILE **-- //
   const sendVideoFile = () => { 
     setOpen(!open);  
+    const tempID = 1
     if(!recordedChunks.length) { 
     setErrorNull(true)
     setOpen(false)
@@ -111,7 +112,8 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
     ) 
     formDate.append( 
     'id',
-    id 
+    // id
+    tempID
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
