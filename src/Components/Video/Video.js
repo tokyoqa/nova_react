@@ -124,7 +124,9 @@ if (MediaRecorder.isTypeSupported("video/webm")) {
         headers: { 
       'Content-Type': 'multipart/form-data' 
         }, 
-        enctype: "multipart/form-data" 
+        enctype: "multipart/form-data",
+        transformRequest: (d) => d
+
       } 
       )  
       .then((res) => { 

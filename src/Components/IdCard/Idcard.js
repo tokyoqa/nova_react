@@ -107,7 +107,6 @@ import '../../Config';
             }
         })
         .then((res) => {
-          setOpen(false); 
           if (res.data.statusCode === 1){
             console.log(res.data)
             setError(true)
@@ -127,6 +126,7 @@ import '../../Config';
           else{
           console.log(res.data)
             // Send backside of idcard
+          setOpen(true); 
           axios({
             method: 'POST',
             url: global.config.REST_API + 'api/passport-back',
