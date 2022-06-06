@@ -20,7 +20,6 @@ export  default function App({id, secretWord}) {
 	let 	navigate = useNavigate(); 
 	const [recordedChunks, setRecordedChunks] = useState([]);
 	const [videoSrc, setVideoSrc] = useState(null);
-	const [dataVideo, setDataVideo] = useState(null)
 	const [open, setOpen] = React.useState(false);
 	let 	options = {};
 	const formDate = new FormData();
@@ -146,17 +145,7 @@ export  default function App({id, secretWord}) {
     }
   }
 
-const closeError = (event, reason) => { 
-  if (reason === 'clickaway') { 
-   return; 
-  } 
-  setError(false); 
-  setError04(false) 
-  setSuccess(false);
-  setWarning(false);
-  setErrorNull(false)
-}; 
- 
+
  const custVideoConstraints = { 
   width: 640, 
   height: 480, 
@@ -226,6 +215,21 @@ const closeError = (event, reason) => {
     const hideBtn = () =>{
       document.getElementById('start-btn').style.visibility="hidden"
     }
+
+
+
+    const closeError = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setError(false); 
+      setError04(false) 
+      setSuccess(false);
+      setWarning(false);
+      setErrorNull(false)
+
+    };
+     
   return (
     <>
       <div className="camera-form">	

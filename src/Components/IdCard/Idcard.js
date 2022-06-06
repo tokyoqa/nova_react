@@ -177,7 +177,6 @@ const onFileUpload = () => {
       return;
     }
     setError(false);
-    setError(false);
     setErrorFiles(false)
     setErrorFront(false)
     setErrorBack(false)
