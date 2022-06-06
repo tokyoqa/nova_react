@@ -139,7 +139,6 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   
 return (
   <div className="camera-container">
-    <div className='camera-item'>
     {
       (dataUri)
         ?<ImagePreview dataUri={dataUri}
@@ -162,7 +161,6 @@ return (
           onCameraStop = { () => { handleCameraStop(); } }
         />
     }
-  </div> 
     <div className="btn-group-camera">
     <Button sx={{width: '120px', marginRight: "5px", marginTop: 1}} variant="contained" color="success" onClick={resetPhoto} >
       Переснять
@@ -178,7 +176,6 @@ return (
     > 
     <CircularProgress color="inherit" /> 
   </Backdrop> 
-   
   <Stack spacing={2} sx={{ width: '100%' }}>
     <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
