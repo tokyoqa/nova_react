@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, Typography, ButtonGroup} from '@mui/material';
+import {Backdrop, CircularProgress, Stack, Snackbar, Button } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import "./Video.css";
 import Webcam from "react-webcam";
@@ -42,29 +42,6 @@ export  default function App({id, secretWord}) {
 	// 		navigate('/')
 	// 	}
 	// });
-
-
-
-
-// if (MediaRecorder.isTypeSupported("video/webm")) {
-//   options = { mimeType: "video/webm",
-//               audioBitsPerSecond: 128000, 
-//               videoBitsPerSecond: 2500000, 
-//               // recordingLength: 5000, 
-//               width: { min: 640, ideal: 1920 }, 
-//               height: { min: 400, ideal: 1080 }, 
-//               aspectRatio: { ideal: 1.7777777778 }, 
-//               frameRate: { max: 30 }, 
-//               sampleSize: 16,   
-//               channelCount: 2 
-      
-//      }; 
-//  } 
-//  else if (MediaRecorder.isTypeSupported("video/mp4")) { 
-//   options = { type: "video/webm;codecs=h.264", 
-//               audioBitsPerSecond : 128000, 
-//               videoBitsPerSecond : 2500000 }; 
-//  } 
   
  const handleDataAvailable = ({ data }) => { 
    
@@ -91,7 +68,6 @@ export  default function App({id, secretWord}) {
     console.error({err2})
   }
 }
-
   mediaRecorderRef.current.addEventListener( 
    "dataavailable", 
    handleDataAvailable 
@@ -102,23 +78,11 @@ export  default function App({id, secretWord}) {
   setTimeout(event => { 
    mediaRecorderRef.current.stop(); 
     }, 5000); 
-      // if (window.MediaRecorder) { 
-  //  setStatusVideo('Запись') 
-  //  mediaRecorderRef.current = new window.MediaRecorder( 
-  //  webcamRef.current.stream, 
-  //  options 
-  //     ); 
  };
 
   // --** SEND FILE **-- //
-  const sendVideoFile = () => {
-    const tempID = 1
-    
-
-
-
-    setOpen(!open);  
-
+  const sendVideoFile = () => { 
+    setOpen(!open);  // Open loading menu
     if(!recordedChunks.length){
       setErrorNull(true)
       setOpen(false)
@@ -135,7 +99,6 @@ export  default function App({id, secretWord}) {
     formDate.append( 
     'id',
     id
-    // tempID
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
@@ -194,8 +157,6 @@ const closeError = (event, reason) => {
   setWarning(false);
   setInfo(false); 
   setErrorNull(false)
-
-
 }; 
  
  const custVideoConstraints = { 
@@ -209,7 +170,6 @@ const closeError = (event, reason) => {
   noiseSuppression: true, 
   echoCancellation: true, 
  }; 
- 
  
  // Timer function  
  const getTimeRemaining = (e) => { 
@@ -238,7 +198,6 @@ const closeError = (event, reason) => {
    } 
   }; 
   setStatusVideo('Записано') 
-
   } 
     } 
    
@@ -330,12 +289,6 @@ const closeError = (event, reason) => {
       <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeError}>
         <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
           Пожалуйста ожидайте!
-        </Alert>
-      </Snackbar>
-
-      <Snackbar open={openInfo} autoHideDuration={6000} onClose={closeError}>
-        <Alert onClose={closeError} severity="info" sx={{ width: '100%' }}>
-          This is a info message!
         </Alert>
       </Snackbar>
     </Stack>

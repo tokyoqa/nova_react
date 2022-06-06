@@ -8,7 +8,6 @@ import {
   Backdrop,
   CircularProgress,
   Stack,
-  Alert,
   Checkbox,
   Snackbar,
   FormControlLabel,
@@ -20,7 +19,6 @@ import {
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import { useEffect } from "react";
-import { fontSize } from '@mui/system';
 
 export const Terms = ({ id }) => {
   let navigate = useNavigate();
@@ -35,18 +33,6 @@ export const Terms = ({ id }) => {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-  const headers = {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-nHeaders": "*",
-    "Access-Control-Allow-Methods": "*",
-    "Access-Control-Allow-Credentials": "true",
-    "Access-Control-Allow-Headers":
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-    withCredentials: true,
-    mode: "no-cors",
-  };
   // useEffect(() => {
   //   if(!id){
   //     navigate('/')
@@ -125,39 +111,17 @@ export const Terms = ({ id }) => {
 
   };
 
-  const closeSucces = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setSuccess(false);
-  };
-
   const closeError = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setError(false);
     setError04(false);
-  };
-
-  const closeWarning = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+    setSuccess(false);
     setWarning(false);
+
+
   };
-
-  const closeInfo = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setInfo(false);
-  };
-  // CSS Styles
-
-
-
-
 
   return (
     <div>
@@ -202,10 +166,10 @@ export const Terms = ({ id }) => {
         <Snackbar
           open={openSuccess}
           autoHideDuration={6000}
-          onClose={closeSucces}
+          onClose={closeError}
         >
           <Alert
-            onClose={closeSucces}
+            onClose={closeError}
             severity="success"
             sx={{ width: "100%" }}
           >
@@ -229,28 +193,14 @@ export const Terms = ({ id }) => {
           </Alert>
         </Snackbar>
 
-        <Snackbar
-          open={openWarning}
-          autoHideDuration={6000}
-          onClose={closeWarning}
-        >
-          <Alert
-            onClose={closeWarning}
-            severity="warning"
-            sx={{ width: "100%" }}
-          >
+        <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeError}>
+          <Alert onClose={closeError} severity="warning" sx={{ width: "100%" }} >
             Пожалуйста ожидайте!
-          </Alert>
-        </Snackbar>
-
-        <Snackbar open={openInfo} autoHideDuration={6000} onClose={closeInfo}>
-          <Alert onClose={closeInfo} severity="info" sx={{ width: "100%" }}>
-            This is a info message!
           </Alert>
         </Snackbar>
       </Stack>
     </div>
+  
   );
 };
-
 export default Terms;

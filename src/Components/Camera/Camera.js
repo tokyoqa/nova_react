@@ -153,12 +153,6 @@ axios({
   })
 }
 }
-const closeSucces = (event, reason) => {
-  if (reason === 'clickaway') {
-  return;
-  }
-  setSuccess(false);
-};
 
 const closeError = (event, reason) => {
   if (reason === 'clickaway') {
@@ -166,20 +160,17 @@ const closeError = (event, reason) => {
   }
   setError(false);
   setError04(false)
+  setInfo(false);
+  setWarning(false);
+  setSuccess(false);
+
+
 };
 
 const closeWarning = (event, reason) => {
   if (reason === 'clickaway') {
   return;
   }
-  setWarning(false);
-};
-
-const closeInfo = (event, reason) => {
-  if (reason === 'clickaway') {
-  return;
-  }
-  setInfo(false);
 };
 
 const isFullscreen = false
@@ -243,11 +234,7 @@ return (
   </Backdrop> 
    
   <Stack spacing={2} sx={{ width: '100%' }}>
-    <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeSucces}>
-      <Alert onClose={closeSucces} severity="success" sx={{ width: '100%' }}>
-      This is a openSuccess message!
-      </Alert>
-    </Snackbar>
+
     <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
       <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
       Ошибка! Повторите заново!
@@ -258,14 +245,9 @@ return (
       Ошибка! Такой пользователей существует!
       </Alert>
     </Snackbar>
-    <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeWarning}>
-      <Alert onClose={closeWarning} severity="warning" sx={{ width: '100%' }}>
+    <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeError}>
+      <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
       Пожалуйста ожидайте!
-      </Alert>
-    </Snackbar>
-    <Snackbar open={openInfo} autoHideDuration={6000} onClose={closeInfo}>
-      <Alert onClose={closeInfo} severity="info" sx={{ width: '100%' }}>
-      This is a info message!
       </Alert>
     </Snackbar>
   </Stack>

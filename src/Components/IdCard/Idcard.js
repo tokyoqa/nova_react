@@ -173,51 +173,20 @@ import '../../Config';
       };
       }
       
-      
-      const closeSucces = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-        setSuccess(false);
-        setError(false);
-        setErrorFiles(false)
-        setErrorFiles(false)
-        setErrorFront(false)
-        setErrorBack(false)
-        setErrorFiles(false)
-      };
       const closeError = (event, reason) => {
         if (reason === 'clickaway') {
           return;
         }
         setError(false);
-        setErrorFiles(false)
         setSuccess(false);
         setError(false);
         setErrorFiles(false)
-        setErrorFiles(false)
         setErrorFront(false)
         setErrorBack(false)
-        setErrorFiles(false)
-      };
-      const closeErrorFiles = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-        setErrorFiles(false)
-      };
-      const closeWarning = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
         setWarning(false);
+        setSuccess(false);
       };
-      const closeInfo = (event, reason) => {
-        if (reason === 'clickaway') {
-          return;
-        }
-        setInfo(false);
-      };
+
       const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
       });
@@ -294,11 +263,6 @@ return (
       <CircularProgress color="inherit" /> 
       </Backdrop> 
       <Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeSucces}>
-        <Alert onClose={closeSucces} severity="success" sx={{ width: '100%' }}>
-          This is a openSuccess message!
-        </Alert>
-      </Snackbar>
 
       <Snackbar open={openErrorBack} autoHideDuration={6000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
@@ -318,25 +282,19 @@ return (
         </Alert>
       </Snackbar>
 
-      <Snackbar open={openErrorFiles} autoHideDuration={6000} onClose={closeErrorFiles}>
-        <Alert onClose={closeErrorFiles} severity="error" sx={{ width: '100%' }}>
+      <Snackbar open={openErrorFiles} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Ошибка! Загрузите фото паспорта!
         </Alert>
       </Snackbar>
 
-      <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeWarning}>
-        <Alert onClose={closeWarning} severity="warning" sx={{ width: '100%' }}>
+      <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
           Пожалуйста ожидайте!
-        </Alert>
-      </Snackbar>
-
-      <Snackbar open={openInfo} autoHideDuration={6000} onClose={closeInfo}>
-        <Alert onClose={closeInfo} severity="info" sx={{ width: '100%' }}>
-          This is a info message!
         </Alert>
       </Snackbar>
       </Stack>
       </div>
   )
 }
-export default Idcard;
+export default Idcard;  
