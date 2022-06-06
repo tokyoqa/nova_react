@@ -1,9 +1,3 @@
-@media (max-width: 1200px){
-  body{
-
-  }
-}
-
 .camera-item{
   width: 100%;
   height: 80%;
@@ -26,6 +20,14 @@
   .demo-image-preview-fullscreen > img{
     width: 100%;
   }
+  react-html5-camera-photo>img, .react-html5-camera-photo > video {
+    width: 100%
+  }
+  .camera-item{
+    width: 100%;
+    height: 80%;
+    overflow: hidden;
+  }
 }
 
 .demo-image-preview-fulls creen > img {
@@ -43,6 +45,3 @@
 }
 
 
-react-html5-camera-photo>img, .react-html5-camera-photo > video {
-  width: 80%
-}
