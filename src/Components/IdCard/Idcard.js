@@ -114,6 +114,7 @@ const onFileUpload = () => {
       }
       else{
       console.log(res.data)
+      setOpen(true); 
       axios({
         method: 'POST',
         url: global.config.REST_API + 'api/passport-back',

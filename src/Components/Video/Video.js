@@ -133,7 +133,8 @@ export  default function App({id, secretWord}) {
       console.log(res) 
       } 
       else{ 
-      alert('Success!') 
+      alert('Success!')
+      navigate('/finish')
       console.log(res.data) 
       } 
       }) 
@@ -217,7 +218,8 @@ const closeError = (event, reason) => {
         clearTimer(getDeadTime()); 
     } 
 		const remakeVideo = () => {
-      setRecordedChunks([])
+      setRecordedChunks([null])
+      recordedChunks([null])
       startVideo()
     } 
   
