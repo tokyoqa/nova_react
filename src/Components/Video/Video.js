@@ -34,11 +34,11 @@ export  default function App({id, secretWord}) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-	useEffect(() => {
-		if(!id){
-			navigate('/')
-		}
-	});
+	// useEffect(() => {
+	// 	if(!id){
+	// 		navigate('/')
+	// 	}
+	// });
   
  const handleDataAvailable = ({ data }) => { 
    
@@ -80,6 +80,7 @@ export  default function App({id, secretWord}) {
   // --** SEND FILE **-- //
   const sendVideoFile = () => { 
     setOpen(!open);  // Open loading menu
+    const tempId = 1
     if(!recordedChunks.length){
       setErrorNull(true)
       setOpen(false)
@@ -95,7 +96,8 @@ export  default function App({id, secretWord}) {
     ) 
     formDate.append( 
     'id',
-    id
+    // id
+    tempId
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
@@ -208,7 +210,7 @@ export  default function App({id, secretWord}) {
     } 
 		const remakeVideo = () => {
       setRecordedChunks([null])
-      recordedChunks([null])
+      // recordedChunks([null])
       startVideo()
     } 
   
