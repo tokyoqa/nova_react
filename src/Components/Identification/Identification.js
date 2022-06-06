@@ -65,7 +65,6 @@ export const Identification  = ({id}) => {
   }
       const resendNumber = () => {
         setSuccess(true)
-        
         axios
         .get(url + id)
           .then((res) => {

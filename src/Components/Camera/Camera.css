@@ -1,3 +1,14 @@
+@media (max-width: 1200px){
+  body{
+
+  }
+}
+
+.camera-item{
+  width: 100%;
+  height: 80%;
+}
+
 .demo-image-preview {
   display: flex;
   justify-content: center;
@@ -5,8 +16,8 @@
 
 .demo-image-preview > img {
   width: 90%;
-}
 
+}
 
 @media screen and (min-width:320px) and (max-width:640px) {
   .demo-image-preview {
@@ -15,27 +26,12 @@
   .demo-image-preview-fullscreen > img{
     width: 100%;
   }
-  .camera-container{
-  }
 }
 
-/* fullscreen enable by props */
-.demo-image-preview-fullscreen > img {
+.demo-image-preview-fulls creen > img {
+  margin: 0 auto;
   width: 100vw;
   height:100vh;
-}
-.photo-send-btn{
-  display: flex;
-  justify-content: center;
-}
-.photo-reset-btn{
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-}
-
-@media screen and (min-width:320px) and (max-width:640px) {
-
 }
 
 .camera-container{

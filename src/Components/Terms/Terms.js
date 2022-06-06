@@ -33,11 +33,11 @@ export const Terms = ({ id }) => {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-  // useEffect(() => {
-  //   if(!id){
-  //     navigate('/')
-  //   }
-  // });
+  useEffect(() => {
+    if(!id){
+      navigate('/')
+    }
+  });
 
   const handleChangeChecked = (event) => {
     if(!event.target.checked){
@@ -131,10 +131,10 @@ export const Terms = ({ id }) => {
               Удаленная Идентификация
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
-              Поздравляем ваша идентификация (Lite) на расмотрении. Нажмите "Закончить" чтобы перейти конечную страницу.
+              Поздравляем ваша идентификация фото-идентификация на расмотрении. Нажмите "Закончить" чтобы перейти конечную страницу.
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '5px'}}>
-              Если хотите пройти Full идентификацию. Для этого нажмите на кнопку "Продолжить"
+              Если хотите пройти полную видео-идентификацию нажмите на кнопку "Продолжить"
             </Typography>
             <FormControlLabel sx={{marginTop: 2}}
             control={ 
@@ -150,7 +150,7 @@ export const Terms = ({ id }) => {
           </Button>
           <Button  sx={{margin: '0 auto', marginTop: '20px'}} variant="contained" 
                   endIcon={<AssignmentTurnedInOutlinedIcon />} onClick={agreeSubmit}>
-            Продолжить 
+            Продолжить
           </Button>
         </CardActions>
       </Card>

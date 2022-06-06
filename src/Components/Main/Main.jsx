@@ -10,15 +10,13 @@ import './Main.css';
 const Main = ({setId}) => {
 // Values
 const [number, setNumber] = useState("");
-// const [email, setEmail] = useState("");
 const [openLoading, setOpenLoading] = React.useState(false); 
 const [openNumberError, setNumberError] = React.useState(false);
 const [openError, setError] = React.useState(false);
 const [openError04, setError04] = React.useState(false);
 const [openWarning, setWarning] = React.useState(false);
+const PhoneMask = "{996}000000000"
 let   navigate = useNavigate(); 
-const PhoneMask = "{996}000000000";
-// const MailMask = /^\S*@?\S*$/;
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -114,7 +112,7 @@ return (
         </Button>
       </CardContent>
     </Card>       
-    <Backdrop
+      <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
         open={openLoading}> 
       <CircularProgress color="inherit" /> 

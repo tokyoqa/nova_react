@@ -26,22 +26,20 @@ export  default function App({id, secretWord}) {
 	const formDate = new FormData();
 	const [openSuccess, setSuccess] = React.useState(false);
 	const [openError, setError] = React.useState(false)
+	const [openErrorWord, setErrorWord] = React.useState(false)
 	const [openErrorNull, setErrorNull] = React.useState(false)
 	const [openError04, setError04] = React.useState(false)
 	const [openWarning, setWarning] = React.useState(false)
-	const [openInfo, setInfo] = React.useState(false)
-	let 	audioOptions = {};
 
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-	
 
-	// useEffect(() => {
-	// 	if(!id){
-	// 		navigate('/')
-	// 	}
-	// });
+	useEffect(() => {
+		if(!id){
+			navigate('/')
+		}
+	});
   
  const handleDataAvailable = ({ data }) => { 
    
@@ -119,7 +117,7 @@ export  default function App({id, secretWord}) {
       .then((res) => { 
       setOpen(false);  
       if (res.data.statusCode === 1){ 
-        setError(true)
+        setErrorWord(true)
         console.log(res) 
       } 
       else if(res.data.statusCode === 2){ 
@@ -155,7 +153,6 @@ const closeError = (event, reason) => {
   setError04(false) 
   setSuccess(false);
   setWarning(false);
-  setInfo(false); 
   setErrorNull(false)
 }; 
  
@@ -272,6 +269,11 @@ const closeError = (event, reason) => {
       <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Ошибка! Повторите заново!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openErrorWord} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+          Ошибка! Произнесите слово еще раз. Громко и четко
         </Alert>
       </Snackbar>
       <Snackbar open={openErrorNull} autoHideDuration={6000} onClose={closeError}>

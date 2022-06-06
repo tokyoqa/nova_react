@@ -67,6 +67,7 @@ return(
         />
         <Route 
           path='finish'
+          id={id}
           element={<Finish
         />}
         />   
