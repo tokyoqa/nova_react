@@ -43,7 +43,7 @@ const Finish = ({identType, id}) => {
               Удаленная Идентификация
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
-              Поздравляем ваша идентификация {identType} на расмотрении. Вам будет прислано сообщение на телефон.
+              Поздравляем ваша идентификация {identType} на расмотрении. Вам будет отправлено сообщение на телефон.
             </Typography>
           </CardContent>
         <CardActions >

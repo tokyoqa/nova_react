@@ -15,7 +15,7 @@ const [openNumberError, setNumberError] = React.useState(false);
 const [openError, setError] = React.useState(false);
 const [openError04, setError04] = React.useState(false);
 const [openWarning, setWarning] = React.useState(false);
-const PhoneMask = "{996}000000000"
+const PhoneMask = '+{996} (000) 000-000'
 let   navigate = useNavigate(); 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -105,7 +105,7 @@ return (
           className="form-input-phone"
           onAccept={(value) => {setNumber(value)}}
           value={number}
-          placeholder="+996 000 000 000"
+          placeholder="+996"
         />
         <Button color="success" className="main_submit" sx={{ justifyContent: 'center', marginTop: '30px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postData}>
             Продолжить 

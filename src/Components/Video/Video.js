@@ -37,11 +37,11 @@ export  default function App({id, secretWord}) {
   });
 
 
-	// useEffect(() => {
-	// 	if(!id){
-	// 		navigate('/')
-	// 	}
-	// });
+	useEffect(() => {
+		if(!id){
+			navigate('/')
+		}
+	});
   
  const handleDataAvailable = ({ data }) => { 
    
@@ -51,7 +51,7 @@ export  default function App({id, secretWord}) {
   } 
  }; 
  
- const startVideo = () => {
+ const startVideo = () =>   {
   hideBtn()
 
   onClickReset(); 

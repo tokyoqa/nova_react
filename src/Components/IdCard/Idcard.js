@@ -81,7 +81,7 @@ const onFileUpload = () => {
     );
     formDataBack.append(
       'id',
-        id
+      id
     )
     axios({
         method: 'POST',
