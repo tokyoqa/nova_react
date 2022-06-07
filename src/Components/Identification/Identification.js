@@ -1,4 +1,4 @@
-import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, Typography} from '@mui/material';
+import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, Typography, Link as Nv } from '@mui/material';
 import {IMaskInput} from "react-imask";
 import axios from "axios";
 import React, { useState } from "react";
@@ -17,8 +17,10 @@ export const Identification  = ({id}) => {
     const [openSuccess, setSuccess] = React.useState(false)
     const [openErrorCount, setErrorCount] = React.useState(false)
     const [openWarning, setWarning] = React.useState(false)
-    const [count, setCount] = useState(1);
-    const url = global.config.REST_API + 'api/reset?id=' 
+    const [openErrorNull, setErrorNull] = React.useState(false)
+    const url = global.config.REST_API + 'api/reset?id='
+    const [counter, setCounter] = React.useState(60);
+    const [isDisabled, setIsDisabled] = useState(false);
 
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -28,10 +30,10 @@ export const Identification  = ({id}) => {
         navigate('/')
       }
     });
+
     function postSecureCode(){
-      setCount(count + 1)
         if(!secureCode && secureCode < 4){
-        setError(true)
+          setErrorNull(true)
       }
       else{
       setOpen(!open)
@@ -63,11 +65,14 @@ export const Identification  = ({id}) => {
         )
     }
   }
+
+
       const resendNumber = () => {
-        setSuccess(true)
+        setIsDisabled(true)
         axios
         .get(url + id)
           .then((res) => {
+            setSuccess(true)
             setOpen(false); 
             if (res.data.statusCode === 1){
               setError(true)
@@ -80,6 +85,7 @@ export const Identification  = ({id}) => {
             }
             else if(res.data.statusCode === 6){
               console.log(res.data)
+              setSuccess(false)
               setErrorCount(true)
             }
             else{
@@ -102,6 +108,7 @@ export const Identification  = ({id}) => {
       setErrorCount(false)
       setWarning(false);
       setSuccess(false)
+      setErrorNull(false)
     };
 
 return(
@@ -124,10 +131,13 @@ return(
         <Button color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postSecureCode} >
             Продолжить
         </Button>
-        <Button color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={resendNumber}>
+        <Button disabled={isDisabled} color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={resendNumber}>
             Отправить снова
         </Button>
       </CardContent>
+      <Typography sx={{textAlign: 'center'}}>
+        Отправить код повторно через  00:{counter}
+      </Typography>
     </Card>       
       <Backdrop 
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
@@ -139,6 +149,11 @@ return(
       <Snackbar open={openErrorCount} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Ошибка. Истечено количество попыток!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openErrorNull} autoHideDuration={3000} onClose={closeError}>
+        <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
+          Введите код чтобы продолжить!
         </Alert>
       </Snackbar>
       <Snackbar open={openSuccess} autoHideDuration={3000} onClose={closeError}>

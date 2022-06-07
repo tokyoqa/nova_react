@@ -50,13 +50,15 @@ import '../../Config';
     return () => URL.revokeObjectURL(objectUrlBack)
   }, [selectedFileBack])
 
-    useEffect(() => {
-      if(!id){
-        navigate('/')
-      }
-    });
+  // useEffect(() => {
+  //   if(!id){
+  //     navigate('/')
+  //   }
+  // });
 
 const onFileUpload = () => {
+  const tempID = 1
+
   if(!selectedFileBack || !selectedFileFront){
     setErrorFiles(true)
   }
@@ -81,7 +83,8 @@ const onFileUpload = () => {
     );
     formDataBack.append(
       'id',
-      id
+      // id
+      tempID
     )
     axios({
         method: 'POST',

@@ -14,8 +14,10 @@ const [openLoading, setOpenLoading] = React.useState(false);
 const [openNumberError, setNumberError] = React.useState(false);
 const [openError, setError] = React.useState(false);
 const [openError04, setError04] = React.useState(false);
-const [openWarning, setWarning] = React.useState(false);
-const PhoneMask = '+{996} (000) 000-000'
+const [openTimeOut, setTimeOut] = React.useState(false);
+const [openError500, setError500] = React.useState(false)
+const [openErrorCount, setErrorCount] = React.useState(false)
+const PhoneMask = '+{996} (000) 000 - 000'
 let   navigate = useNavigate(); 
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -29,10 +31,11 @@ const closeError = (event, reason) => {
   setNumberError(false);
   setError(false);
   setError04(false)
-  setWarning(false);
+  setError500(false)
 };
 
  async function postData(){
+  setNumber(number.replace(/[^a-zа-яё]/gi, ''))
   if(!number.length || number.length < 12){
 
     setNumberError(true)
@@ -66,16 +69,24 @@ const closeError = (event, reason) => {
       setId(res.data.id);
       setOpenLoading(false);
       if (res.data.statusCode === 1){
-        setError(true)
+        console.log(res.data)
+        setNumberError(true)
       }
       else if(res.data.statusCode === 2){
-        setError(true)
+        console.log(res.data)
+        setError(true) 
       }
       else if(res.data.statusCode === 3){
-        setWarning(true)
+        console.log(res.data)
+        setTimeOut(true)
       }
       else if(res.data.statusCode === 4){
+        console.log(res.data)
         setError04(true)
+      }
+      else if(res.data.statusCode === 6){
+        console.log(res.data)
+        setErrorCount(true)
       }
       else{
       navigate('/identification')
@@ -85,7 +96,7 @@ const closeError = (event, reason) => {
     .catch((err) => {
       console.log(err)
       setOpenLoading(false)
-      setError(true)
+      setError500(true)
     })
   }
 }
@@ -105,7 +116,7 @@ return (
           className="form-input-phone"
           onAccept={(value) => {setNumber(value)}}
           value={number}
-          placeholder="+996"
+          placeholder="+996 (000) 000-000"
         />
         <Button color="success" className="main_submit" sx={{ justifyContent: 'center', marginTop: '30px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postData}>
             Продолжить 
@@ -128,14 +139,24 @@ return (
         Ошибка! Повторите снова!
       </Alert>
     </Snackbar>
+    <Snackbar open={openError500} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
+        Ошибка сервера. Повторите позже пожалуйста!
+      </Alert>
+    </Snackbar>
     <Snackbar open={openError04} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
         Ошибка! Такой пользователей существует!
       </Alert>
     </Snackbar>
-    <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>
+    <Snackbar open={openErrorCount} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+        Превышено количество запросов с этого номера. Попробуйте повторить завтра!
+      </Alert>
+    </Snackbar>
+    <Snackbar open={openTimeOut} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
-        Пожалуйста ожидайте!
+        Прошло время ожидания. Повторите ошибку.
       </Alert>
     </Snackbar>
   </Stack>
