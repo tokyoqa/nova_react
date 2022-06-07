@@ -18,27 +18,29 @@ export  default function App({id, secretWord}) {
 	const webcamRef = useRef(null);
 	const mediaRecorderRef = useRef(null);
 	let 	navigate = useNavigate(); 
-	const [recordedChunks, setRecordedChunks] = useState([]);
 	const [videoSrc, setVideoSrc] = useState(null);
 	const [open, setOpen] = React.useState(false);
 	let 	options = {};
-	const formDate = new FormData();
 	const [openSuccess, setSuccess] = React.useState(false);
 	const [openError, setError] = React.useState(false)
 	const [openErrorWord, setErrorWord] = React.useState(false)
 	const [openErrorNull, setErrorNull] = React.useState(false)
 	const [openError04, setError04] = React.useState(false)
 	const [openWarning, setWarning] = React.useState(false)
+	const [recordedChunks, setRecordedChunks] = useState([]);
 
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
+  const blob = new Blob(recordedChunks, {
+    type: options?.mimeType || "" 
+  });
 
-	// useEffect(() => {
-	// 	if(!id){
-	// 		navigate('/')
-	// 	}
-	// });
+	useEffect(() => {
+		if(!id){
+			navigate('/')
+		}
+	});
   
  const handleDataAvailable = ({ data }) => { 
    
@@ -79,6 +81,7 @@ export  default function App({id, secretWord}) {
 
   // --** SEND FILE **-- //
   const sendVideoFile = () => { 
+  	const formDate = new FormData();
     setOpen(!open);  // Open loading menu
     const tempId = 1
     if(!recordedChunks.length){
@@ -86,9 +89,7 @@ export  default function App({id, secretWord}) {
       setOpen(false)
     }
     else{
-    const blob = new Blob(recordedChunks, {
-      type: options?.mimeType || "" 
-    });
+
     console.log(blob);   
     formDate.append( 
     'video', 
@@ -96,8 +97,8 @@ export  default function App({id, secretWord}) {
     ) 
     formDate.append( 
     'id',
-    // id
-    tempId
+    id
+    // tempId
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
@@ -134,9 +135,9 @@ export  default function App({id, secretWord}) {
       console.log(res) 
       } 
       else{ 
-      alert('Success!')
       navigate('/finish')
       console.log(res.data) 
+      setSuccess(true)
       } 
       }) 
       .catch(error =>{ 
@@ -209,16 +210,15 @@ export  default function App({id, secretWord}) {
         clearTimer(getDeadTime()); 
     } 
 		const remakeVideo = () => {
+      console.log(recordedChunks)
+      setRecordedChunks(null)
       setRecordedChunks([null])
-      // recordedChunks([null])
       startVideo()
     } 
   
     const hideBtn = () =>{
       document.getElementById('start-btn').style.visibility="hidden"
     }
-
-
 
     const closeError = (event, reason) => {
       if (reason === 'clickaway') {
@@ -229,7 +229,7 @@ export  default function App({id, secretWord}) {
       setSuccess(false);
       setWarning(false);
       setErrorNull(false)
-
+      setErrorWord(false)
     };
      
   return (
@@ -268,35 +268,32 @@ export  default function App({id, secretWord}) {
       <CircularProgress color="inherit" /> 
     </Backdrop> 
 		<Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeError}>
+      <Snackbar open={openSuccess} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="success" sx={{ width: '100%' }}>
-          Ошибка! Вы не прошли проверку. Повторите 
+          Успешно!
         </Alert>
       </Snackbar>
-
-      <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
+      <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Ошибка! Повторите заново!
         </Alert>
       </Snackbar>
-      <Snackbar open={openErrorWord} autoHideDuration={6000} onClose={closeError}>
+      <Snackbar open={openErrorWord} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Ошибка! Произнесите слово еще раз. Громко и четко
         </Alert>
       </Snackbar>
-      <Snackbar open={openErrorNull} autoHideDuration={6000} onClose={closeError}>
+      <Snackbar open={openErrorNull} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Ошибка! Нету данных для отправки
         </Alert>
       </Snackbar>
-
-      <Snackbar open={openError04} autoHideDuration={6000} onClose={closeError}>
+      <Snackbar open={openError04} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Ошибка сервиса. 
         </Alert>
       </Snackbar>
-
-      <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeError}>
+      <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
           Пожалуйста ожидайте!
         </Alert>
