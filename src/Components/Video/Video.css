@@ -9,7 +9,6 @@ body{
 }
 
 .btn-items{
-	margin-top: 30px ;
 	text-align: center;
 }
 
@@ -59,7 +58,4 @@ body {
 
 .video-status{
   text-align: center;
-}
-.btn-items{
-  margin: 0 auto;
 }

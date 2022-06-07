@@ -28,30 +28,32 @@ export  default function App({id, secretWord}) {
 	const [openError04, setError04] = React.useState(false)
 	const [openWarning, setWarning] = React.useState(false)
 	const [recordedChunks, setRecordedChunks] = useState([]);
-
-  const Alert = React.forwardRef(function Alert(props, ref) {
-  	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
   });
+  
+  const Alert = React.forwardRef(function Alert(props, ref) {
+  	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 
-	useEffect(() => {
-		if(!id){
-			navigate('/')
-		}
-	});
+
+	// useEffect(() => {
+	// 	if(!id){
+	// 		navigate('/')
+	// 	}
+	// });
   
  const handleDataAvailable = ({ data }) => { 
    
   if (data.size > 0) { 
-   setRecordedChunks((prev) => prev.concat(data)); 
+  //  setRecordedChunks((prev) => prev.concat(data));
+  setRecordedChunks([data]) 
   } 
- 
  }; 
  
  const startVideo = () => {
   hideBtn()
+
   onClickReset(); 
   try {
     mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, { mimeType: 'audio/webm' });
@@ -72,7 +74,7 @@ export  default function App({id, secretWord}) {
    handleDataAvailable 
   ); 
   mediaRecorderRef.current.start(); 
-   
+   console.log(blob)
   onClickReset(); 
   setTimeout(event => { 
    mediaRecorderRef.current.stop(); 
@@ -90,7 +92,6 @@ export  default function App({id, secretWord}) {
     }
     else{
 
-    console.log(blob);   
     formDate.append( 
     'video', 
       blob 
@@ -248,13 +249,13 @@ export  default function App({id, secretWord}) {
       </div>
 			<div className="video-status">Status: {statusVideo}</div>
 			<div className="btn-items">
-					<Button id="start-btn" color='success' sx={{display: 'block' ,marginTop: '10px', width: "40%", marginRight:"5px"}} variant="contained" onClick={startVideo}>
+					<Button id="start-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={startVideo}>
             Запись
           </Button>
-					<Button id="send-btn" color='success' sx={{display: 'block', marginTop: '10px', width: "40%", marginRight:"5px"}} variant="contained" onClick={sendVideoFile}>
+					<Button id="send-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={sendVideoFile}>
             Отправить
           </Button>
-					<Button id="reset-btn" color='success' sx={{display: 'block', marginTop: '10px', width: "40%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
+					<Button id="reset-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
             Переснять 
           </Button>
 				<div> Произнесите слово [ <strong>{secretWord}</strong> ] четко и громко для прохождения идентификации </div>
