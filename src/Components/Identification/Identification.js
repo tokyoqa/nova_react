@@ -46,7 +46,7 @@ export const Identification  = ({id}) => {
             }
             else if(res.data.statusCode === 2){
               console.log(res.data)
-              setError(true)
+              setError(true)  
             }
             else if(res.data.statusCode === 3){
               console.log(res.data)

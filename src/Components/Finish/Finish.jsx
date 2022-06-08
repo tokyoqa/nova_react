@@ -1,4 +1,4 @@
-import {Stack, Snackbar, Card, CardContent, Typography, CardActions} from "@mui/material";
+import {Stack, Snackbar, Card, CardContent, Typography, CardActions, Button} from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
 import React, {useState} from "react";
 import "./Finish.css";
@@ -10,6 +10,7 @@ const Finish = ({identType, id}) => {
   const [openError, setError] = useState(false);
   const [openError04, setError04] = useState(false);
   const [openWarning, setWarning] = useState(false);
+  const navigate = useNavigate()
 
   // Alerts function
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -26,13 +27,18 @@ const Finish = ({identType, id}) => {
     setSuccess(false);
   };
 
+  const goHome = () => {
+    navigate('/')
+  }
+
   const cardStyle = {
     display: "block",
     transitionDuration: "0.3s",
     height: "250px",
     width: "400px",
     margin: "0 auto",
-    marginTop: "30px"
+    marginTop: "30px",
+    textAlign: 'center'
   };
 
   return (
@@ -43,8 +49,11 @@ const Finish = ({identType, id}) => {
               Удаленная Идентификация
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
-              Поздравляем ваша идентификация {identType} на расмотрении. Вам будет отправлено сообщение на телефон.
+              Поздравляем ваша идентификация {identType} на рассмотрении. Вам будет отправлено сообщение на телефон.
             </Typography>
+            <Button id="reset-btn" color='success' sx={{ margin: '0 auto', marginTop: '50px', width: "50%", textAlign: 'center'}} variant="contained" onClick={goHome}>
+            На главную 
+          </Button>
           </CardContent>
         <CardActions >
         </CardActions>

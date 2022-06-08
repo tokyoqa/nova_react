@@ -37,11 +37,11 @@ export  default function App({id, secretWord}) {
   });
 
 
-	useEffect(() => {
-		if(!id){
-			navigate('/')
-		}
-	});
+	// useEffect(() => {
+	// 	if(!id){
+	// 		navigate('/')
+	// 	}
+	// });
   
  const handleDataAvailable = ({ data }) => { 
    
@@ -237,7 +237,7 @@ export  default function App({id, secretWord}) {
     <>
       <div className="camera-form">	
 			<Webcam
-			className="camera-item"
+			className="video-item"
 			ref={webcamRef}
 			height={500}
 			mirrored={true}

@@ -3,8 +3,8 @@ body{
   padding: 0;
 }
 
-.camera-item{
-	display: flex;
+.video-item{
+  display: flex;
 	margin: 0 auto;
 }
 
