@@ -113,6 +113,9 @@ const onFileUpload = () => {
         setErrorBack(true)
       }
       else{
+      console.log(selectedFileBack)
+      console.log(selectedFileFront)
+      console.log(id)
       console.log(res.data)
       setOpen(true); 
       axios({
