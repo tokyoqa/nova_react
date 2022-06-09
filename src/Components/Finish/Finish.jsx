@@ -6,7 +6,6 @@ import { useNavigate } from "react-router";
 
 const Finish = ({identType, id}) => {
   // Values
-  const [openSuccess, setSuccess] = useState(false);
   const [openError, setError] = useState(false);
   const [openError04, setError04] = useState(false);
   const [openWarning, setWarning] = useState(false);
@@ -24,7 +23,6 @@ const Finish = ({identType, id}) => {
     setError(false);
     setError04(false);
     setWarning(false);
-    setSuccess(false);
   };
 
   const goHome = () => {
@@ -59,11 +57,6 @@ const Finish = ({identType, id}) => {
         </CardActions>
       </Card>
       <Stack spacing={2} sx={{ width: "100%" }}>
-        <Snackbar open={openSuccess} autoHideDuration={6000} onClose={closeError}>
-          <Alert onClose={closeError} severity="success" sx={{ width: "100%" }}>
-            This is a openSuccess message!
-          </Alert>
-        </Snackbar>
 
         <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
           <Alert onClose={closeError} severity="error" sx={{ width: "100%" }}>
