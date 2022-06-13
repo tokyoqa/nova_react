@@ -1,7 +1,8 @@
-import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, Typography} from '@mui/material';
-import {IMaskInput} from "react-imask";
+import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, InputLabel, Select, TextField,
+CardContent, Typography, FormControl, MenuItem } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import {useNavigate} from "react-router";
+import { useInputValue } from 'react-haiku';
 import React, {useState} from "react";
 import axios from "axios";
 import '../../Config';
@@ -9,20 +10,27 @@ import './Main.css';
 
 const Main = ({setId}) => {
 // Values
-const [number, setNumber] = useState("");
+const [number, setNumber] = useInputValue('');
 const [openLoading, setOpenLoading] = React.useState(false); 
 const [openNumberError, setNumberError] = React.useState(false);
+const [openNumberErrorCode, setNumberErrorCode] = React.useState(false)
 const [openError, setError] = React.useState(false);
 const [openError04, setError04] = React.useState(false);
 const [openTimeOut, setTimeOut] = React.useState(false);
 const [openError500, setError500] = React.useState(false)
 const [openErrorCount, setErrorCount] = React.useState(false)
-const PhoneMask = '+{996} (000) 000 - 000'
+const [code, setCode] = React.useState('');
 let   navigate = useNavigate(); 
-
+let fullNumber = code + number
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+console.log(fullNumber)
+
+const handleChangeCode = (event) => {
+  setCode(event.target.value);
+
+};
 
 const closeError = (event, reason) => {
   if (reason === 'clickaway') {
@@ -31,14 +39,17 @@ const closeError = (event, reason) => {
   setNumberError(false);
   setError(false);
   setError04(false)
+  setErrorCount(false)
   setError500(false)
+  setNumberErrorCode(false)
 };
 
  async function postData(){
-  setNumber(number.replace(/[^a-zа-яё]/gi, ''))
-  if(!number.length || number.length < 12){
-
+  if(!number.length || number.length < 9){
     setNumberError(true)
+  }
+  else if (!code){
+    setNumberErrorCode(true)
   }
   else
   {
@@ -61,7 +72,7 @@ const closeError = (event, reason) => {
           mode: 'no-cors'
         },
         data: { 
-          number: number
+          number: fullNumber
         }
       }
     )
@@ -102,23 +113,46 @@ const closeError = (event, reason) => {
 }
 
 return (
-  <div className='container-main'>
-    <Card className='card-container-main' >
-      <CardHeader  sx={{textAlign: "center", padding: 0, marginTop: 2}}
-        title="Удаленная идентификация"
+  <div className='main-container'>
+    <Card className='main-card'>
+      <CardHeader  className='main-card__header' title="Удаленная идентификация"/>
+      <CardContent className='main-card__content'>
+        <Typography sx={{marginBottom: '20px'}} variant="h5" color="text.secondary">
+          Введите номер:
+        </Typography>
+        <FormControl required sx={{ m: 1, minWidth: 80 }}>
+          <InputLabel id="demo-simple-select-required-label">Код</InputLabel>
+          <Select
+            labelId="demo-simple-select-required-label"
+            id="demo-simple-select-required"
+            value={code}
+            label="Код"
+            onChange={handleChangeCode}
+          >
+            <MenuItem value={+996}>+996</MenuItem>
+            <MenuItem value={+7}>   +7 </MenuItem>
+          </Select>
+      </FormControl>
+      <TextField sx={{marginTop: '9px'}}
+        value={number}
+        id="outlined-number"
+        label="Номер"
+        type="number"
+        placeholder='700 000 000'
+        onChange={setNumber}
+        InputLabelProps={{
+          shrink: true,
+      }}
       />
-      <CardContent  sx={{fontSize: "20px", textAlign: 'center'}}>
-        <Typography sx={{fontSize: "20px", textAlign: "center", marginBottom: "15px"}} variant="h5" color="text.secondary">
-            Введите номер:
-        </Typography> 
-        <IMaskInput
+        {/* <IMaskInput
           mask={PhoneMask}
           className="form-input-phone"
           onAccept={(value) => {setNumber(value)}}
           value={number}
           placeholder="+996 (000) 000-000"
-        />
-        <Button color="success" className="main_submit" sx={{ justifyContent: 'center', marginTop: '30px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postData}>
+        /> */}
+        <Button color="success" className="main_submit" 
+          sx={{ justifyContent: 'center', marginTop: '30px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postData}>
             Продолжить 
         </Button>
       </CardContent>
@@ -132,6 +166,11 @@ return (
     <Snackbar open={openNumberError} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
         Введите правильный номер!
+      </Alert>
+    </Snackbar>
+    <Snackbar open={openNumberErrorCode} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
+        Выберите код страны 
       </Alert>
     </Snackbar>
     <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>

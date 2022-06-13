@@ -61,10 +61,22 @@ export const Terms = ({ id }) => {
             console.log(res.data);
             setOpen(false);
             if (res.data.statusCode === 1) {
-            } else if (res.data.statusCode === 2) {
-            } else if (res.data.statusCode === 3) {
-            } else if (res.data.statusCode === 4) {
-            } else {
+              setError(true)
+              console.log(res.data)
+            } 
+            else if (res.data.statusCode === 2) {
+              setError(true)
+              console.log(res.data)
+            } 
+            else if (res.data.statusCode === 3) {
+              setError(true)
+              console.log(res.data)
+            } 
+            else if (res.data.statusCode === 4) {
+              setError(true)
+              console.log(res.data)
+            } 
+            else {
               navigate("/video");
               setOpen(false);
               

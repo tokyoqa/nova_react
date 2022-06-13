@@ -85,7 +85,6 @@ export  default function App({id, secretWord}) {
   const sendVideoFile = () => { 
   	const formDate = new FormData();
     setOpen(!open);  // Open loading menu
-    const tempId = 1
     if(!recordedChunks.length){
       setErrorNull(true)
       setOpen(false)
