@@ -20,7 +20,6 @@
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.13",
     "axios": "^0.26.0",
-    "canvas": "^2.9.1",
     "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-countdown-circle-timer": "^3.0.9",
