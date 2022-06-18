@@ -116,8 +116,12 @@ export  default function App({id, secretWord}) {
         setErrorWord(true)
         console.log(res.data) 
       } 
-      else if(res.data.statusCode === 2){ 
-        setError(true) 
+      else if(res.data.statusCode === 2){
+
+
+        navigate('/videoAgreement')
+        console.log(res.data)
+        setSuccess(true)
         console.log(res.data) 
       } 
       else if(res.data.statusCode === 3){ 
@@ -129,7 +133,7 @@ export  default function App({id, secretWord}) {
         console.log(res.data) 
       } 
       else{ 
-        navigate('/finish')
+        navigate('/videoAgreement')
         console.log(res.data) 
         setSuccess(true)
       } 

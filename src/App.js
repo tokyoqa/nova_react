@@ -6,7 +6,7 @@ import Idcard from './Components/IdCard/Idcard';
 import Terms from './Components/Terms/Terms'
 import Video from './Components/Video/Video'
 import Camera from './Components/Camera/Camera'
-import Layout from './layout/Layout';
+import Layout from './Layout/Layout';
 import NotFound from './Components/NotFound/NotFound';
 import VideoAgreement from './Components/VideoAgreement/Agreement'
 import React, { useState } from "react";
