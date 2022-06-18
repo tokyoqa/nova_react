@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
 import {Backdrop, CircularProgress, Stack, Snackbar, Button } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-import "./Video.css";
 import Webcam from "react-webcam";
 import axios from "axios";
 import {useNavigate} from "react-router";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import '../../Config';
 
-export  default function App({id, secretWord}) {
+export  default function VideoAgreement({id}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
 	const minutes = Math.floor(timeLeft/60);
 	const seconds = timeLeft - minutes * 60;
@@ -28,6 +28,8 @@ export  default function App({id, secretWord}) {
 	const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
 	let 	options = {};
+  const tempID = '1'
+
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
   });
@@ -48,8 +50,11 @@ export  default function App({id, secretWord}) {
   } 
  };
 
- // Start recording video
+ console.log(tempID)
+
+ 
  const startVideo = () => {
+  setOpenTimer(true)
   hideBtn()
   onClickReset(); 
   try {
@@ -77,11 +82,14 @@ export  default function App({id, secretWord}) {
  };
 
   // --** SEND FILE **-- //
-  const sendVideoFile = () => { 
+  const sendVideoFile = () => {
   	const formDate = new FormData();
-    const temp = 1
     setOpen(!open);  // Open loading menu
-    if(!recordedChunks.length){
+    if(!recordedChunks.length ){
+      setErrorNull(true)
+      setOpen(false)
+    }
+    else if(!tempID){
       setErrorNull(true)
       setOpen(false)
     }
@@ -92,15 +100,15 @@ export  default function App({id, secretWord}) {
     ) 
     formDate.append( 
     'id',
+    tempID 
     // id
-    temp
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
       axios 
     ( 
       { 
-        url: global.config.REST_API + 'api/video', 
+        url: global.config.REST_API + 'api/video-agreement', 
         method: 'POST', 
         data: formDate, 
         headers: { 
@@ -156,70 +164,73 @@ export  default function App({id, secretWord}) {
  
  // Timer function  
  const getTimeRemaining = (e) => { 
-    const total = Date.parse(e) - Date.parse(new Date()); 
-    const seconds = Math.floor((total / 1000) % 60); 
-    const minutes = Math.floor((total / 1000 / 60) % 60);   
-    const hours = Math.floor((total / 1000 / 60 / 60) % 24); 
-    return { 
-        total, hours, minutes, seconds 
-    }; 
+        const total = Date.parse(e) - Date.parse(new Date()); 
+        const seconds = Math.floor((total / 1000) % 60); 
+        const minutes = Math.floor((total / 1000 / 60) % 60); 
+        const hours = Math.floor((total / 1000 / 60 / 60) % 24); 
+        return { 
+            total, hours, minutes, seconds 
+        }; 
   } 
    
-const startTimer = (e) => {
-  let { total, seconds } = getTimeRemaining(e); 
-  if (total >= 0) {
-    setTimer((seconds > 9 ? seconds :  seconds))
-  }
-  if( seconds === 0){
+  const startTimer = (e) => {
+      let { total, seconds }  
+                  = getTimeRemaining(e); 
+      if (total >= 0) { 
+          setTimer( 
+  (seconds > 9 ? seconds :  seconds) 
+          )
+      }
+    if( seconds === 0){
+      setOpenTimer(false)
   const handleStopCaptureClick = () => { 
-    if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
-      mediaRecorderRef.current.stop(); 
-    } 
+   if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
+   mediaRecorderRef.current.stop(); 
+   } 
   }; 
-    setStatusVideo('Записано') 
+  setStatusVideo('Записано') 
   }
-  }
-
-   
-  const clearTimer = (e) => {   
-      setTimer('5'); 
-      if (Ref.current) clearInterval(Ref.current); 
-      const id = setInterval(() => { 
-          startTimer(e); 
-      }, 1000) 
-      Ref.current = id; 
-  } 
-  
-  const getDeadTime = () => { 
-      let deadline = new Date(); 
-      deadline.setSeconds(deadline.getSeconds() + 5); 
-      return deadline; 
-  } 
-  
-  const onClickReset = () => { 
-      clearTimer(getDeadTime()); 
-  } 
-  const remakeVideo = () => {
-    setRecordedChunks(null)
-    setRecordedChunks([null])
-    startVideo()
-  } 
-
-  const hideBtn = () =>{
-    document.getElementById('start-btn').style.visibility="hidden"
-  }
-
-  const closeError = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
     }
-    setError(false); 
-    setError04(false) 
-    setSuccess(false);
-    setWarning(false);
-    setErrorNull(false)
-    setErrorWord(false)
-  };
+   
+    const clearTimer = (e) => {   
+        setTimer('5'); 
+        if (Ref.current) clearInterval(Ref.current); 
+        const id = setInterval(() => { 
+            startTimer(e); 
+        }, 1000) 
+        Ref.current = id; 
+    } 
+   
+    const getDeadTime = () => { 
+        let deadline = new Date(); 
+        deadline.setSeconds(deadline.getSeconds() + 5); 
+        return deadline; 
+    } 
+   
+    const onClickReset = () => { 
+        clearTimer(getDeadTime()); 
+    } 
+		const remakeVideo = () => {
+      setRecordedChunks(null)
+      setRecordedChunks([null])
+      startVideo()
+    } 
+  
+    const hideBtn = () =>{
+      document.getElementById('start-btn').style.visibility="hidden"
+    }
+
+    const closeError = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setError(false); 
+      setError04(false) 
+      setSuccess(false);
+      setWarning(false);
+      setErrorNull(false)
+      setErrorWord(false)
+    };
      
 return (
   <>
@@ -237,7 +248,7 @@ return (
     </div>
     {
       (!openTimer)
-      ? console.log('none')
+      ?<> </>
       :
       <Backdrop 
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
@@ -247,20 +258,36 @@ return (
     }
     <div className="video-status">Status: {statusVideo}</div>
     <div className="btn-items">
-        <Button id="start-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={startVideo}>
-          Запись
+        <Button
+          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
+          id="start-btn" 
+          color='success' 
+          variant="contained" 
+          onClick={startVideo}>
+            Запись
         </Button>
-        <Button id="send-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={sendVideoFile}>
-          Отправить
+        <Button 
+          id="send-btn" 
+          color='success' 
+          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
+          variant="contained" 
+          onClick={sendVideoFile}
+          >
+            Отправить
         </Button>
-        <Button id="reset-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
-          Переснять 
+        <Button 
+          id="reset-btn" 
+          color='success' 
+          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
+          variant="contained" 
+          onClick={remakeVideo}>
+            Переснять 
         </Button>
-      <div> Произнесите слово [ <strong>{secretWord}</strong> ] четко и громко для прохождения идентификации </div>
       <h2 className="timer-Console">{timer}</h2>
     </div>
   
 
+    
   <Backdrop 
     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
     open={open}>

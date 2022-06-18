@@ -25,7 +25,6 @@ let fullNumber = code + number
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-console.log(fullNumber)
 
 const handleChangeCode = (event) => {
   setCode(event.target.value);
@@ -45,10 +44,11 @@ const closeError = (event, reason) => {
 };
 
  async function postData(){
-  if(!number.length || number.length < 9){
-    setNumberError(true)
-  }
-  else if (!code){
+  // if(!number.length || number.length < 9){
+  //   setNumberError(true)
+  // }
+  // else 
+  if (!code){
     setNumberErrorCode(true)
   }
   else
@@ -114,7 +114,7 @@ const closeError = (event, reason) => {
 
 return (
   <div className='main-container'>
-    <Card className='main-card'>
+    <Card className='main-card' sx={{boxShadow: 'none'}}>
       <CardHeader  className='main-card__header' title="Удаленная идентификация"/>
       <CardContent className='main-card__content'>
         <Typography sx={{marginBottom: '20px'}} variant="h5" color="text.secondary">
@@ -144,24 +144,23 @@ return (
           shrink: true,
       }}
       />
-        {/* <IMaskInput
-          mask={PhoneMask}
-          className="form-input-phone"
-          onAccept={(value) => {setNumber(value)}}
-          value={number}
-          placeholder="+996 (000) 000-000"
-        /> */}
-        <Button color="success" className="main_submit" 
-          sx={{ justifyContent: 'center', marginTop: '30px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postData}>
+        <Button 
+          color="success" 
+          className="main_submit" 
+          sx={{ justifyContent: 'center', marginTop: '30px', width: '60%', borderRadius: "15px"}} 
+          variant="contained" 
+          onClick={postData}
+          >
             Продолжить 
         </Button>
       </CardContent>
-    </Card>       
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
-        open={openLoading}> 
-      <CircularProgress color="inherit" /> 
-      </Backdrop>
+    </Card>
+
+  <Backdrop
+    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
+    open={openLoading}> 
+    <CircularProgress color="inherit" /> 
+  </Backdrop>
   <Stack spacing={2} sx={{ width: '100%' }}>
     <Snackbar open={openNumberError} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>

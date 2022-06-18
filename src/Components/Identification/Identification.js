@@ -143,7 +143,6 @@ export const Identification  = ({id}) => {
             setSuccess(false)
             setError(true)
           })
-          console.log(id)
       }
     const closeError = (event, reason) => {
       if (reason === 'clickaway') {
@@ -176,7 +175,7 @@ return(
         <Button color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postSecureCode} >
             Продолжить
         </Button>
-        <Button disabled={isDisabled} color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={resendNumber}>
+        <Button disabled={isDisabled} color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="outlined" onClick={resendNumber}>
             Отправить снова
         </Button>
       </CardContent>
