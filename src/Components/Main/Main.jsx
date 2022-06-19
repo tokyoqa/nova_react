@@ -139,7 +139,7 @@ return (
           className="form-input-phone"
           onAccept={(value) => {setNumber(value)}}
           value={number}
-          placeholder={(code === +996  || code === ''  ? "(000) 000-000" : '(000) 000 - 00 - 00')}
+          placeholder={(code === +996  || code === ''  ? "(000) 000 - 000" : '(000) 000 - 00 - 00')}
           />
         <Button 
           color="success" 
