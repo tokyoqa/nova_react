@@ -19,68 +19,6 @@
     width: 175px
 }
 
-.header__links_grid{
-    display: grid;
-    grid: auto auto / auto auto;
-}
-
-.header__link{
-    margin-bottom: -5px;
-    margin-left: 70px;
-    font-size: 15px;
-    text-decoration: none;
-    color: #4bba53;
-    display: flex;
-    margin-top: 15px;
-}
-
-.nav__phone{
-    width: 207px;
-    display: inline-block;
-    vertical-align: top;
-    margin-top: 33px;
-    margin-left: 62px;
-}
-
-.nav__phone a {
-    display: block;
-    font-size: 17px;
-    color: #000;
-    text-decoration: none;
-}
-
-.nav__phone span{
-    display: block;
-    font-size: 17px;
-    color: #000;
-    text-decoration: none;
-    margin-bottom: 2px;
-}
-
-.header__links{
-    display: inline-block;
-    vertical-align: top;
-    margin-top: 8px;
-}
-
-
-@media screen and (min-width:320px) and (max-width:640px) {
-    .header{
-        display: flex;
-        height: 53px;
-        background-color: #fff;
-        outline: none;
-        border-bottom: solid #bbb 0.5px;
-    }
-   .header__logo > a > img{
-        padding: 0 5px;
-        width: 117px;
-        height: 35px;
-        margin-top: 8px;
-        margin-left: 15px;
-   } 
-}
-
 @media screen and (min-width: 1050px) and (max-width: 1400px){
     .header__logo > a > img{
         margin-top: 42px;
@@ -92,52 +30,25 @@
     }
 }
 
-
-
-.footer{
-    background: #016436;
-    padding: 46px 0;
-
-}
-
-.wrapper__footer{
-    width: 1230px;
-    margin: 0 auto;
-    flex-shrink: 0;
-
-}
-
-.footer_items{
-    overflow: hidden;
-}
-
-.footer_item{
-    width: 26%;
-    float: left;
-}
-.footer__item{
-    width: 25%;
-    float: left;
-}
-@media screen and (max-width: 768px){
-    .footer{
-        margin-top: 50px;
-        padding-top: 30px;
-        padding-bottom: 20px;
-    }
-    
-    .wrapper__footer{
-        width: 320px;
-    }
-
-}
-
 @media screen and (min-width:640px) and (max-width: 1050px) {
     .header__logo > a > img{
-        padding: 0 5px;
         width: 200px;
         height: 55px;
         margin-top: 40px;
         margin-left: 15px;
+   } 
+}
+
+@media screen and (min-width:320px) and (max-width:640px) {
+    .header{
+        height: 50px;
+        background-color: #fff;
+        outline: none;
+        border-bottom: solid #bbb 0.5px;
+    }
+   .header__logo > a > img{
+        width: 130px;
+        height: 35px;
+        margin: 5px 0 5px 25px ;
    } 
 }

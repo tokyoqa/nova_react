@@ -6,21 +6,19 @@ import Webcam from "react-webcam";
 import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
-import {useEffect} from 'react';
 
 export  default function App({id, secretWord}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
 	const minutes = Math.floor(timeLeft/60);
 	const seconds = timeLeft - minutes * 60;
 	const Ref = useRef(null);
-    const [timer, setTimer] = useState('5');
+  const [timer, setTimer] = useState('5');
 	const [statusVideo, setStatusVideo] = useState();
 	const webcamRef = useRef(null);
 	const mediaRecorderRef = useRef(null);
 	let 	navigate = useNavigate(); 
 	const [videoSrc, setVideoSrc] = useState(null);
 	const [open, setOpen] = React.useState(false);
-	let 	options = {};
 	const [openSuccess, setSuccess] = React.useState(false);
 	const [openError, setError] = React.useState(false)
 	const [openErrorWord, setErrorWord] = React.useState(false)
@@ -28,14 +26,15 @@ export  default function App({id, secretWord}) {
 	const [openError04, setError04] = React.useState(false)
 	const [openWarning, setWarning] = React.useState(false)
 	const [recordedChunks, setRecordedChunks] = useState([]);
+  const [openTimer, setOpenTimer] = useState(false)
+	let 	options = {};
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
   });
-  
+
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-
 
 	// useEffect(() => {
 	// 	if(!id){
@@ -44,16 +43,14 @@ export  default function App({id, secretWord}) {
 	// });
   
  const handleDataAvailable = ({ data }) => { 
-   
   if (data.size > 0) { 
-  //  setRecordedChunks((prev) => prev.concat(data));
   setRecordedChunks([data]) 
   } 
- }; 
- 
- const startVideo = () =>   {
-  hideBtn()
+ };
 
+ // Start recording video
+ const startVideo = () => {
+  hideBtn()
   onClickReset(); 
   try {
     mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, { mimeType: 'audio/webm' });
@@ -64,7 +61,6 @@ export  default function App({id, secretWord}) {
     mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, { mimeType: 'video/mp4' });
   }
   catch (err2) {
-    // If fallback doesn't work either. Log / process errors.
     console.error({err1});
     console.error({err2})
   }
@@ -74,7 +70,6 @@ export  default function App({id, secretWord}) {
    handleDataAvailable 
   ); 
   mediaRecorderRef.current.start(); 
-   console.log(blob)
   onClickReset(); 
   setTimeout(event => { 
    mediaRecorderRef.current.stop(); 
@@ -84,22 +79,21 @@ export  default function App({id, secretWord}) {
   // --** SEND FILE **-- //
   const sendVideoFile = () => { 
   	const formDate = new FormData();
+    const temp = 1
     setOpen(!open);  // Open loading menu
-    const tempId = 1
     if(!recordedChunks.length){
       setErrorNull(true)
       setOpen(false)
     }
     else{
-
     formDate.append( 
     'video', 
       blob 
     ) 
     formDate.append( 
     'id',
-    id
-    // tempId
+    // id
+    temp
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
@@ -114,41 +108,43 @@ export  default function App({id, secretWord}) {
         }, 
         enctype: "multipart/form-data",
         transformRequest: (d) => d
-
       } 
       )  
       .then((res) => { 
       setOpen(false);  
       if (res.data.statusCode === 1){ 
         setErrorWord(true)
-        console.log(res) 
+        console.log(res.data) 
       } 
-      else if(res.data.statusCode === 2){ 
-        setError(true) 
-        console.log(res) 
+      else if(res.data.statusCode === 2){
+
+
+        navigate('/videoAgreement')
+        console.log(res.data)
+        setSuccess(true)
+        console.log(res.data) 
       } 
       else if(res.data.statusCode === 3){ 
         setWarning(true) 
-      console.log(res) 
+        console.log(res.data) 
       } 
       else if(res.data.statusCode === 4){ 
         setError04(true) 
-      console.log(res) 
+        console.log(res.data) 
       } 
       else{ 
-      navigate('/finish')
-      console.log(res.data) 
-      setSuccess(true)
+        navigate('/videoAgreement')
+        console.log(res.data) 
+        setSuccess(true)
       } 
       }) 
       .catch(error =>{ 
-      console.error(error) 
-      setOpen(false) 
-      setError(true) 
+        console.error(error) 
+        setOpen(false) 
+        setError(true) 
       }) 
     }
   }
-
 
  const custVideoConstraints = { 
   width: 640, 
@@ -164,142 +160,148 @@ export  default function App({id, secretWord}) {
  
  // Timer function  
  const getTimeRemaining = (e) => { 
-        const total = Date.parse(e) - Date.parse(new Date()); 
-        const seconds = Math.floor((total / 1000) % 60); 
-        const minutes = Math.floor((total / 1000 / 60) % 60); 
-        const hours = Math.floor((total / 1000 / 60 / 60) % 24); 
-        return { 
-            total, hours, minutes, seconds 
-        }; 
-    } 
-   
-   
-    const startTimer = (e) => { 
-        let { total, hours, minutes, seconds }  
-                    = getTimeRemaining(e); 
-        if (total >= 0) { 
-            setTimer( 
-    (seconds > 9 ? seconds :  seconds) 
-            ) 
-        } 
-     if( seconds == 0){ 
-  const handleStopCaptureClick = () => { 
-   if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
-   mediaRecorderRef.current.stop(); 
-   } 
-  }; 
-  setStatusVideo('Записано') 
+    const total = Date.parse(e) - Date.parse(new Date()); 
+    const seconds = Math.floor((total / 1000) % 60); 
+    const minutes = Math.floor((total / 1000 / 60) % 60);   
+    const hours = Math.floor((total / 1000 / 60 / 60) % 24); 
+    return { 
+        total, hours, minutes, seconds 
+    }; 
   } 
-    } 
    
-    const clearTimer = (e) => {   
-        setTimer('5'); 
-        if (Ref.current) clearInterval(Ref.current); 
-        const id = setInterval(() => { 
-            startTimer(e); 
-        }, 1000) 
-        Ref.current = id; 
+const startTimer = (e) => {
+  let { total, seconds } = getTimeRemaining(e); 
+  if (total >= 0) {
+    setTimer((seconds > 9 ? seconds :  seconds))
+  }
+  if( seconds === 0){
+  const handleStopCaptureClick = () => { 
+    if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
+      mediaRecorderRef.current.stop(); 
     } 
-   
-    const getDeadTime = () => { 
-        let deadline = new Date(); 
-        deadline.setSeconds(deadline.getSeconds() + 5); 
-        return deadline; 
-    } 
-   
-    const onClickReset = () => { 
-        clearTimer(getDeadTime()); 
-    } 
-		const remakeVideo = () => {
-      console.log(recordedChunks)
-      setRecordedChunks(null)
-      setRecordedChunks([null])
-      startVideo()
-    } 
-  
-    const hideBtn = () =>{
-      document.getElementById('start-btn').style.visibility="hidden"
-    }
+  }; 
+    setStatusVideo('Записано') 
+  }
+  }
 
-    const closeError = (event, reason) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-      setError(false); 
-      setError04(false) 
-      setSuccess(false);
-      setWarning(false);
-      setErrorNull(false)
-      setErrorWord(false)
-    };
+   
+  const clearTimer = (e) => {   
+      setTimer('5'); 
+      if (Ref.current) clearInterval(Ref.current); 
+      const id = setInterval(() => { 
+          startTimer(e); 
+      }, 1000) 
+      Ref.current = id; 
+  } 
+  
+  const getDeadTime = () => { 
+      let deadline = new Date(); 
+      deadline.setSeconds(deadline.getSeconds() + 5); 
+      return deadline; 
+  } 
+  
+  const onClickReset = () => { 
+      clearTimer(getDeadTime()); 
+  } 
+  const remakeVideo = () => {
+    setRecordedChunks(null)
+    setRecordedChunks([null])
+    startVideo()
+  } 
+
+  const hideBtn = () =>{
+    document.getElementById('start-btn').style.visibility="hidden"
+  }
+
+  const closeError = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setError(false); 
+    setError04(false) 
+    setSuccess(false);
+    setWarning(false);
+    setErrorNull(false)
+    setErrorWord(false)
+  };
      
-  return (
-    <>
-      <div className="camera-form">	
-			<Webcam
-			className="video-item"
-			ref={webcamRef}
-			height={500}
-			mirrored={true}
-			audio={true}
-			muted={true}
-			videoConstraints={custVideoConstraints}
-			audioConstraints={custAudioConstraints}
-			/>
-      </div>
-			<div className="video-status">Status: {statusVideo}</div>
-			<div className="btn-items">
-					<Button id="start-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={startVideo}>
-            Запись
-          </Button>
-					<Button id="send-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={sendVideoFile}>
-            Отправить
-          </Button>
-					<Button id="reset-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
-            Переснять 
-          </Button>
-				<div> Произнесите слово [ <strong>{secretWord}</strong> ] четко и громко для прохождения идентификации </div>
-				<h2 className="timer-Console">{timer}</h2>
-			</div>
-			
-     
-	  <Backdrop 
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
-          open={open}> 
-      <CircularProgress color="inherit" /> 
-    </Backdrop> 
-		<Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={openSuccess} autoHideDuration={3000} onClose={closeError}>
-        <Alert onClose={closeError} severity="success" sx={{ width: '100%' }}>
-          Успешно!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ошибка! Повторите заново!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openErrorWord} autoHideDuration={3000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ошибка! Произнесите слово еще раз. Громко и четко
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openErrorNull} autoHideDuration={3000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ошибка! Нету данных для отправки
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openError04} autoHideDuration={3000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ошибка сервиса. 
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>
-        <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
-          Пожалуйста ожидайте!
-        </Alert>
-      </Snackbar>
-    </Stack>
-    </>
-  );
+return (
+  <>
+    <div className="camera-form">	
+    <Webcam
+    className="video-item"
+    ref={webcamRef}
+    height={400}
+    mirrored={true}
+    audio={true}
+    muted={true}
+    videoConstraints={custVideoConstraints}
+    audioConstraints={custAudioConstraints}
+    />
+    </div>
+    {
+      (!openTimer)
+      ? console.log('none')
+      :
+      <Backdrop 
+      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
+      open={openTimer}>
+      <p> Через {}сек начнется запись </p>
+    </Backdrop>
+    }
+    <div className="video-status">Status: {statusVideo}</div>
+    <div className="btn-items">
+        <Button id="start-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={startVideo}>
+          Запись
+        </Button>
+        <Button id="send-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={sendVideoFile}>
+          Отправить
+        </Button>
+        <Button id="reset-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
+          Переснять 
+        </Button>
+      <div> Произнесите слово [ <strong>{secretWord}</strong> ] четко и громко для прохождения идентификации </div>
+      <h2 className="timer-Console">{timer}</h2>
+    </div>
+  
+
+  <Backdrop 
+    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
+    open={open}>
+    <CircularProgress color="inherit" /> 
+  </Backdrop> 
+  <Stack spacing={2} sx={{ width: '100%' }}>
+    <Snackbar open={openSuccess} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="success" sx={{ width: '100%' }}>
+        Успешно!
+      </Alert>
+    </Snackbar>
+    <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+        Ошибка! Повторите заново!
+      </Alert>
+    </Snackbar>
+    <Snackbar open={openErrorWord} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+        Ошибка! Произнесите слово еще раз. Громко и четко
+      </Alert>
+    </Snackbar>
+    <Snackbar open={openErrorNull} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+        Ошибка! Нету данных для отправки
+      </Alert>
+    </Snackbar>
+    <Snackbar open={openError04} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+        Ошибка сервиса. 
+      </Alert>
+    </Snackbar>
+    <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
+        Пожалуйста ожидайте!
+      </Alert>
+    </Snackbar>
+  </Stack>
+  </>
+);
 }

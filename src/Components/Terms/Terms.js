@@ -33,11 +33,11 @@ export const Terms = ({ id }) => {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-  useEffect(() => {
-    if(!id){
-      navigate('/')
-    }
-  });
+  // useEffect(() => {
+  //   if(!id){
+  //     navigate('/')
+  //   }
+  // });
 
   const handleChangeChecked = (event) => {
     if(!event.target.checked){
@@ -61,10 +61,22 @@ export const Terms = ({ id }) => {
             console.log(res.data);
             setOpen(false);
             if (res.data.statusCode === 1) {
-            } else if (res.data.statusCode === 2) {
-            } else if (res.data.statusCode === 3) {
-            } else if (res.data.statusCode === 4) {
-            } else {
+              setError(true)
+              console.log(res.data)
+            } 
+            else if (res.data.statusCode === 2) {
+              setError(true)
+              console.log(res.data)
+            } 
+            else if (res.data.statusCode === 3) {
+              setError(true)
+              console.log(res.data)
+            } 
+            else if (res.data.statusCode === 4) {
+              setError(true)
+              console.log(res.data)
+            } 
+            else {
               navigate("/video");
               setOpen(false);
               
@@ -144,7 +156,7 @@ export const Terms = ({ id }) => {
           />
           </CardContent>
         <CardActions >
-          <Button sx={{margin: '0 auto', marginTop: '20px'}} variant="contained" 
+          <Button sx={{margin: '0 auto', marginTop: '20px'}} variant="outlined" 
                   endIcon={<AssignmentOutlinedIcon />} onClick={disagreeSubmit}>
             Закончить
           </Button>

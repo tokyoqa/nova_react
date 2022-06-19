@@ -50,11 +50,11 @@ import '../../Config';
     return () => URL.revokeObjectURL(objectUrlBack)
   }, [selectedFileBack])
 
-    useEffect(() => {
-      if(!id){
-        navigate('/')
-      }
-    });
+  // useEffect(() => {
+  //   if(!id){
+  //     navigate('/')
+  //   }
+  // });
 
 const onFileUpload = () => {
   if(!selectedFileBack || !selectedFileFront){
@@ -113,10 +113,6 @@ const onFileUpload = () => {
         setErrorBack(true)
       }
       else{
-      console.log(selectedFileBack)
-      console.log(selectedFileFront)
-      console.log(id)
-      console.log(res.data)
       setOpen(true); 
       axios({
         method: 'POST',

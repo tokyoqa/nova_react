@@ -3,7 +3,8 @@ import {IMaskInput} from "react-imask";
 import axios from "axios";
 import React, { useState } from "react";
 import "./Identification.css";
-import { useNavigate } from "react-router";
+import { useNavigate} from "react-router";
+import { useRef } from 'react';
 import '../../Config';
 import { useEffect } from 'react';
 import MuiAlert from '@mui/material/Alert';
@@ -19,20 +20,64 @@ export const Identification  = ({id}) => {
     const [openWarning, setWarning] = React.useState(false)
     const [openErrorNull, setErrorNull] = React.useState(false)
     const url = global.config.REST_API + 'api/reset?id='
-    const [counter, setCounter] = React.useState(60);
-    const [isDisabled, setIsDisabled] = useState(false);
+    const [timer, setTimer] = useState('00:00:00');
+    const Ref = useRef(null);
+    const [isDisabled, setIsDisabled] = useState(true);
 
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
+    // useEffect(() => {
+    //   if(!id){
+    //     navigate('/')
+    //   }
+    // });
+    const getTimeRemaining = (e) => {
+        const total = Date.parse(e) - Date.parse(new Date());
+        const seconds = Math.floor((total / 1000) % 60);
+        const minutes = Math.floor((total / 1000 / 60) % 60);
+        const hours = Math.floor((total / 1000 / 60 / 60) % 24);
+        return {
+            total, hours, minutes, seconds
+      };
+    }
+    const startTimer = (e) => {
+        let { total, hours, minutes, seconds } 
+        = getTimeRemaining(e);
+        if (total >= 0) {
+        setTimer(
+          (hours > 9 ? hours : '0' + hours) + ':' +
+          (minutes > 9 ? minutes : '0' + minutes) + ':'
+          + (seconds > 9 ? seconds : '0' + seconds)
+        )
+        }
+        if(seconds === 0){
+          setIsDisabled(false)
+        }
+  }
+    const clearTimer = (e) => {
+      setTimer('00:00:60');
+      if (Ref.current) clearInterval(Ref.current);
+      const id = setInterval(() => {
+          startTimer(e);
+      }, 1000)
+      Ref.current = id;
+    } 
+    const getDeadTime = () => {
+      let deadline = new Date();
+      deadline.setSeconds(deadline.getSeconds() + 60);
+      return deadline;
+    }
     useEffect(() => {
-      if(!id){
-        navigate('/')
-      }
-    });
+      clearTimer(getDeadTime());
+    }, []);
 
+    const onClickReset = () => {
+      clearTimer(getDeadTime());
+    }
+    // Post code 
     function postSecureCode(){
-        if(!secureCode && secureCode < 4){
+        if(!secureCode || secureCode.length < 4){
           setErrorNull(true)
       }
       else{
@@ -69,6 +114,7 @@ export const Identification  = ({id}) => {
 
       const resendNumber = () => {
         setIsDisabled(true)
+        onClickReset()
         axios
         .get(url + id)
           .then((res) => {
@@ -98,7 +144,6 @@ export const Identification  = ({id}) => {
             setSuccess(false)
             setError(true)
           })
-          console.log(id)
       }
     const closeError = (event, reason) => {
       if (reason === 'clickaway') {
@@ -131,12 +176,12 @@ return(
         <Button color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postSecureCode} >
             Продолжить
         </Button>
-        <Button disabled={isDisabled} color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={resendNumber}>
+        <Button disabled={isDisabled} color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="outlined" onClick={resendNumber}>
             Отправить снова
         </Button>
       </CardContent>
       <Typography sx={{textAlign: 'center'}}>
-        Отправить код повторно через  00:{counter}
+        Отправить код повторно через  {timer}
       </Typography>
     </Card>       
       <Backdrop 

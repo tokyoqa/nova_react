@@ -5,17 +5,17 @@ import logo from '../assets/svg/logo.svg'
 
 export default function Layout () {
 return (
-<div>
-  <header className={styles.header}>
-    <div className={styles.container}>
-      <div className={styles.header__logo }> 
-        <a href="/"> <img src={logo} alt="img-logo"/> </a>
+  <div>
+    <header className={styles.header}>
+      <div className={styles.container}>
+        <div className={styles.header__logo }> 
+          <a href="/"> <img src={logo} alt="img-logo"/> </a>
+        </div>
       </div>
-    </div>
-  </header>
-  <main className={styles.oulet}>
-    <Outlet />
-  </main>
-</div>
+    </header>
+    <main className={styles.oulet}>
+      <Outlet />
+    </main>
+  </div>
   );
 }
