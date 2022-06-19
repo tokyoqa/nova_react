@@ -3,6 +3,7 @@ CardContent, Typography, FormControl, MenuItem } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import {useNavigate} from "react-router";
 import { useInputValue } from 'react-haiku';
+import { IMaskInput } from 'react-imask';
 import React, {useState} from "react";
 import axios from "axios";
 import '../../Config';
@@ -20,7 +21,9 @@ const [openTimeOut, setTimeOut] = React.useState(false);
 const [openError500, setError500] = React.useState(false)
 const [openErrorCount, setErrorCount] = React.useState(false)
 const [code, setCode] = React.useState('');
-let   navigate = useNavigate(); 
+let   navigate = useNavigate();
+const kgMask = '(000) 000 - 000'
+const ruMask = '(000) 000 - 00 - 00'
 let fullNumber = code + number
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -28,9 +31,8 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 const handleChangeCode = (event) => {
   setCode(event.target.value);
-
+  setNumber('')
 };
-
 const closeError = (event, reason) => {
   if (reason === 'clickaway') {
     return;
@@ -44,11 +46,10 @@ const closeError = (event, reason) => {
 };
 
  async function postData(){
-  // if(!number.length || number.length < 9){
-  //   setNumberError(true)
-  // }
-  // else 
-  if (!code){
+  if(!number.length){
+    setNumberError(true)
+  }
+  else if (!code){
     setNumberErrorCode(true)
   }
   else
@@ -114,7 +115,7 @@ const closeError = (event, reason) => {
 
 return (
   <div className='main-container'>
-    <Card className='main-card' sx={{boxShadow: 'none'}}>
+    <Card className='main-card'>
       <CardHeader  className='main-card__header' title="Удаленная идентификация"/>
       <CardContent className='main-card__content'>
         <Typography sx={{marginBottom: '20px'}} variant="h5" color="text.secondary">
@@ -133,17 +134,13 @@ return (
             <MenuItem value={+7}>   +7 </MenuItem>
           </Select>
       </FormControl>
-      <TextField sx={{marginTop: '9px'}}
-        value={number}
-        id="outlined-number"
-        label="Номер"
-        type="number"
-        placeholder='700 000 000'
-        onChange={setNumber}
-        InputLabelProps={{
-          shrink: true,
-      }}
-      />
+          <IMaskInput
+          mask={(code === +996  || code === '' ? kgMask : ruMask)}
+          className="form-input-phone"
+          onAccept={(value) => {setNumber(value)}}
+          value={number}
+          placeholder={(code === +996  || code === ''  ? "(000) 000-000" : '(000) 000 - 00 - 00')}
+          />
         <Button 
           color="success" 
           className="main_submit" 

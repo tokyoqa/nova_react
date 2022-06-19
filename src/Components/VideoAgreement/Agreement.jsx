@@ -4,7 +4,6 @@ import MuiAlert from '@mui/material/Alert';
 import Webcam from "react-webcam";
 import axios from "axios";
 import {useNavigate} from "react-router";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import '../../Config';
 
 export  default function VideoAgreement({id}) {
@@ -256,7 +255,8 @@ return (
       <p> Через {}сек начнется запись </p>
     </Backdrop>
     }
-    <div className="video-status">Status: {statusVideo}</div>
+    <div className="video-agreement_text">Произнесите "Я соглашаюсь на обработку персональных данных" для того чтобы пройти идентификацию.</div>
+    <div className="video-status"> Статус записи видео: {statusVideo}</div>
     <div className="btn-items">
         <Button
           sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 

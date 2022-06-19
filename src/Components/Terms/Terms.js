@@ -156,7 +156,7 @@ export const Terms = ({ id }) => {
           />
           </CardContent>
         <CardActions >
-          <Button sx={{margin: '0 auto', marginTop: '20px'}} variant="contained" 
+          <Button sx={{margin: '0 auto', marginTop: '20px'}} variant="outlined" 
                   endIcon={<AssignmentOutlinedIcon />} onClick={disagreeSubmit}>
             Закончить
           </Button>

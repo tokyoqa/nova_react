@@ -75,8 +75,9 @@ export const Identification  = ({id}) => {
     const onClickReset = () => {
       clearTimer(getDeadTime());
     }
+    // Post code 
     function postSecureCode(){
-        if(!secureCode && secureCode < 4){
+        if(!secureCode || secureCode.length < 4){
           setErrorNull(true)
       }
       else{
