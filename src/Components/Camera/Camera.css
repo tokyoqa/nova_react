@@ -25,16 +25,9 @@
   .demo-image-preview-fullscreen > img{
     width: 100%;
   }
-  react-html5-camera-photo>img, .react-html5-camera-photo > video {
-
-  }
   .camera-item{
-    display: flex;
-    align-items: center;
-    font-size: row;
     width: auto; 
-    height: 650px;
-    text-align: center;
+    height: 80%;
     overflow: hidden;
   }
 }
