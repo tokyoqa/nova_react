@@ -79,8 +79,7 @@ export  default function App({id, secretWord}) {
   // --** SEND FILE **-- //
   const sendVideoFile = () => { 
   	const formDate = new FormData();
-    const temp = 1
-    setOpen(!open);  // Open loading menu
+    setOpen(!open); 
     if(!recordedChunks.length){
       setErrorNull(true)
       setOpen(false)
@@ -92,8 +91,7 @@ export  default function App({id, secretWord}) {
     ) 
     formDate.append( 
     'id',
-    // id
-    temp
+    id
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
@@ -117,10 +115,6 @@ export  default function App({id, secretWord}) {
         console.log(res.data) 
       } 
       else if(res.data.statusCode === 2){
-
-
-        navigate('/videoAgreement')
-        console.log(res.data)
         setSuccess(true)
         console.log(res.data) 
       } 
@@ -266,7 +260,7 @@ return (
   
 
   <Backdrop 
-    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
+    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex  .drawer + 1 }} 
     open={open}>
     <CircularProgress color="inherit" /> 
   </Backdrop> 

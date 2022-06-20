@@ -115,10 +115,10 @@ const closeError = (event, reason) => {
 
 return (
   <div className='main-container'>
-    <Card className='main-card'>
+    <Card className='main-card' sx={{boxShadow: 'none'}}>
       <CardHeader  className='main-card__header' title="Удаленная идентификация"/>
       <CardContent className='main-card__content'>
-        <Typography sx={{marginBottom: '20px'}} variant="h5" color="text.secondary">
+        <Typography sx={{marginBottom: '15px'}} variant="h5" color="text.secondary">
           Введите номер:
         </Typography>
         <FormControl required sx={{ m: 1, minWidth: 80 }}>

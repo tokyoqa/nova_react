@@ -245,7 +245,7 @@ return (
     audioConstraints={custAudioConstraints}
     />
     </div>
-    {
+    {/* {
       (!openTimer)
       ?<> </>
       :
@@ -254,7 +254,7 @@ return (
       open={openTimer}>
       <p> Через {}сек начнется запись </p>
     </Backdrop>
-    }
+    } */}
     <div className="video-agreement_text">Произнесите "Я соглашаюсь на обработку персональных данных" для того чтобы пройти идентификацию.</div>
     <div className="video-status"> Статус записи видео: {statusVideo}</div>
     <div className="btn-items">

@@ -158,8 +158,8 @@ export const Identification  = ({id}) => {
 
 return(
   <div className="ident_form">
-    <Card className={"card-container-ident"}>
-      <CardHeader  sx={{textAlign: "center", padding: 0, marginTop: 2}}
+    <Card className="card-container-ident" sx={{boxShadow: 'none'}}>
+      <CardHeader  sx={{textAlign: "center", marginTop: 2}}
         title="Удаленная идентификация"
       />
       <CardContent sx={{fontSize: "20px", textAlign: 'center'}}>

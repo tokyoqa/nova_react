@@ -139,13 +139,14 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   
 return (
   <div className="camera-container">
-    <div className='camera-item'>
     {
       (dataUri)
         ?<ImagePreview dataUri={dataUri}
             isFullscreen={isFullscreen}
         />
-        :<Camera onTakePhotoAnimationDone = {handleTakePhotoAnimationDone}
+        :
+      <div className='camera-item'>
+        <Camera onTakePhotoAnimationDone = {handleTakePhotoAnimationDone}
           isFullscreen={isFullscreen}
           idealFacingMode={FACING_MODES.USER}
           onTakePhoto = {(dataUri) => { handleTakePhoto(dataUri); } }
@@ -161,8 +162,9 @@ return (
           onCameraStart = { (stream) => { handleCameraStart(stream); } }
           onCameraStop = { () => { handleCameraStop(); } }
         />
+      </div>
+
     }
-    </div>
     <div className="btn-group-camera">
     <Button sx={{width: '120px', marginRight: "5px", marginTop: 1}} variant="contained" color="success" onClick={resetPhoto} >
       Переснять

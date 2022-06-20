@@ -137,7 +137,7 @@ export const Terms = ({ id }) => {
 
   return (
     <div>
-      <Card className="cardStyle">
+      <Card className="cardStyle" sx={{boxShadow: 'none'}}>
           <CardContent>
             <Typography sx={{textAlign: 'center'}} gutterBottom variant="h5" component="p">
               Удаленная Идентификация
