@@ -26,7 +26,7 @@
     width: 100%;
   }
   react-html5-camera-photo>img, .react-html5-camera-photo > video {
-    width: 100%
+    width: 70%
   }
   .camera-item{
     width: 100%;
