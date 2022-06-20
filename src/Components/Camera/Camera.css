@@ -29,10 +29,9 @@
 
   }
   .camera-item{
-    min-width: 100%; 
-    min-height: 80%; 
     width: auto; 
-    height: auto;
+    height: 650px;
+    text-align: center;
     overflow: hidden;
   }
 }

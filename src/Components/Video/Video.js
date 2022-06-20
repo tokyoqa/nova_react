@@ -249,7 +249,7 @@ return (
       <p> Через {}сек начнется запись </p>
     </Backdrop>
     }
-    <div className="video-status">Status: {statusVideo}</div>
+    <div className="video-status">Статус записи видео: {statusVideo}</div>
     <div className="btn-items">
         <Button id="start-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={startVideo}>
           Запись
