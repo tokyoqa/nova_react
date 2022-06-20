@@ -5,6 +5,7 @@ import Webcam from "react-webcam";
 import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 export  default function VideoAgreement({id}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
@@ -26,6 +27,7 @@ export  default function VideoAgreement({id}) {
 	const [openWarning, setWarning] = React.useState(false)
 	const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
+  
 	let 	options = {};
   const tempID = '1'
 
@@ -216,7 +218,7 @@ export  default function VideoAgreement({id}) {
     } 
   
     const hideBtn = () =>{
-      document.getElementById('start-btn').style.visibility="hidden"
+      document.getElementById('start-btn').style.disabled="true"
     }
 
     const closeError = (event, reason) => {
@@ -230,6 +232,20 @@ export  default function VideoAgreement({id}) {
       setErrorNull(false)
       setErrorWord(false)
     };
+
+    const renderTime = ({ remainingTime }) => {
+      return (
+        <div className="timer">
+          <div className="text">Запись начнется через</div>
+          <div className="value">{remainingTime}</div>
+          <div className="text">секунд</div>
+        </div>
+      );
+    };
+    const startOpenTimer = () => {
+      setOpenTimer(true)
+     }
+    
      
 return (
   <>
@@ -245,16 +261,29 @@ return (
     audioConstraints={custAudioConstraints}
     />
     </div>
-    {/* {
+    {
       (!openTimer)
-      ?<> </>
+      ? null
       :
-      <Backdrop 
+      <Backdrop
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
       open={openTimer}>
-      <p> Через {}сек начнется запись </p>
-    </Backdrop>
-    } */}
+      <div className="App">
+        <div className="timer-wrapper">
+          <CountdownCircleTimer
+            isPlaying
+            duration={3}
+            colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+            colorsTime={[3, 2.5, 1.5, 0]}
+            onComplete={() => ( { shouldRepeat: false, delay: 1 }, setOpenTimer(false), startVideo())}
+            >
+            {renderTime}  
+
+          </CountdownCircleTimer>
+        </div>
+       </div>
+      </Backdrop>
+    }
     <div className="video-agreement_text">Произнесите "Я соглашаюсь на обработку персональных данных" для того чтобы пройти идентификацию.</div>
     <div className="video-status"> Статус записи видео: {statusVideo}</div>
     <div className="btn-items">
@@ -263,7 +292,7 @@ return (
           id="start-btn" 
           color='success' 
           variant="contained" 
-          onClick={startVideo}>
+          onClick={startOpenTimer}>
             Запись
         </Button>
         <Button 

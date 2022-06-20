@@ -10,7 +10,7 @@
 
 @media screen and (min-width:320px) and (max-width:640px) {
   .demo-image-preview {
-    height: 75%;  
+    height: 75%;
   }
   .demo-image-preview-fullscreen > img{
     width: 75%;
@@ -19,14 +19,13 @@
     width: 75%;
     height: auto;
     margin: 0 auto;
-} 
+  } 
 }
 
-.btn-group-camera{
+.btn-group-camera{                                                            
   text-align: center;
   margin-top: 15px;
   margin-right:20 17px;
-
 }
 
 .header{

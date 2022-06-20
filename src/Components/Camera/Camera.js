@@ -18,10 +18,10 @@ const  CameraJS = ({id, setSecretWord}) => {
   const [openWarning, setWarning] = React.useState(false)
 
   // useEffect(() => {
-  //     if(!id){
-  //       navigate('/')
-  //     }
-  //   });
+    //     if(!id){
+    //       navigate('/')
+    //     }
+    //   });
 
 function handleTakePhoto (dataUri) {
   setDataUri(dataUri)  
@@ -113,8 +113,6 @@ const closeError = (event, reason) => {
   setError(false);
   setError04(false)
   setWarning(false);
-
-
 };
 
 
@@ -150,7 +148,7 @@ return (
           isFullscreen={isFullscreen}
           idealFacingMode={FACING_MODES.USER}
           onTakePhoto = {(dataUri) => { handleTakePhoto(dataUri); } }
-          onCameraError = { (error) => { handleCameraError(error); } }
+          onCameraError = { (error) => { handleCameraError(error); } }  
           imageType = {IMAGE_TYPES.PNG}
           imageCompression = {0.97}
           isMaxResolution = {true}
@@ -166,7 +164,7 @@ return (
     }
     <div className="btn-group-camera">
     <Button  sx={{width: '120px', marginRight: '10px'}} variant="outlined" color="success" onClick={resetPhoto} >
-      Заново
+       Переснять
     </Button>
     <Button  sx={{width: '120px'}} variant="contained" color="success" onClick={sendPhoto} >
       Готово 

@@ -215,7 +215,7 @@ return (
                   src={previewFront}
                   alt=''
                   />
-                  <input 
+                  <input
                       type="file" 
                       onChange={onFileChangeFront}
                       name="front_passport" 
