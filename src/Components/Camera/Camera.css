@@ -30,7 +30,7 @@
   }
   .camera-item{
     min-width: 100%; 
-    min-height: 100%; 
+    min-height: 80%; 
     width: auto; 
     height: auto;
     overflow: hidden;
