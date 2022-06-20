@@ -30,7 +30,6 @@
   .camera-item{
     width: auto;
     height: 600px;
-    border: 1px solid;
     overflow: hidden;
   }
   #outer-circle {
@@ -39,7 +38,7 @@
     width: 75px;
     background-color: hsla(0,0%,100%,.4);
     z-index: 1;
-    top: -60px;
+    top: -100px;
   }
 }
 
