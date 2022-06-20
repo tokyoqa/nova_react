@@ -221,7 +221,7 @@ const startTimer = (e) => {
      
 return (
   <>
-    <div className="video-form">	
+    <div className="video-form">
     <Webcam
     className="video-item"
     ref={webcamRef}
@@ -237,30 +237,43 @@ return (
       (!openTimer)
       ? console.log('none')
       :
-      <Backdrop 
+      <Backdrop
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
       open={openTimer}>
-      <p> Через {}сек начнется запись </p>
+      <p> Через {} сек начнется запись </p>
     </Backdrop>
     }
-    <div className="video-status">Статус записи видео: {statusVideo}</div>
+    <div className="video-status">Статус записи: {statusVideo}</div>
     <div className="btn-items">
-        <Button id="start-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={startVideo}>
+        <Button 
+          id="start-btn" 
+          color='success' 
+          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
+          variant="contained" 
+          onClick={startVideo}
+          >
           Запись
         </Button>
-        <Button id="send-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={sendVideoFile}>
+        <Button 
+          id="send-btn" 
+          color='success' 
+          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
+          variant="contained"
+          onClick={sendVideoFile}
+          >
           Отправить
         </Button>
-        <Button id="reset-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
+        <Button 
+          id="reset-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
           Переснять 
         </Button>
-      <div> Произнесите слово [ <strong>{secretWord}</strong> ] четко и громко для прохождения идентификации </div>
+      <div className="video-text_word"> Произнесите слово <strong>{secretWord}</strong> четко и громко для прохождения идентификации </div>
       <h2 className="timer-Console">{timer}</h2>
     </div>
   
 
   <Backdrop 
-    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex  .drawer + 1 }} 
+    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
     open={open}>
     <CircularProgress color="inherit" /> 
   </Backdrop> 
