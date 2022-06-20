@@ -39,7 +39,6 @@ h1{
   margin-top: 10px;
   width: auto;
   height: 400px;
-  border: 1px solid #000;
   transform: rotateY(180deg);
   -webkit-transform:rotateY(180deg); /*Safari and Chrome */
   -moz-transform:rotateY(180deg); /*Firefox*/

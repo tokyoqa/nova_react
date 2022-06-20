@@ -221,7 +221,7 @@ const startTimer = (e) => {
      
 return (
   <>
-    <div className="camera-form">	
+    <div className="video-form">	
     <Webcam
     className="video-item"
     ref={webcamRef}

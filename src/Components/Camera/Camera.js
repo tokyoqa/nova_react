@@ -151,7 +151,6 @@ return (
           idealFacingMode={FACING_MODES.USER}
           onTakePhoto = {(dataUri) => { handleTakePhoto(dataUri); } }
           onCameraError = { (error) => { handleCameraError(error); } }
-          idealResolution = {{width: 300, height: 300}}
           imageType = {IMAGE_TYPES.PNG}
           imageCompression = {0.97}
           isMaxResolution = {true}
