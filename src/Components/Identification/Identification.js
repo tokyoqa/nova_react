@@ -27,11 +27,11 @@ export const Identification  = ({id}) => {
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
-    // useEffect(() => {
-    //   if(!id){
-    //     navigate('/')
-    //   }
-    // });
+    useEffect(() => {
+      if(!id){
+        navigate('/')
+      }
+    });
     const getTimeRemaining = (e) => {
         const total = Date.parse(e) - Date.parse(new Date());
         const seconds = Math.floor((total / 1000) % 60);
@@ -220,4 +220,5 @@ return(
   </div>
 )
 }
+
 export default Identification;

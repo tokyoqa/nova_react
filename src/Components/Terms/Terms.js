@@ -28,16 +28,16 @@ export const Terms = ({ id }) => {
   const [openError, setError] = React.useState(false);
   const [openError04, setError04] = React.useState(false);
   const [openWarning, setWarning] = React.useState(false);
-  const [openInfo, setInfo] = React.useState(false);
   const [check, setChecked] = React.useState('')
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-  // useEffect(() => {
-  //   if(!id){
-  //     navigate('/')
-  //   }
-  // });
+
+  useEffect(() => {
+    if(!id){
+      navigate('/')
+    }
+  });
 
   const handleChangeChecked = (event) => {
     if(!event.target.checked){
@@ -48,9 +48,7 @@ export const Terms = ({ id }) => {
     }
   };
 
-
   const agreeSubmit = (event) => {
-  
       if(!check || check === undefined){
         setOpen(false)
         setError(true)
@@ -79,7 +77,6 @@ export const Terms = ({ id }) => {
             else {
               navigate("/video");
               setOpen(false);
-              
           }
         } )
         .catch((err) => {
@@ -119,8 +116,6 @@ export const Terms = ({ id }) => {
         setOpen(false);
       });
       navigate('/finish')
-    
-
   };
 
   const closeError = (event, reason) => {
@@ -131,8 +126,6 @@ export const Terms = ({ id }) => {
     setError04(false);
     setSuccess(false);
     setWarning(false);
-
-
   };
 
   return (
@@ -215,4 +208,5 @@ export const Terms = ({ id }) => {
   
   );
 };
+
 export default Terms;

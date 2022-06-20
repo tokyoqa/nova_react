@@ -6,6 +6,8 @@ import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { useEffect } from "react";
+
 
 export  default function VideoAgreement({id}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
@@ -39,11 +41,11 @@ export  default function VideoAgreement({id}) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-	// useEffect(() => {
-	// 	if(!id){
-	// 		navigate('/')
-	// 	}
-	// });
+	useEffect(() => {
+		if(!id){
+			navigate('/')
+		}
+	});
   
  const handleDataAvailable = ({ data }) => { 
   if (data.size > 0) { 

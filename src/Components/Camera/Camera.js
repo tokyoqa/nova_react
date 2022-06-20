@@ -17,11 +17,11 @@ const  CameraJS = ({id, setSecretWord}) => {
   const [openError04, setError04] = React.useState(false)
   const [openWarning, setWarning] = React.useState(false)
 
-  // useEffect(() => {
-    //     if(!id){
-    //       navigate('/')
-    //     }
-    //   });
+  useEffect(() => {
+        if(!id){
+          navigate('/')
+        }
+      });
 
 function handleTakePhoto (dataUri) {
   setDataUri(dataUri)  
@@ -115,7 +115,6 @@ const closeError = (event, reason) => {
   setWarning(false);
 };
 
-
 const isFullscreen = false
 const ImagePreview = ({ dataUri, isFullscreen }) => {
     let classNameFullscreen = isFullscreen ? 'demo-image-preview-fullscreen' : '';
@@ -197,4 +196,5 @@ return (
 </div>
 );
 }
+
 export default CameraJS;
