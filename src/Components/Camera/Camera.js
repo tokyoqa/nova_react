@@ -165,11 +165,11 @@ return (
 
     }
     <div className="btn-group-camera">
-    <Button sx={{width: '120px', marginRight: "5px", marginTop: 1}} variant="contained" color="success" onClick={resetPhoto} >
-      Переснять
+    <Button  sx={{width: '120px', marginRight: '10px'}} variant="outlined" color="success" onClick={resetPhoto} >
+      Заново
     </Button>
-    <Button sx={{width: '120px', marginTop: 1}} variant="contained" color="success" onClick={sendPhoto} >
-      Готово
+    <Button  sx={{width: '120px'}} variant="contained" color="success" onClick={sendPhoto} >
+      Готово 
     </Button>
     </div>
     
