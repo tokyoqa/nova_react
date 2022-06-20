@@ -26,8 +26,11 @@
     width: 100%;
   }
   react-html5-camera-photo>img, .react-html5-camera-photo > video {
-    width: 70%;
-    height: 70% ;
+    min-width: 100%; 
+    min-height: 100%; 
+    width: auto; 
+    height: auto;
+    overflow: hidden;
   }
   .camera-item{
     width: 100%;
