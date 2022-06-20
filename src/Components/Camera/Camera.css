@@ -29,6 +29,9 @@
 
   }
   .camera-item{
+    display: flex;
+    align-items: center;
+    font-size: row;
     width: auto; 
     height: 650px;
     text-align: center;
