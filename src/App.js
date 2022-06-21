@@ -57,7 +57,7 @@ return(
           />}
         />
         <Route 
-          path='videoAgreement' 
+          path='video-agreement' 
           element={<VideoAgreement
           id={id}
           />}
