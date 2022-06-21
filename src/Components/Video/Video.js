@@ -136,7 +136,7 @@ export  default function App({id, secretWord}) {
         console.log(res.data) 
       } 
       else{ 
-        navigate('/videoAgreement')
+        navigate('/video-agreement')
         console.log(res.data) 
         setSuccess(true)
       } 
@@ -213,7 +213,7 @@ const startTimer = (e) => {
   } 
 
   const hideBtn = () =>{
-    document.getElementById('start-btn').style.disabled="true"
+    document.getElementById('start-btn').style.display = 'none';
   }
 
   const closeError = (event, reason) => {
