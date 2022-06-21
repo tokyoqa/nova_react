@@ -38,11 +38,11 @@ export  default function App({id, secretWord}) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-	// useEffect(() => {
-	// 	if(!id){
-	// 		navigate('/')
-	// 	}
-	// });
+	useEffect(() => {
+		if(!id){
+			navigate('/')
+		}
+	});
 
   
  const handleDataAvailable = ({ data }) => { 
@@ -284,7 +284,7 @@ return (
           color='success' 
           sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
           variant="contained" 
-          onClick={startOpenTimer} // Start timer 
+          onClick={startOpenTimer} 
           >
           Запись
         </Button>
