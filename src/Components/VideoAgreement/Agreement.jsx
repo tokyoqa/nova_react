@@ -5,8 +5,8 @@ import Webcam from "react-webcam";
 import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
+import '../Video/Video.css'
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-
 
 export  default function App({id, secretWord}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
@@ -58,6 +58,8 @@ export  default function App({id, secretWord}) {
 
  // Start recording video
  const startVideo = () => {
+  setRecordedChunks(null)
+  setRecordedChunks([null])
   hideBtn()
   onClickReset(); 
   try {
@@ -106,7 +108,7 @@ export  default function App({id, secretWord}) {
       axios 
     ( 
       { 
-        url: global.config.REST_API + 'api/video', 
+        url: global.config.REST_API + 'api/video-agreement', 
         method: 'POST', 
         data: formDate, 
         headers: { 
@@ -135,7 +137,7 @@ export  default function App({id, secretWord}) {
         console.log(res.data) 
       } 
       else{ 
-        navigate('/videoAgreement')
+        navigate('/finish')
         console.log(res.data) 
         setSuccess(true)
       } 
@@ -205,14 +207,8 @@ const startTimer = (e) => {
   const onClickReset = () => { 
       clearTimer(getDeadTime()); 
   } 
-  const remakeVideo = () => {
-    setRecordedChunks(null)
-    setRecordedChunks([null])
-    startVideo()
-  } 
-
   const hideBtn = () =>{
-    document.getElementById('start-btn').disabled= true
+    // document.getElementById('start-btn').styles.visibility = 'hidden';
   }
 
   const closeError = (event, reason) => {
@@ -301,7 +297,7 @@ return (
           color='success' 
           sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
           variant="contained" 
-          onClick={remakeVideo}>
+          onClick={startOpenTimer}>
             Переснять 
         </Button>
       <h2 className="timer-Console">{timer}</h2>
