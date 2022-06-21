@@ -3,7 +3,6 @@ import MuiAlert from "@mui/material/Alert";
 import React, {useState} from "react";
 import "./Finish.css";
 import { useNavigate } from "react-router";
-import {useEffect } from 'react';
 
 const Finish = ({identType, id}) => {
   // Values
