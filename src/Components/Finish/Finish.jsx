@@ -25,11 +25,7 @@ const Finish = ({identType, id}) => {
     setError04(false);
     setWarning(false);
   };
-  useEffect(() => {
-    if(!id){
-      navigate('/')
-    }
-  });
+
 
   const goHome = () => {
     navigate('/')
