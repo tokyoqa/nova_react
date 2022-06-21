@@ -59,6 +59,8 @@ export  default function App({id, secretWord}) {
 
  // Start recording video
  const startVideo = () => {
+  setRecordedChunks(null)
+  setRecordedChunks([null])
   hideBtn()
   onClickReset(); 
   try {
@@ -206,11 +208,6 @@ const startTimer = (e) => {
   const onClickReset = () => { 
       clearTimer(getDeadTime()); 
   } 
-  const remakeVideo = () => {
-    setRecordedChunks(null)
-    setRecordedChunks([null])
-    startVideo()
-  } 
 
   const hideBtn = () =>{
     document.getElementById('start-btn').style.display = 'none';
@@ -302,7 +299,7 @@ return (
           color='success' 
           sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
           variant="contained" 
-          onClick={remakeVideo}
+          onClick={startOpenTimer}
           >
           Переснять 
         </Button>
