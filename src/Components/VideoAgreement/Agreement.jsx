@@ -208,7 +208,7 @@ const startTimer = (e) => {
       clearTimer(getDeadTime()); 
   } 
   const hideBtn = () =>{
-    // document.getElementById('start-btn').styles.visibility = 'hidden';
+    document.getElementById('start-btn').style.display = 'none';
   }
 
   const closeError = (event, reason) => {
