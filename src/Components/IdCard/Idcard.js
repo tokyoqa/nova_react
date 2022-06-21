@@ -50,11 +50,11 @@ import '../../Config';
     return () => URL.revokeObjectURL(objectUrlBack)
   }, [selectedFileBack])
 
-  // useEffect(() => {
-  //   if(!id){
-  //     navigate('/')
-  //   }
-  // });
+  useEffect(() => {
+    if(!id){
+      navigate('/')
+    }
+  });
 
 const onFileUpload = () => {
   if(!selectedFileBack || !selectedFileFront){
@@ -215,7 +215,7 @@ return (
                   src={previewFront}
                   alt=''
                   />
-                  <input 
+                  <input
                       type="file" 
                       onChange={onFileChangeFront}
                       name="front_passport" 
@@ -287,4 +287,5 @@ return (
   </div>
   )
 }
+
 export default Idcard;  

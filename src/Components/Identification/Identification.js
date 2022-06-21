@@ -27,11 +27,11 @@ export const Identification  = ({id}) => {
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
-    // useEffect(() => {
-    //   if(!id){
-    //     navigate('/')
-    //   }
-    // });
+    useEffect(() => {
+      if(!id){
+        navigate('/')
+      }
+    });
     const getTimeRemaining = (e) => {
         const total = Date.parse(e) - Date.parse(new Date());
         const seconds = Math.floor((total / 1000) % 60);
@@ -158,8 +158,8 @@ export const Identification  = ({id}) => {
 
 return(
   <div className="ident_form">
-    <Card className={"card-container-ident"}>
-      <CardHeader  sx={{textAlign: "center", padding: 0, marginTop: 2}}
+    <Card className="card-container-ident" sx={{boxShadow: 'none'}}>
+      <CardHeader  sx={{textAlign: "center", marginTop: 2}}
         title="Удаленная идентификация"
       />
       <CardContent sx={{fontSize: "20px", textAlign: 'center'}}>
@@ -220,4 +220,5 @@ return(
   </div>
 )
 }
+
 export default Identification;

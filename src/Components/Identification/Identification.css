@@ -94,17 +94,16 @@
   }
   .card-container-ident{
     width: 98%;
-    height: 500px;
   }
   .ident_code {
     width: 95%;
     background-color: #fff;
     border-radius: 12px;
-    border: 1 solid ;
     border-color: rgb(240, 239, 239);
     box-sizing: border-box;
     color: #000;
     padding-left: 10px;
     font-size: 18px;
+    box-shadow: none;
   }
 }

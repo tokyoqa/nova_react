@@ -17,11 +17,11 @@ const  CameraJS = ({id, setSecretWord}) => {
   const [openError04, setError04] = React.useState(false)
   const [openWarning, setWarning] = React.useState(false)
 
-  // useEffect(() => {
-  //     if(!id){
-  //       navigate('/')
-  //     }
-  //   });
+  useEffect(() => {
+        if(!id){
+          navigate('/')
+        }
+      });
 
 function handleTakePhoto (dataUri) {
   setDataUri(dataUri)  
@@ -113,10 +113,7 @@ const closeError = (event, reason) => {
   setError(false);
   setError04(false)
   setWarning(false);
-
-
 };
-
 
 const isFullscreen = false
 const ImagePreview = ({ dataUri, isFullscreen }) => {
@@ -139,18 +136,18 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   
 return (
   <div className="camera-container">
-    <div className='camera-item'>
     {
       (dataUri)
         ?<ImagePreview dataUri={dataUri}
             isFullscreen={isFullscreen}
         />
-        :<Camera onTakePhotoAnimationDone = {handleTakePhotoAnimationDone}
+        :
+      <div className='camera-item'>
+        <Camera onTakePhotoAnimationDone = {handleTakePhotoAnimationDone}
           isFullscreen={isFullscreen}
           idealFacingMode={FACING_MODES.USER}
           onTakePhoto = {(dataUri) => { handleTakePhoto(dataUri); } }
-          onCameraError = { (error) => { handleCameraError(error); } }
-          idealResolution = {{width: 300, height: 300}}
+          onCameraError = { (error) => { handleCameraError(error); } }  
           imageType = {IMAGE_TYPES.PNG}
           imageCompression = {0.97}
           isMaxResolution = {true}
@@ -161,14 +158,15 @@ return (
           onCameraStart = { (stream) => { handleCameraStart(stream); } }
           onCameraStop = { () => { handleCameraStop(); } }
         />
+      </div>
+
     }
-    </div>
     <div className="btn-group-camera">
-    <Button sx={{width: '120px', marginRight: "5px", marginTop: 1}} variant="contained" color="success" onClick={resetPhoto} >
-      Переснять
+    <Button  sx={{width: '120px', marginRight: '10px'}} variant="outlined" color="success" onClick={resetPhoto} >
+       Переснять
     </Button>
-    <Button sx={{width: '120px', marginTop: 1}} variant="contained" color="success" onClick={sendPhoto} >
-      Готово
+    <Button  sx={{width: '120px'}} variant="contained" color="success" onClick={sendPhoto} >
+      Готово 
     </Button>
     </div>
     
@@ -198,4 +196,5 @@ return (
 </div>
 );
 }
+
 export default CameraJS;

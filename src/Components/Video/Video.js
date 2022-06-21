@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {Backdrop, CircularProgress, Stack, Snackbar, Button } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import "./Video.css";
@@ -6,6 +6,8 @@ import Webcam from "react-webcam";
 import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+
 
 export  default function App({id, secretWord}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
@@ -36,17 +38,24 @@ export  default function App({id, secretWord}) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-	// useEffect(() => {
-	// 	if(!id){
-	// 		navigate('/')
-	// 	}
-	// });
+	useEffect(() => {
+		if(!id){
+			navigate('/')
+		}
+	});
+
   
  const handleDataAvailable = ({ data }) => { 
   if (data.size > 0) { 
   setRecordedChunks([data]) 
   } 
  };
+
+
+ const startOpenTimer = () => {
+  setOpenTimer(true)
+ }
+
 
  // Start recording video
  const startVideo = () => {
@@ -79,8 +88,7 @@ export  default function App({id, secretWord}) {
   // --** SEND FILE **-- //
   const sendVideoFile = () => { 
   	const formDate = new FormData();
-    const temp = 1
-    setOpen(!open);  // Open loading menu
+    setOpen(!open); 
     if(!recordedChunks.length){
       setErrorNull(true)
       setOpen(false)
@@ -92,8 +100,7 @@ export  default function App({id, secretWord}) {
     ) 
     formDate.append( 
     'id',
-    // id
-    temp
+    id
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
@@ -117,10 +124,6 @@ export  default function App({id, secretWord}) {
         console.log(res.data) 
       } 
       else if(res.data.statusCode === 2){
-
-
-        navigate('/videoAgreement')
-        console.log(res.data)
         setSuccess(true)
         console.log(res.data) 
       } 
@@ -210,7 +213,7 @@ const startTimer = (e) => {
   } 
 
   const hideBtn = () =>{
-    document.getElementById('start-btn').style.visibility="hidden"
+    document.getElementById('start-btn').style.disabled="true"
   }
 
   const closeError = (event, reason) => {
@@ -224,10 +227,22 @@ const startTimer = (e) => {
     setErrorNull(false)
     setErrorWord(false)
   };
+
+
+  const renderTime = ({ remainingTime }) => {
+    return (
+      <div className="timer">
+        <div className="text">Запись начнется через</div>
+        <div className="value">{remainingTime}</div>
+        <div className="text">секунд</div>
+      </div>
+    );
+  };
+  
      
 return (
   <>
-    <div className="camera-form">	
+    <div className="video-form">
     <Webcam
     className="video-item"
     ref={webcamRef}
@@ -241,26 +256,57 @@ return (
     </div>
     {
       (!openTimer)
-      ? console.log('none')
+      ? null
       :
-      <Backdrop 
+      <Backdrop
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
       open={openTimer}>
-      <p> Через {}сек начнется запись </p>
-    </Backdrop>
+      <div className="App">
+        <div className="timer-wrapper">
+          <CountdownCircleTimer
+            isPlaying
+            duration={3}
+            colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+            colorsTime={[3, 2.5, 1.5, 0]}
+            onComplete={() => ( { shouldRepeat: false, delay: 1 }, setOpenTimer(false), startVideo())}
+            >
+            {renderTime}  
+
+          </CountdownCircleTimer>
+        </div>
+       </div>
+      </Backdrop>
     }
-    <div className="video-status">Status: {statusVideo}</div>
+    <div className="video-status">Статус записи: {statusVideo}</div>
     <div className="btn-items">
-        <Button id="start-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={startVideo}>
+        <Button 
+          id="start-btn" 
+          color='success' 
+          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
+          variant="contained" 
+          onClick={startOpenTimer} 
+          >
           Запись
         </Button>
-        <Button id="send-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={sendVideoFile}>
+        <Button 
+          id="send-btn" 
+          color='success' 
+          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
+          variant="contained"
+          onClick={sendVideoFile}
+          >
           Отправить
         </Button>
-        <Button id="reset-btn" color='success' sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} variant="contained" onClick={remakeVideo}>
+        <Button 
+          id="reset-btn" 
+          color='success' 
+          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
+          variant="contained" 
+          onClick={remakeVideo}
+          >
           Переснять 
         </Button>
-      <div> Произнесите слово [ <strong>{secretWord}</strong> ] четко и громко для прохождения идентификации </div>
+      <div className="video-text_word"> Произнесите слово <strong>{secretWord}</strong> четко и громко для прохождения идентификации </div>
       <h2 className="timer-Console">{timer}</h2>
     </div>
   

@@ -16,7 +16,6 @@
     width: inherit;
     height: inherit;
     border-radius: inherit;
-
 }
 
 .form-legend {
@@ -45,6 +44,7 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    margin-bottom: 20px;
     
 }
 

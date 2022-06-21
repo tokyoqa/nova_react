@@ -1,12 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {Backdrop, CircularProgress, Stack, Snackbar, Button } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import Webcam from "react-webcam";
 import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
-export  default function VideoAgreement({id}) {
+
+export  default function App({id, secretWord}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
 	const minutes = Math.floor(timeLeft/60);
 	const seconds = timeLeft - minutes * 60;
@@ -27,8 +29,6 @@ export  default function VideoAgreement({id}) {
 	const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
 	let 	options = {};
-  const tempID = '1'
-
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
   });
@@ -42,6 +42,7 @@ export  default function VideoAgreement({id}) {
 	// 		navigate('/')
 	// 	}
 	// });
+
   
  const handleDataAvailable = ({ data }) => { 
   if (data.size > 0) { 
@@ -49,11 +50,14 @@ export  default function VideoAgreement({id}) {
   } 
  };
 
- console.log(tempID)
 
- 
- const startVideo = () => {
+ const startOpenTimer = () => {
   setOpenTimer(true)
+ }
+
+
+ // Start recording video
+ const startVideo = () => {
   hideBtn()
   onClickReset(); 
   try {
@@ -81,14 +85,10 @@ export  default function VideoAgreement({id}) {
  };
 
   // --** SEND FILE **-- //
-  const sendVideoFile = () => {
+  const sendVideoFile = () => { 
   	const formDate = new FormData();
-    setOpen(!open);  // Open loading menu
-    if(!recordedChunks.length ){
-      setErrorNull(true)
-      setOpen(false)
-    }
-    else if(!tempID){
+    setOpen(!open); 
+    if(!recordedChunks.length){
       setErrorNull(true)
       setOpen(false)
     }
@@ -99,15 +99,14 @@ export  default function VideoAgreement({id}) {
     ) 
     formDate.append( 
     'id',
-    tempID 
-    // id
+    id
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
       axios 
     ( 
       { 
-        url: global.config.REST_API + 'api/video-agreement', 
+        url: global.config.REST_API + 'api/video', 
         method: 'POST', 
         data: formDate, 
         headers: { 
@@ -123,8 +122,8 @@ export  default function VideoAgreement({id}) {
         setErrorWord(true)
         console.log(res.data) 
       } 
-      else if(res.data.statusCode === 2){ 
-        setError(true) 
+      else if(res.data.statusCode === 2){
+        setSuccess(true)
         console.log(res.data) 
       } 
       else if(res.data.statusCode === 3){ 
@@ -136,7 +135,7 @@ export  default function VideoAgreement({id}) {
         console.log(res.data) 
       } 
       else{ 
-        navigate('/finish')
+        navigate('/videoAgreement')
         console.log(res.data) 
         setSuccess(true)
       } 
@@ -163,73 +162,82 @@ export  default function VideoAgreement({id}) {
  
  // Timer function  
  const getTimeRemaining = (e) => { 
-        const total = Date.parse(e) - Date.parse(new Date()); 
-        const seconds = Math.floor((total / 1000) % 60); 
-        const minutes = Math.floor((total / 1000 / 60) % 60); 
-        const hours = Math.floor((total / 1000 / 60 / 60) % 24); 
-        return { 
-            total, hours, minutes, seconds 
-        }; 
+    const total = Date.parse(e) - Date.parse(new Date()); 
+    const seconds = Math.floor((total / 1000) % 60); 
+    const minutes = Math.floor((total / 1000 / 60) % 60);   
+    const hours = Math.floor((total / 1000 / 60 / 60) % 24); 
+    return { 
+        total, hours, minutes, seconds 
+    }; 
   } 
    
-  const startTimer = (e) => {
-      let { total, seconds }  
-                  = getTimeRemaining(e); 
-      if (total >= 0) { 
-          setTimer( 
-  (seconds > 9 ? seconds :  seconds) 
-          )
-      }
-    if( seconds === 0){
-      setOpenTimer(false)
-  const handleStopCaptureClick = () => { 
-   if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
-   mediaRecorderRef.current.stop(); 
-   } 
-  }; 
-  setStatusVideo('Записано') 
+const startTimer = (e) => {
+  let { total, seconds } = getTimeRemaining(e); 
+  if (total >= 0) {
+    setTimer((seconds > 9 ? seconds :  seconds))
   }
-    }
-   
-    const clearTimer = (e) => {   
-        setTimer('5'); 
-        if (Ref.current) clearInterval(Ref.current); 
-        const id = setInterval(() => { 
-            startTimer(e); 
-        }, 1000) 
-        Ref.current = id; 
+  if( seconds === 0){
+  const handleStopCaptureClick = () => { 
+    if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
+      mediaRecorderRef.current.stop(); 
     } 
-   
-    const getDeadTime = () => { 
-        let deadline = new Date(); 
-        deadline.setSeconds(deadline.getSeconds() + 5); 
-        return deadline; 
-    } 
-   
-    const onClickReset = () => { 
-        clearTimer(getDeadTime()); 
-    } 
-		const remakeVideo = () => {
-      setRecordedChunks(null)
-      setRecordedChunks([null])
-      startVideo()
-    } 
-  
-    const hideBtn = () =>{
-      document.getElementById('start-btn').style.visibility="hidden"
-    }
+  }; 
+    setStatusVideo('Записано') 
+  }
+  }
 
-    const closeError = (event, reason) => {
-      if (reason === 'clickaway') {
-        return;
-      }
-      setError(false); 
-      setError04(false) 
-      setSuccess(false);
-      setWarning(false);
-      setErrorNull(false)
-      setErrorWord(false)
-    };
+   
+  const clearTimer = (e) => {   
+      setTimer('5'); 
+      if (Ref.current) clearInterval(Ref.current); 
+      const id = setInterval(() => { 
+          startTimer(e); 
+      }, 1000) 
+      Ref.current = id; 
+  } 
+  
+  const getDeadTime = () => { 
+      let deadline = new Date(); 
+      deadline.setSeconds(deadline.getSeconds() + 5); 
+      return deadline; 
+  } 
+  
+  const onClickReset = () => { 
+      clearTimer(getDeadTime()); 
+  } 
+  const remakeVideo = () => {
+    setRecordedChunks(null)
+    setRecordedChunks([null])
+    startVideo()
+  } 
+
+  const hideBtn = () =>{
+    document.getElementById('start-btn').disabled= true
+  }
+
+  const closeError = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setError(false); 
+    setError04(false) 
+    setSuccess(false);
+    setWarning(false);
+    setErrorNull(false)
+    setErrorWord(false)
+  };
+
+
+  const renderTime = ({ remainingTime }) => {
+    return (
+      <div className="timer">
+        <div className="text">Запись начнется через</div>
+        <div className="value">{remainingTime}</div>
+        <div className="text">секунд</div>
+      </div>
+    );
+  };
+  
      
 return (
   <>
@@ -247,13 +255,26 @@ return (
     </div>
     {
       (!openTimer)
-      ?<> </>
+      ? null
       :
-      <Backdrop 
+      <Backdrop
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
       open={openTimer}>
-      <p> Через {}сек начнется запись </p>
-    </Backdrop>
+      <div className="App">
+        <div className="timer-wrapper">
+          <CountdownCircleTimer
+            isPlaying
+            duration={3}
+            colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+            colorsTime={[3, 2.5, 1.5, 0]}
+            onComplete={() => ( { shouldRepeat: false, delay: 1 }, setOpenTimer(false), startVideo())}
+            >
+            {renderTime}  
+
+          </CountdownCircleTimer>
+        </div>
+       </div>
+      </Backdrop>
     }
     <div className="video-agreement_text">Произнесите "Я соглашаюсь на обработку персональных данных" для того чтобы пройти идентификацию.</div>
     <div className="video-status"> Статус записи видео: {statusVideo}</div>
@@ -263,7 +284,7 @@ return (
           id="start-btn" 
           color='success' 
           variant="contained" 
-          onClick={startVideo}>
+          onClick={startOpenTimer}>
             Запись
         </Button>
         <Button 
