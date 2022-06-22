@@ -9,6 +9,13 @@ h1{
   margin-bottom: 40px;
 }
 
+.timer-console{
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+
 .video-item{
   display: flex;
 	margin: 0 auto;
@@ -17,15 +24,6 @@ h1{
 .btn-items{
 	text-align: center;
 }
-
-.time-Console{
-	width: 95%;
-  background: rgb(255, 255, 255);
-  border-radius: 10px;
-  height: 120%;
-	color: blue;
-}
-
 .demo-section {
   padding-bottom: 2rem;
   border-bottom: 2px solid;
@@ -47,8 +45,6 @@ h1{
 .video-status{
   text-align: center;
 }
-
-
 
 .timer-wrapper {
   display: flex;
@@ -88,35 +84,9 @@ h1 {
   margin-bottom: 40px;
 }
 
-.timer-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-.timer {
-  font-family: "Montserrat";
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.text {
-  color: rgb(253, 253, 253);
-}
-
-.value {
-  font-size: 40px;
-}
-
-.info {
-  max-width: 360px;
-  margin: 40px auto 0;
-  text-align: center;
-  font-size: 16px;
-}
 
 .App{
-  padding-bottom: 450px;
+  padding-bottom: 100px;
 }
 
 
@@ -129,6 +99,7 @@ h1 {
   }
   .video-text_word{
     margin: 6px 4px 0 2px;
+    text-align: center;
   }
   
 }

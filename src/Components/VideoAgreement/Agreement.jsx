@@ -28,6 +28,8 @@ export  default function App({id, secretWord}) {
 	const [openWarning, setWarning] = React.useState(false)
 	const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
+  const [isRunning, setRunning] = useState(false)
+
 	let 	options = {};
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
@@ -37,11 +39,11 @@ export  default function App({id, secretWord}) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-	useEffect(() => {
-		if(!id){
-			navigate('/')
-		}
-	});
+	// useEffect(() => {
+	// 	if(!id){
+	// 		navigate('/')
+	// 	}
+	// });
 
   
  const handleDataAvailable = ({ data }) => { 
@@ -89,7 +91,6 @@ export  default function App({id, secretWord}) {
   // --** SEND FILE **-- //
   const sendVideoFile = () => { 
   	const formDate = new FormData();
-    const temp = 1
     setOpen(!open); 
     if(!recordedChunks.length){
       setErrorNull(true)
@@ -102,8 +103,7 @@ export  default function App({id, secretWord}) {
     ) 
     formDate.append( 
     'id',
-    // id
-    temp
+    id
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
@@ -181,10 +181,11 @@ const startTimer = (e) => {
     setTimer((seconds > 9 ? seconds :  seconds))
   }
   if( seconds === 0){
-  const handleStopCaptureClick = () => { 
-    if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
-      mediaRecorderRef.current.stop(); 
-    } 
+    setRunning(false)
+    const handleStopCaptureClick = () => { 
+      if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
+        mediaRecorderRef.current.stop(); 
+      } 
   }; 
     setStatusVideo('Записано') 
   }
@@ -265,7 +266,7 @@ return (
             duration={3}
             colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
             colorsTime={[3, 2.5, 1.5, 0]}
-            onComplete={() => ( { shouldRepeat: false, delay: 1 }, setOpenTimer(false), startVideo())}
+            onComplete={() => ( { shouldRepeat: false, delay: 1 }, setOpenTimer(false), startVideo(), setRunning(true))}
             >
             {renderTime}  
 
@@ -274,11 +275,11 @@ return (
        </div>
       </Backdrop>
     }
-    <div className="video-agreement_text">Произнесите "Я соглашаюсь на обработку персональных данных" для того чтобы пройти идентификацию.</div>
-    <div className="video-status"> Статус записи видео: {statusVideo}</div>
+    <h2 className="timer-console">{timer}</h2>
+    <div className="video-agreement_text">Произнесите <b> "Я соглашаюсь на обработку персональных данных" </b> для того чтобы пройти идентификацию.</div>
     <div className="btn-items">
         <Button
-          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
+          sx={{marginTop: '10px', width: "120px", marginRight:"5px"}} 
           id="start-btn" 
           color='success' 
           variant="contained" 
@@ -288,21 +289,21 @@ return (
         <Button 
           id="send-btn" 
           color='success' 
-          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
+          sx={{marginTop: '10px', width: "120px", marginRight:"5px"}} 
           variant="contained" 
           onClick={sendVideoFile}
+          disabled={isRunning}
           >
             Отправить
         </Button>
         <Button 
           id="reset-btn" 
           color='success' 
-          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
+          sx={{marginTop: '10px', width: "120px", marginRight:"5px"}} 
           variant="contained" 
           onClick={startOpenTimer}>
             Переснять 
         </Button>
-      <h2 className="timer-Console">{timer}</h2>
     </div>
   
 

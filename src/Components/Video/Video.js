@@ -29,6 +29,7 @@ export  default function App({id, secretWord}) {
 	const [openWarning, setWarning] = React.useState(false)
 	const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
+  const [isRunning, setRunning] = useState(false)
 	let 	options = {};
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
@@ -38,11 +39,11 @@ export  default function App({id, secretWord}) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-	useEffect(() => {
-		if(!id){
-			navigate('/')
-		}
-	});
+	// useEffect(() => {
+	// 	if(!id){
+	// 		navigate('/')
+	// 	}
+	// });
 
   
  const handleDataAvailable = ({ data }) => { 
@@ -180,12 +181,13 @@ const startTimer = (e) => {
     setTimer((seconds > 9 ? seconds :  seconds))
   }
   if( seconds === 0){
-  const handleStopCaptureClick = () => { 
+    setRunning(false)
+  const handleStopCaptureClick = () => {
+    setRunning(false)
     if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
-      mediaRecorderRef.current.stop(); 
+      mediaRecorderRef.current.stop();
     } 
   }; 
-    setStatusVideo('Записано') 
   }
   }
 
@@ -213,6 +215,7 @@ const startTimer = (e) => {
     document.getElementById('start-btn').style.display = 'none';
   }
 
+
   const closeError = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -229,7 +232,7 @@ const startTimer = (e) => {
   const renderTime = ({ remainingTime }) => {
     return (
       <div className="timer">
-        <div className="text">Запись начнется через</div>
+        <div className="text">Запись начнется...</div>
         <div className="value">{remainingTime}</div>
         <div className="text">секунд</div>
       </div>
@@ -265,16 +268,18 @@ return (
             duration={3}
             colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
             colorsTime={[3, 2.5, 1.5, 0]}
-            onComplete={() => ( { shouldRepeat: false, delay: 1 }, setOpenTimer(false), startVideo())}
+            onComplete={() => ( { shouldRepeat: false, delay: 1 }, setOpenTimer(false), startVideo(), setRunning(true))}
+            
             >
             {renderTime}  
-
           </CountdownCircleTimer>
         </div>
        </div>
       </Backdrop>
     }
-    <div className="video-status">Статус записи: {statusVideo}</div>
+    <h2 className="timer-console">{timer}</h2>
+    <div className="video-text_word"> Произнесите слово <strong>{secretWord}</strong> четко и громко для прохождения идентификации </div>
+
     <div className="btn-items">
         <Button 
           id="start-btn" 
@@ -291,6 +296,7 @@ return (
           sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
           variant="contained"
           onClick={sendVideoFile}
+          disabled={isRunning}
           >
           Отправить
         </Button>
@@ -303,8 +309,6 @@ return (
           >
           Переснять 
         </Button>
-      <div className="video-text_word"> Произнесите слово <strong>{secretWord}</strong> четко и громко для прохождения идентификации </div>
-      <h2 className="timer-Console">{timer}</h2>
     </div>
   
 
