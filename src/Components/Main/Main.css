@@ -34,6 +34,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 @media screen and (min-width:320px) and (max-width:640px) {
+  .main-container{
+    width: 95%;
+    margin: 0 auto;
+  }
   .main-card{
     width: 100%;
      

@@ -115,7 +115,7 @@ const closeError = (event, reason) => {
 
 return (
   <div className='main-container'>
-    <Card className='main-card' sx={{boxShadow: 'none'}}>
+    <Card className='main-card'>
       <CardHeader  className='main-card__header' title="Удаленная идентификация"/>
       <CardContent className='main-card__content'>
         <Typography sx={{marginBottom: '15px'}} variant="h5" color="text.secondary">

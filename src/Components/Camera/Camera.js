@@ -16,6 +16,7 @@ const  CameraJS = ({id, setSecretWord}) => {
   const [openError, setError] = React.useState(false)
   const [openError04, setError04] = React.useState(false)
   const [openWarning, setWarning] = React.useState(false)
+  const [openFaceNotMatch, setFaceNotMatch] = React.useState(false)
 
   useEffect(() => {
         if(!id){
@@ -46,6 +47,7 @@ const sendPhoto = () => {
     setError(true)
 }
 else{
+  const temp = 1
 setError(false)
 setOpen(true)
 setDataUri(dataUri);
@@ -54,6 +56,7 @@ axios({
     url: global.config.REST_API + 'api/selfie',
     data:{ 
         base64: dataUri,
+        // id: temp
         id: id
     },
     headers: {
@@ -66,33 +69,26 @@ axios({
     },
 })
 .then((res) => {
+  setOpen(false)
   setSecretWord(res.data.secretWord)
   setDataUri(null)
-  console.log(res.data.secretWord)
   if (res.data.statusCode === 1){
-      console.log(res.data)
-      setError(true)
-      setOpen(false)
+    console.log(res.data)
+    setFaceNotMatch(true)
   }
   else if(res.data.statusCode === 2){
     console.log(res.data)
     setError(true)
-    setOpen(false)
-    
   }
   else if(res.data.statusCode === 3){
     console.log(res.data)
     setWarning(true)
-    setOpen(false)
-
   }
   else if(res.data.statusCode === 4){
     console.log(res.data)
     setError04(true)
-    setOpen(false)
   }
   else{
-  setOpen(false);
   navigate('/terms')
 
   console.log(res.data)
@@ -100,19 +96,17 @@ axios({
 })
   .catch(error =>{
       setError(true);
-      setOpen(false);
       console.log(error)
   })
 }
 }
-
 const closeError = (event, reason) => {
   if (reason === 'clickaway') {
   return;
   }
   setError(false);
-  setError04(false)
   setWarning(false);
+  setFaceNotMatch(false)
 };
 
 const isFullscreen = false
@@ -129,13 +123,15 @@ const ImagePreview = ({ dataUri, isFullscreen }) => {
 const resetPhoto = () =>{
   setDataUri(null)
 }
-      
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
   
 return (
   <div className="camera-container">
+    <div className="">
+      Внимание! Сделайте снимок лица. 
+    </div>
     {
       (dataUri)
         ?<ImagePreview dataUri={dataUri}
@@ -159,7 +155,6 @@ return (
           onCameraStop = { () => { handleCameraStop(); } }
         />
       </div>
-
     }
     <div className="btn-group-camera">
     <Button  sx={{width: '120px', marginRight: '10px'}} variant="outlined" color="success" onClick={resetPhoto} >
@@ -169,7 +164,6 @@ return (
       Готово 
     </Button>
     </div>
-    
   <Backdrop 
     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
     open={open} 
@@ -182,16 +176,17 @@ return (
       Ошибка! Повторите заново!
       </Alert>
     </Snackbar>
-    <Snackbar open={openError04} autoHideDuration={3000} onClose={closeError}>
-      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-      Ошибка! Такой пользователей существует!
-      </Alert>
-    </Snackbar>
     <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
       Пожалуйста ожидайте!
       </Alert>
     </Snackbar>
+    <Snackbar open={openFaceNotMatch} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
+        Внимание! Фото лица не разпознано или не найдено. Повторите еще раз.
+      </Alert>
+    </Snackbar>
+
   </Stack>
 </div>
 );

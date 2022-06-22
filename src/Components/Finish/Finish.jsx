@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import "./Finish.css";
 import { useNavigate } from "react-router";
 
-const Finish = ({identType, id}) => {
+const Finish = ({id}) => {
   // Values
   const [openError, setError] = useState(false);
   const [openError04, setError04] = useState(false);
@@ -48,7 +48,7 @@ const Finish = ({identType, id}) => {
               Удаленная Идентификация
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
-              Поздравляем ваша идентификация {identType} на рассмотрении. Вам будет отправлено сообщение на телефон.
+              Поздравляем ваша идентификация на рассмотрении. Вам будет отправлено сообщение на телефон.
             </Typography>
             <Button id="reset-btn" color='success' sx={{ margin: '0 auto', marginTop: '50px', width: "50%", textAlign: 'center'}} variant="contained" onClick={goHome}>
             На главную 

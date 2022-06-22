@@ -136,10 +136,14 @@ export const Terms = ({ id }) => {
               Удаленная Идентификация
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
-              Поздравляем ваша идентификация фото-идентификация на расмотрении. Нажмите "Закончить" чтобы перейти конечную страницу.
+              Поздравляем, Ваша заявка фото-идентификации на стадии рассмотрения. Нажмите "Закончить" чтобы перейти на завершающую страницу.
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '5px'}}>
-              Если хотите пройти полную видео-идентификацию нажмите на кнопку "Продолжить"
+              В случаи прохождения видео идентификации, Вам необходимо нажать кнопку "Продолжить" 
+            </Typography>
+              <br/>
+            <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '5px'}}>
+            <a href="">  Ниже Вы можете ознакомиться с  условиями "Видео" и "Фото" идентификации. </a> 
             </Typography>
             <FormControlLabel sx={{marginTop: 2}}
             control={ 
