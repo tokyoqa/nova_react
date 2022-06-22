@@ -18,7 +18,7 @@ export  default function App({id, secretWord}) {
 	const [statusVideo, setStatusVideo] = useState();
 	const webcamRef = useRef(null);
 	const mediaRecorderRef = useRef(null);
-	let 	navigate = useNavigate(); 
+	let 	navigate = useNavigate();
 	const [videoSrc, setVideoSrc] = useState(null);
 	const [open, setOpen] = React.useState(false);
 	const [openSuccess, setSuccess] = React.useState(false);
@@ -127,7 +127,7 @@ export  default function App({id, secretWord}) {
         console.log(res.data) 
       } 
       else if(res.data.statusCode === 2){
-        setSuccess(true)
+        setError04(true)
         console.log(res.data) 
       } 
       else if(res.data.statusCode === 3){ 
@@ -340,7 +340,7 @@ return (
     </Snackbar>
     <Snackbar open={openError04} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-        Ошибка сервиса. 
+        Ошибка сервиса. Повторите похже пожалуйста!
       </Alert>
     </Snackbar>
     <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>
