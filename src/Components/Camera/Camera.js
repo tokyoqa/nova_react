@@ -18,11 +18,11 @@ const  CameraJS = ({id, setSecretWord}) => {
   const [openWarning, setWarning] = React.useState(false)
   const [openFaceNotMatch, setFaceNotMatch] = React.useState(false)
 
-  // useEffect(() => {
-  //       if(!id){
-  //         navigate('/')
-  //       }
-  //     });
+  useEffect(() => {
+        if(!id){
+          navigate('/')
+        }
+      });
 
 function handleTakePhoto (dataUri) {
   setDataUri(dataUri)  

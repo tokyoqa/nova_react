@@ -33,11 +33,11 @@ export const Terms = ({ id }) => {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  // useEffect(() => {
-  //   if(!id){
-  //     navigate('/')
-  //   }
-  // });
+  useEffect(() => {
+    if(!id){
+      navigate('/')
+    }
+  });
 
   const handleChangeChecked = (event) => {
     if(!event.target.checked){
