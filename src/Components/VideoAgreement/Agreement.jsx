@@ -127,7 +127,7 @@ export  default function App({id, secretWord}) {
         console.log(res.data) 
       } 
       else if(res.data.statusCode === 2){
-        setSuccess(true)
+        setError04(true)
         console.log(res.data) 
       } 
       else if(res.data.statusCode === 3){ 
@@ -219,7 +219,7 @@ const startTimer = (e) => {
       return;
     }
     setError(false); 
-    setError04(false) 
+    setError04(false);
     setSuccess(false);
     setWarning(false);
     setErrorNull(false)
@@ -336,7 +336,7 @@ return (
     </Snackbar>
     <Snackbar open={openError04} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-        Ошибка сервиса. 
+        Технические проблемы. Повторите позже пожалуйста!
       </Alert>
     </Snackbar>
     <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>
