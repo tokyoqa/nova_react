@@ -172,6 +172,7 @@ return(
             className="ident_code"
             onAccept={(value) =>{setCode(value)}}
             value={secureCode}
+            autocomplete="off"
           />
         <Button color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postSecureCode} >
             Продолжить
