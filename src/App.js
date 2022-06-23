@@ -9,12 +9,14 @@ import Camera from './Components/Camera/Camera'
 import Layout from './Layout/Layout';
 import NotFound from './Components/NotFound/NotFound';
 import VideoAgreement from './Components/VideoAgreement/Agreement'
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 function App(){
 
   //Variables
   const [id, setId] = useState(null);
-  const [secretWord, setSecretWord] = useState(null)
+  const [secretWord, setSecretWord] = useState(null);
+  const [fullName, setFullName] = useState(null);
+  // const [fullName, setFullName] = useContext('')
 return(
   <div>
     <Routes>
@@ -23,7 +25,7 @@ return(
           index element={<Main
           setId={setId}
           />}
-        />    
+        />
         <Route 
           path='identification' 
           element={<Identification 
@@ -54,12 +56,14 @@ return(
           element={<Video 
           id={id}
           secretWord={secretWord}
+          setFullName={setFullName}
           />}
         />
         <Route 
           path='video-agreement' 
           element={<VideoAgreement
           id={id}
+          fullName={fullName}
           />}
         />
         <Route 

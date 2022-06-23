@@ -130,26 +130,30 @@ export const Terms = ({ id }) => {
 
   return (
     <div>
-      <Card className="cardStyle" sx={{boxShadow: 'none'}}>
+      <Card className="cardStyle">
           <CardContent>
             <Typography sx={{textAlign: 'center'}} gutterBottom variant="h5" component="p">
               Удаленная Идентификация
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
-              Поздравляем, Ваша заявка фото-идентификации на стадии рассмотрения. Нажмите "Закончить" чтобы перейти на завершающую страницу.
+              Поздравляем! Ваша заявка на фото-идентификацию находится на стадии рассмотрения. 
+              Нажмите "Закончить" для завершения идентификации.
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '5px'}}>
-              В случаи прохождения видео идентификации, Вам необходимо нажать кнопку "Продолжить" 
+              Для расширения возможностей необходимо пройти видео-идентификацию. Для этого нажмите "Продолжить" 
             </Typography>
               <br/>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '5px'}}>
-            <a href="">  Ниже Вы можете ознакомиться с  условиями "Видео" и "Фото" идентификации. </a> 
+            <a href="https://ab.kg/guarddog/laravel-filemanager/files/shares/dogovorpublichnoyoferty.pdf" target="_blank">  
+            Здесь Вы можете ознакомиться с условиями видео- и фото-идентификаций </a> 
             </Typography>
             <FormControlLabel sx={{marginTop: 2}}
             control={ 
               <Checkbox onChange={handleChangeChecked} name="" />
             }
-            label={<Typography  variant="body2" color="textSecondary">Подтверждаю согласие на сбор, обработку и передачу персональных данных</Typography>}
+            label={<Typography  variant="body2" color="textSecondary">
+              Подтверждаю согласие на сбор, обработку и передачу персональных данных
+              </Typography>}
           />
           </CardContent>
         <CardActions >
