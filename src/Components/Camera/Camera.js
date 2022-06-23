@@ -129,7 +129,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   
 return (
   <div className="camera-container">
-    <div className="">
+    <div className="camera-text_info">
       Внимание! Сделайте снимок лица. 
     </div>
     {

@@ -8,6 +8,19 @@
   width: 75%;
 }
 
+
+/* CAMERA STYLES */
+.camera-text_info{
+  display: inline-block;
+  background-color: aquamarine;
+  position: absolute;
+  z-index: 1000;
+  top: 65px;
+  left:50%;
+  transform:translate(-50%, -50%);
+  font-size: 10px;
+}
+
 @media screen and (min-width:320px) and (max-width:640px) {
   .demo-image-preview {
     height: 75%;

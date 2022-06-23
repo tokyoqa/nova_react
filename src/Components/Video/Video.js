@@ -9,7 +9,7 @@ import '../../Config';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 
-export  default function App({id, secretWord}) {
+export  default function App({id, secretWord, setFullName}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
 	const minutes = Math.floor(timeLeft/60);
 	const seconds = timeLeft - minutes * 60;
@@ -121,7 +121,8 @@ export  default function App({id, secretWord}) {
       } 
       )  
       .then((res) => { 
-      setOpen(false);  
+      setOpen(false);
+      console.log(res.data.fullName)
       if (res.data.statusCode === 1){ 
         setErrorWord(true)
         console.log(res.data) 
@@ -278,7 +279,8 @@ return (
       </Backdrop>
     }
     <h2 className="timer-console">{timer}</h2>
-    <div className="video-text_word"> Произнесите слово <strong>{secretWord}</strong> четко и громко для прохождения идентификации </div>
+    <div className="video-text_word"> Произнесите слово <strong>{secretWord}</strong> четко и громко один раз
+     для прохождения идентификации </div>
 
     <div className="btn-items">
         <Button 
@@ -304,7 +306,7 @@ return (
           id="reset-btn" 
           color='success' 
           sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
-          variant="contained" 
+          variant="contained"  
           onClick={startOpenTimer}
           >
           Переснять 

@@ -8,7 +8,7 @@ import '../../Config';
 import '../Video/Video.css'
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
-export  default function App({id, secretWord}) {
+export  default function App({id, secretWord, fullName}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
 	const minutes = Math.floor(timeLeft/60);
 	const seconds = timeLeft - minutes * 60;
@@ -276,7 +276,7 @@ return (
       </Backdrop>
     }
     <h2 className="timer-console">{timer}</h2>
-    <div className="video-agreement_text">Произнесите <b> "Я соглашаюсь на обработку персональных данных" </b> для того чтобы пройти идентификацию.</div>
+    <div className="video-agreement_text">Произнесите <b> "Я, {fullName}, соглашаюсь на обработку персональных данных" </b> для того чтобы пройти идентификацию.</div>
     <div className="btn-items">
         <Button
           sx={{marginTop: '10px', width: "120px", marginRight:"5px"}} 

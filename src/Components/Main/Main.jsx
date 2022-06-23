@@ -1,4 +1,4 @@
-import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, InputLabel, Select, TextField,
+import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, InputLabel, Select, NativeSelect ,
 CardContent, Typography, FormControl, MenuItem } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import {useNavigate} from "react-router";
@@ -20,7 +20,7 @@ const [openError04, setError04] = React.useState(false);
 const [openTimeOut, setTimeOut] = React.useState(false);
 const [openError500, setError500] = React.useState(false)
 const [openErrorCount, setErrorCount] = React.useState(false)
-const [code, setCode] = React.useState('');
+const [code, setCode] = React.useState('+996');
 let   navigate = useNavigate();
 const kgMask = '(000) 000 - 000'
 const ruMask = '(000) 000 - 00 - 00'
@@ -130,16 +130,16 @@ return (
             label="Код"
             onChange={handleChangeCode}
           >
-            <MenuItem value={+996}>+996</MenuItem>
-            <MenuItem value={+7}>   +7 </MenuItem>
+            <MenuItem value={'+996'}>+996</MenuItem>
+            <MenuItem value={'+7'}>+7 </MenuItem>
           </Select>
       </FormControl>
           <IMaskInput
-          mask={(code === +996  || code === '' ? kgMask : ruMask)}
+          mask={(code === '+996' ? kgMask : ruMask)}
           className="form-input-phone"
           onAccept={(value) => {setNumber(value)}}
           value={number}
-          placeholder={(code === +996  || code === ''  ? "(000) 000 - 000" : '(000) 000 - 00 - 00')}
+          placeholder={(code === '+996'  ? "(000) 000 - 000" : '(000) 000 - 00 - 00')}
           />
         <Button 
           color="success" 
