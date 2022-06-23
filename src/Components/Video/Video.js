@@ -122,7 +122,7 @@ export  default function App({id, secretWord, setFullName}) {
       )  
       .then((res) => { 
       setOpen(false);
-      console.log(res.data.fullName)
+      setFullName(res.data.fullName)
       if (res.data.statusCode === 1){ 
         setErrorWord(true)
         console.log(res.data) 
