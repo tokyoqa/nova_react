@@ -44,13 +44,14 @@ const Finish = ({id}) => {
     <div>
      <Card style={cardStyle}>
           <CardContent>
-            <Typography sx={{textAlign: 'center'}} gutterBottom variant="h5" component="p">
+            <Typography sx={{textAlign: 'center', fontSize: '22px'}} gutterBottom variant="h5" component="p">
               Удаленная Идентификация
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
-              Поздравляем ваша идентификация на рассмотрении. Вам будет отправлено сообщение на телефон.
+            <Typography variant="body2" color="text.secondary" sx={{fontSize: "14px", textAlign: 'text-justify', marginTop: '10px', padding: '0 2px 0 2px'}}>
+              Поздравляем! Ваша заявка на рассмотрении. <br/>
+              При успешной идентификации, на указанный Вами номер, будет отправлен СМС с логином и паролем от АБ24.
             </Typography>
-            <Button id="reset-btn" color='success' sx={{ margin: '0 auto', marginTop: '50px', width: "50%", textAlign: 'center'}} variant="contained" onClick={goHome}>
+            <Button id="reset-btn" color='success' sx={{ margin: '0 auto', marginTop: '60px', width: "50%", textAlign: 'center'}} variant="contained" onClick={goHome}>
             На главную 
           </Button>
           </CardContent>
