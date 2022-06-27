@@ -5,7 +5,7 @@ import Webcam from "react-webcam";
 import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
-import '../Video/Video.css'
+import '../Video/Video.css';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import getCookies from "../../hooks/getCookies";
 
@@ -30,7 +30,8 @@ export  default function App({fullName}) {
 	const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
   const [isRunning, setRunning] = useState(false)
-
+  const cookiesId = getCookies('id')
+  const [isDisabled, setDisabled] = useState(true);
 	let 	options = {};
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
@@ -46,11 +47,9 @@ export  default function App({fullName}) {
   } 
  };
 
-
  const startOpenTimer = () => {
   setOpenTimer(true)
  }
-
 
  // Start recording video
  const startVideo = () => {
@@ -97,7 +96,7 @@ export  default function App({fullName}) {
     ) 
     formDate.append( 
     'id',
-    getCookies('id')
+    cookiesId
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
@@ -176,6 +175,7 @@ const startTimer = (e) => {
   }
   if( seconds === 0){
     setRunning(false)
+    setDisabled(false)
     const handleStopCaptureClick = () => { 
       if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
         mediaRecorderRef.current.stop(); 
@@ -184,7 +184,6 @@ const startTimer = (e) => {
     setStatusVideo('Записано') 
   }
   }
-
    
   const clearTimer = (e) => {   
       setTimer('8'); 
@@ -295,13 +294,13 @@ return (
           color='success' 
           sx={{marginTop: '10px', width: "120px", marginRight:"5px"}} 
           variant="contained" 
-          onClick={startOpenTimer}>
+          onClick={startOpenTimer}
+          disabled={isDisabled}
+          >
             Переснять 
         </Button>
     </div>
   
-
-    
   <Backdrop 
     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
     open={open}>

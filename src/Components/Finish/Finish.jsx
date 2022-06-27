@@ -45,7 +45,7 @@ const Finish = ({id}) => {
      <Card style={cardStyle}>
           <CardContent>
             <Typography sx={{textAlign: 'center', fontSize: '22px'}} gutterBottom variant="h5" component="p">
-              Удаленная Идентификация
+              Удаленная идентификация
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "14px", textAlign: 'text-justify', marginTop: '10px', padding: '0 2px 0 2px'}}>
               Поздравляем! Ваша заявка на рассмотрении. <br/>

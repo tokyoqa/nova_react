@@ -35,7 +35,7 @@ export const Terms = () => {
 
   const handleChangeChecked = (event) => {
     if(!event.target.checked){
-      setChecked()
+      setChecked('1')
     }
     else{
       setChecked('0')
@@ -43,12 +43,12 @@ export const Terms = () => {
   };
 
   const agreeSubmit = (event) => {
-      if(!check || check === undefined){
+      if(!check || check === '1'){
         setOpen(false)
         setError(true)
       } else { 
           axios
-          .get(url + "id=" + getCookies('id') + "&check=" + check)
+          .get(url + "id=" + getCookies('id') + "&check=0")
           .then((res) => {
             console.log(res.data);
             setOpen(false);
@@ -83,9 +83,11 @@ export const Terms = () => {
     };
 
   const disagreeSubmit = () => {
-      setError(false)
-      setOpen(false)
-      setChecked("1")
+      if(!check || check === '1'){
+        setOpen(false)
+        setError(true)
+      } else
+      {
       axios
       .get(url + "id=" + getCookies('id') + "&check=1")
       .then((res) => {
@@ -102,7 +104,9 @@ export const Terms = () => {
           setOpen(false)
           navigate("/finish");
         }
+        
       })
+      
 
       .catch((err) => {
         console.error(err);
@@ -110,6 +114,7 @@ export const Terms = () => {
         setOpen(false);
       });
       navigate('/finish')
+    }
   };
 
   const closeError = (event, reason) => {
@@ -123,11 +128,11 @@ export const Terms = () => {
   };
 
   return (
-    <div>
+    <div >
       <Card className="cardStyle">
           <CardContent>
             <Typography sx={{textAlign: 'center'}} gutterBottom variant="h5" component="p">
-              Удаленная Идентификация
+              Удаленная идентификация
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
               Поздравляем! Ваша заявка на фото-идентификацию находится на стадии рассмотрения. 
@@ -138,7 +143,7 @@ export const Terms = () => {
             </Typography>
               <br/>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '5px'}}>
-            <a href="https://ab.kg/guarddog/laravel-filemanager/files/shares/dogovorpublichnoyoferty.pdf" target="_blank">  
+            <a className='link-terms' href="https://ab.kg/guarddog/laravel-filemanager/files/shares/dogovorpublichnoyoferty.pdf" target="_blank">  
             Здесь Вы можете ознакомиться с условиями видео- и фото-идентификаций </a> 
             </Typography>
             <FormControlLabel sx={{marginTop: 2}}
@@ -186,7 +191,7 @@ export const Terms = () => {
 
         <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
           <Alert onClose={closeError} severity="error" sx={{ width: "100%" }}>
-            Ошибка! Повторите заново!
+            Необходимо подтверждение на обработку данных 
           </Alert>
         </Snackbar>
 

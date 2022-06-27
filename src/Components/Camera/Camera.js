@@ -18,9 +18,11 @@ const  CameraJS = ({ setSecretWord }) => {
   const [openError04, setError04] = React.useState(false)
   const [openWarning, setWarning] = React.useState(false)
   const [openFaceNotMatch, setFaceNotMatch] = React.useState(false)
+  const [isDisabled, setDisabled] = React.useState(true)
 
 function handleTakePhoto (dataUri) {
-  setDataUri(dataUri)  
+  setDataUri(dataUri)
+  setDisabled(false)
 }
     
 function handleTakePhotoAnimationDone (dataUri) { 
@@ -42,7 +44,6 @@ const sendPhoto = () => {
     setError(true)
 }
 else{
-  const temp = 1
 setError(false)
 setOpen(true)
 setDataUri(dataUri);
@@ -152,11 +153,20 @@ return (
       </div>
     }
     <div className="btn-group-camera">
-    <Button  sx={{width: '120px', marginRight: '10px'}} variant="outlined" color="success" onClick={resetPhoto} >
-       Переснять
-    </Button>
-    <Button  sx={{width: '120px'}} variant="contained" color="success" onClick={sendPhoto} >
+    
+    <Button  sx={{width: '120px', marginRight: '10px'}} 
+    variant="contained" 
+    color="success" 
+    onClick={sendPhoto} >
       Готово 
+    </Button>
+    <Button  sx={{width: '120px'}} 
+    variant="outlined" 
+    color="success" 
+    onClick={resetPhoto}
+    disabled={isDisabled}
+    >
+       Переснять
     </Button>
     </div>
   <Backdrop 

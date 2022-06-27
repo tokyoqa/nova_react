@@ -29,7 +29,8 @@ export  default function App({secretWord, setFullName}) {
 	const [openWarning, setWarning] = React.useState(false)
 	const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
-  const [isRunning, setRunning] = useState(false)
+  const [isRunning, setRunning] = useState(false);
+  const [isDisabled, setDisabled] = useState(true);
 	let 	options = {};
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
@@ -46,11 +47,9 @@ export  default function App({secretWord, setFullName}) {
   } 
  };
 
-
  const startOpenTimer = () => {
   setOpenTimer(true)
  }
-
 
  // Start recording video
  const startVideo = () => {
@@ -97,7 +96,7 @@ export  default function App({secretWord, setFullName}) {
     ) 
     formDate.append( 
     'id',
-    cookieId
+    cookieId 
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject);
@@ -178,6 +177,7 @@ const startTimer = (e) => {
   }
   if( seconds === 0){
     setRunning(false)
+    setDisabled(false)
   const handleStopCaptureClick = () => {
     setRunning(false)
     if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
@@ -186,7 +186,6 @@ const startTimer = (e) => {
   }; 
   }
   }
-
    
   const clearTimer = (e) => {   
       setTimer('5'); 
@@ -211,7 +210,6 @@ const startTimer = (e) => {
     document.getElementById('start-btn').style.display = 'none';
   }
 
-
   const closeError = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -224,7 +222,6 @@ const startTimer = (e) => {
     setErrorWord(false)
   };
 
-
   const renderTime = ({ remainingTime }) => {
     return (
       <div className="timer">
@@ -234,7 +231,6 @@ const startTimer = (e) => {
       </div>
     );
   };
-  
      
 return (
   <>
@@ -265,7 +261,6 @@ return (
             colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
             colorsTime={[3, 2.5, 1.5, 0]}
             onComplete={() => ( { shouldRepeat: false, delay: 1 }, setOpenTimer(false), startVideo(), setRunning(true))}
-            
             >
             {renderTime}  
           </CountdownCircleTimer>
@@ -299,10 +294,11 @@ return (
         </Button>
         <Button 
           id="reset-btn" 
-          color='success' 
+          color='success'
           sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
           variant="contained"  
           onClick={startOpenTimer}
+          disabled={isDisabled}
           >
           Переснять 
         </Button>

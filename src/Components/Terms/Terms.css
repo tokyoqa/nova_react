@@ -2,6 +2,14 @@ body{
   margin: 0;
   padding: 0;
 }
+
+.cardStyle{
+  width: 400px;
+  height: 500px;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
 .terms_form{
   margin: 0 auto;
   margin-top: 100px;
@@ -61,8 +69,8 @@ body{
     text-decoration: none;
   }
 
-  .cardStyle{
-
+  .link-terms{
+    text-decoration: none;
   }
 
   
