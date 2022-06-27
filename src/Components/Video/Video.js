@@ -7,9 +7,9 @@ import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import getCookies from "../../hooks/getCookies";
 
-
-export  default function App({id, secretWord, setFullName}) {
+export  default function App({secretWord, setFullName}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
 	const minutes = Math.floor(timeLeft/60);
 	const seconds = timeLeft - minutes * 60;
@@ -34,6 +34,7 @@ export  default function App({id, secretWord, setFullName}) {
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
   });
+  const cookieId = getCookies('id') 
 
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -84,7 +85,7 @@ export  default function App({id, secretWord, setFullName}) {
   // --** SEND FILE **-- //
   const sendVideoFile = () => { 
   	const formDate = new FormData();
-    setOpen(!open); 
+    setOpen(!open);
     if(!recordedChunks.length){
       setErrorNull(true)
       setOpen(false)
@@ -96,11 +97,12 @@ export  default function App({id, secretWord, setFullName}) {
     ) 
     formDate.append( 
     'id',
-    id
+    cookieId
     ) 
     const urlObject = URL.createObjectURL(blob); 
-    setVideoSrc(urlObject); 
-      axios 
+    setVideoSrc(urlObject);
+    console.log(formDate)
+      axios
     ( 
       { 
         url: global.config.REST_API + 'api/video', 
