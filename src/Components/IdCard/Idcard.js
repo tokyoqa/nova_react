@@ -6,9 +6,11 @@ import React, {useState} from "react";
 import { useNavigate } from "react-router";
 import "./Idcard.css"
 import '../../Config';
+import getCookies from '../../hooks/getCookies';
+
 
   axios.defaults.headers.post['Contect-Type'] = 'multipart';
-  const Idcard = ({id}) => {
+  const Idcard = () => {
   const navigate = useNavigate()
   const [selectedFileFront, setSelectedFileFront] = useState();
   const [selectedFileBack, setSelectedFileBack] = useState()
@@ -50,12 +52,6 @@ import '../../Config';
     return () => URL.revokeObjectURL(objectUrlBack)
   }, [selectedFileBack])
 
-  // useEffect(() => {
-  //   if(!id){
-  //     navigate('/')
-  //   }
-  // });
-
 const onFileUpload = () => {
   if(!selectedFileBack || !selectedFileFront){
     setErrorFiles(true)
@@ -71,7 +67,7 @@ const onFileUpload = () => {
     );
     formDataFront.append(
       'id',
-      id
+      getCookies('id')
     )
 
     formDataBack.append(
@@ -81,7 +77,7 @@ const onFileUpload = () => {
     );
     formDataBack.append(
       'id',
-        id
+      getCookies('id')
     )
     axios({
         method: 'POST',

@@ -12,7 +12,7 @@ import './Main.css';
 import setCookies from '../../hooks/setCookies';
 import removeCookies from '../../hooks/removeCookies';
 
-const Main = ({setId}) => {
+const Main = () => {
   // Values
   const [number, setNumber] = useInputValue('');
   const [openLoading, setOpenLoading] = React.useState(false); 
@@ -77,7 +77,6 @@ const Main = ({setId}) => {
         }).then((res) => {
           removeCookies('id')
           setCookies('id', res.data.id)
-          setId(res.data.id);
           setOpenLoading(false);
           if (res.data.statusCode === 1) {
             console.log(res.data)

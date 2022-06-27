@@ -18,9 +18,9 @@ import {
   CardActions,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-import { useEffect } from "react";
+import getCookies from '../../hooks/getCookies';
 
-export const Terms = ({ id }) => {
+export const Terms = () => {
   let navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const url = global.config.REST_API + "api/submission?";
@@ -31,12 +31,6 @@ export const Terms = ({ id }) => {
   const [check, setChecked] = React.useState('')
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-
-  useEffect(() => {
-    if(!id){
-      navigate('/')
-    }
   });
 
   const handleChangeChecked = (event) => {
@@ -54,7 +48,7 @@ export const Terms = ({ id }) => {
         setError(true)
       } else { 
           axios
-          .get(url + "id=" + id + "&check=" + check)
+          .get(url + "id=" + getCookies('id') + "&check=" + check)
           .then((res) => {
             console.log(res.data);
             setOpen(false);
@@ -93,7 +87,7 @@ export const Terms = ({ id }) => {
       setOpen(false)
       setChecked("1")
       axios
-      .get(url + "id=" + id + "&check=1")
+      .get(url + "id=" + getCookies('id') + "&check=1")
       .then((res) => {
         setOpen(false);
         if (res.data.statusCode === 1) {

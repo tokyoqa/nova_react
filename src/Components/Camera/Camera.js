@@ -8,8 +8,9 @@ import {useEffect } from 'react';
 import '../../Config';
 import axios from 'axios';
 import './Camera.css'
+import getCookies from '../../hooks/getCookies';
 
-const  CameraJS = ({id, setSecretWord}) => {
+const  CameraJS = ({ setSecretWord }) => {
   let navigate = useNavigate();
   const [dataUri, setDataUri] = useState('');
   const [open, setOpen] = React.useState(false); 
@@ -17,12 +18,6 @@ const  CameraJS = ({id, setSecretWord}) => {
   const [openError04, setError04] = React.useState(false)
   const [openWarning, setWarning] = React.useState(false)
   const [openFaceNotMatch, setFaceNotMatch] = React.useState(false)
-
-  // useEffect(() => {
-  //       if(!id){
-  //         navigate('/')
-  //       }
-  //     });
 
 function handleTakePhoto (dataUri) {
   setDataUri(dataUri)  
@@ -57,7 +52,7 @@ axios({
     data:{ 
         base64: dataUri,
         // id: temp
-        id: id
+        id: getCookies('id')
     },
     headers: {
         'Content-Type': 'application/json',

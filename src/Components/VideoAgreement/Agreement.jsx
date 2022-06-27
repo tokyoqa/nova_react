@@ -7,8 +7,9 @@ import {useNavigate} from "react-router";
 import '../../Config';
 import '../Video/Video.css'
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import getCookies from "../../hooks/getCookies";
 
-export  default function App({id, secretWord, fullName}) {
+export  default function App({fullName}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
 	const minutes = Math.floor(timeLeft/60);
 	const seconds = timeLeft - minutes * 60;
@@ -38,13 +39,6 @@ export  default function App({id, secretWord, fullName}) {
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-
-	// useEffect(() => {
-	// 	if(!id){
-	// 		navigate('/')
-	// 	}
-	// });
-
   
  const handleDataAvailable = ({ data }) => { 
   if (data.size > 0) { 
@@ -103,7 +97,7 @@ export  default function App({id, secretWord, fullName}) {
     ) 
     formDate.append( 
     'id',
-    id
+    getCookies('id')
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 

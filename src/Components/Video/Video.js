@@ -38,13 +38,6 @@ export  default function App({id, secretWord, setFullName}) {
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-
-	useEffect(() => {
-		if(!id){
-			navigate('/')
-		}
-	});
-
   
  const handleDataAvailable = ({ data }) => { 
   if (data.size > 0) { 

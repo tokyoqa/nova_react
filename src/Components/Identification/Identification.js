@@ -8,8 +8,9 @@ import { useRef } from 'react';
 import '../../Config';
 import { useEffect } from 'react';
 import MuiAlert from '@mui/material/Alert';
+import getCookies from '../../hooks/getCookies';
   
-export const Identification  = ({id}) => {
+export const Identification  = () => {
     const [open, setOpen] = React.useState(false); 
     const codeMask = "0000";  
     let navigate = useNavigate();
@@ -23,15 +24,12 @@ export const Identification  = ({id}) => {
     const [timer, setTimer] = useState('00:00:00');
     const Ref = useRef(null);
     const [isDisabled, setIsDisabled] = useState(true);
+    
 
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
-    useEffect(() => {
-      if(!id){
-        navigate('/')
-      }
-    });
+
     const getTimeRemaining = (e) => {
         const total = Date.parse(e) - Date.parse(new Date());
         const seconds = Math.floor((total / 1000) % 60);
@@ -82,7 +80,7 @@ export const Identification  = ({id}) => {
       }
       else{
       setOpen(!open)
-        axios.get( global.config.REST_API + 'api/code?id=' + id + '&code='  + secureCode )
+        axios.get( global.config.REST_API + 'api/code?id=' + getCookies('id') + '&code='  + secureCode )
         .then((res) => {  
           setOpen(false); 
             if (res.data.statusCode === 1){
@@ -116,7 +114,7 @@ export const Identification  = ({id}) => {
         setIsDisabled(true)
         onClickReset()
         axios
-        .get(url + id)
+        .get(url + getCookies('id'))
           .then((res) => {
             setSuccess(true)
             setOpen(false); 
