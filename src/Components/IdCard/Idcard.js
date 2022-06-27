@@ -50,11 +50,11 @@ import '../../Config';
     return () => URL.revokeObjectURL(objectUrlBack)
   }, [selectedFileBack])
 
-  useEffect(() => {
-    if(!id){
-      navigate('/')
-    }
-  });
+  // useEffect(() => {
+  //   if(!id){
+  //     navigate('/')
+  //   }
+  // });
 
 const onFileUpload = () => {
   if(!selectedFileBack || !selectedFileFront){
@@ -170,7 +170,6 @@ const onFileUpload = () => {
     )
   };
   }
-      
   const closeError = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -194,7 +193,6 @@ const onFileUpload = () => {
     margin: "0 auto",
     marginTop: "10px"
   };
-
 return (
   <div className='idcard_box'>
     <Card styles={cardStyle} sx={{margin: '0 auto',  marginTop: '20px', border: 1, borderColor: 'grey.300'}}>
@@ -208,7 +206,6 @@ return (
         <div className="photo-area">
             <div className="photo-item">
               <form id="front_passport_form" >
-                
                 <label className="photo-item-label">
                   <img 
                   className='front-preview'
@@ -222,7 +219,6 @@ return (
                       id="front_passport" 
                       />
                 </label>
-
                 <div className="photo-item-title">Лицевая сторона</div>
               </form>
                 </div>

@@ -11,7 +11,7 @@ import NotFound from './Components/NotFound/NotFound';
 import VideoAgreement from './Components/VideoAgreement/Agreement'
 import React, { useState, useContext } from "react";
 function App(){
-
+ 
   //Variables
   const [id, setId] = useState(null);
   const [secretWord, setSecretWord] = useState(null);

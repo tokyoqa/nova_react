@@ -13,7 +13,7 @@ export  default function App({id, secretWord, fullName}) {
 	const minutes = Math.floor(timeLeft/60);
 	const seconds = timeLeft - minutes * 60;
 	const Ref = useRef(null);
-  const [timer, setTimer] = useState('5');
+  const [timer, setTimer] = useState('8');
 	const [statusVideo, setStatusVideo] = useState();
 	const webcamRef = useRef(null);
 	const mediaRecorderRef = useRef(null);
@@ -39,11 +39,11 @@ export  default function App({id, secretWord, fullName}) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-	useEffect(() => {
-		if(!id){
-			navigate('/')
-		}
-	});
+	// useEffect(() => {
+	// 	if(!id){
+	// 		navigate('/')
+	// 	}
+	// });
 
   
  const handleDataAvailable = ({ data }) => { 
@@ -193,7 +193,7 @@ const startTimer = (e) => {
 
    
   const clearTimer = (e) => {   
-      setTimer('5'); 
+      setTimer('8'); 
       if (Ref.current) clearInterval(Ref.current); 
       const id = setInterval(() => { 
           startTimer(e); 
@@ -203,7 +203,7 @@ const startTimer = (e) => {
   
   const getDeadTime = () => { 
       let deadline = new Date(); 
-      deadline.setSeconds(deadline.getSeconds() + 5); 
+      deadline.setSeconds(deadline.getSeconds() + 8); 
       return deadline; 
   } 
   
