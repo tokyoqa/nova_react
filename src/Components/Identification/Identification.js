@@ -20,6 +20,7 @@ export const Identification  = () => {
     const [openErrorCount, setErrorCount] = React.useState(false)
     const [openWarning, setWarning] = React.useState(false)
     const [openErrorNull, setErrorNull] = React.useState(false)
+    const [openCookieError, setCookieError] = React.useState(false)
     const url = global.config.REST_API + 'api/reset?id='
     const [timer, setTimer] = useState('00:00:00');
     const Ref = useRef(null);
@@ -75,8 +76,11 @@ export const Identification  = () => {
     }
     // Post code 
     function postSecureCode(){
-        if(!secureCode || secureCode.length < 4){
-          setErrorNull(true)
+      if(!getCookies('id')){
+        setCookieError(true)
+      }
+      else if(!secureCode || secureCode.length < 4){
+        setErrorNull(true)
       }
       else{
       setOpen(!open)
@@ -152,6 +156,7 @@ export const Identification  = () => {
       setWarning(false);
       setSuccess(false)
       setErrorNull(false)
+      setCookieError(false)
     };
 
 return(
@@ -185,7 +190,7 @@ return(
     </Card>       
       <Backdrop 
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
-        open={open} 
+        open={open}
         > 
       <CircularProgress color="inherit" /> 
       </Backdrop> 
@@ -193,6 +198,11 @@ return(
       <Snackbar open={openErrorCount} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Ошибка. Истечено количество попыток!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openCookieError} autoHideDuration={3000} onClose={closeError}>
+        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+          Ваща сессия истекла. Начните заново.
         </Alert>
       </Snackbar>
       <Snackbar open={openErrorNull} autoHideDuration={3000} onClose={closeError}>
@@ -207,7 +217,7 @@ return(
       </Snackbar>
       <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ошибка! Повторите заново!
+          Ошибка запроса. Повторите занова.
         </Alert>
       </Snackbar>
       <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>

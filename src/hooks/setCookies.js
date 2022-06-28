@@ -1,8 +1,9 @@
 import Cookies from "js-cookie";
 
 const setCookies = ( user_ident , id ) =>{
+const in10Minutes = 1 / 48
   Cookies.set(user_ident, id,{
-    expires: 1,
+    expires: in10Minutes,
     secure: true,
     sameSite: 'strict',
     path: '/'

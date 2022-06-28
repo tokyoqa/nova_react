@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import "./Idcard.css"
 import '../../Config';
 import getCookies from '../../hooks/getCookies';
+import setCookies from '../../hooks/setCookies';
 
 
   axios.defaults.headers.post['Contect-Type'] = 'multipart';
@@ -19,6 +20,7 @@ import getCookies from '../../hooks/getCookies';
   const [openErrorFront, setErrorFront] = useState(false)
   const [openErrorBack, setErrorBack] = useState(false)
   const [openErrorFiles, setErrorFiles] = React.useState(false)
+  const [openCookieError, setCookieError] = React.useState(false)
   const [openWarning, setWarning] = React.useState(false)
   const [previewFront, setPreviewFront] = useState()
   const [previewBack, setPreviewBack] = useState()
@@ -53,7 +55,10 @@ import getCookies from '../../hooks/getCookies';
   }, [selectedFileBack])
 
 const onFileUpload = () => {
-  if(!selectedFileBack || !selectedFileFront){
+  if(!getCookies('id')){
+    setCookieError(true)
+  }
+  else if(!selectedFileBack || !selectedFileFront){
     setErrorFiles(true)
   }
   else{
@@ -175,6 +180,7 @@ const onFileUpload = () => {
     setErrorFront(false)
     setErrorBack(false)
     setWarning(false);
+    setCookieError(false)
   };
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -253,6 +259,11 @@ return (
       <Snackbar open={openErrorBack} autoHideDuration={6000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Плохое качество фото. Загрузите фото лицевой стороны снова.  
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openCookieError} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+          Время сессии истекла. Начните заново.  
         </Alert>
       </Snackbar>
       <Snackbar open={openErrorFront} autoHideDuration={6000} onClose={closeError}>

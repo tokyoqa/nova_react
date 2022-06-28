@@ -72,7 +72,7 @@ export const Terms = () => {
               navigate("/video");
               setOpen(false);
           }
-        } )
+        })
         .catch((err) => {
           console.error(err);
           setError(true);
@@ -104,7 +104,6 @@ export const Terms = () => {
           setOpen(false)
           navigate("/finish");
         }
-        
       })
       
 
