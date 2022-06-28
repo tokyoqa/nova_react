@@ -5,15 +5,16 @@ import Webcam from "react-webcam";
 import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
-import '../Video/Video.css'
+import '../Video/Video.css';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import getCookies from "../../hooks/getCookies";
 
-export  default function App({id, secretWord, fullName}) {
+export  default function App({fullName}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
 	const minutes = Math.floor(timeLeft/60);
 	const seconds = timeLeft - minutes * 60;
 	const Ref = useRef(null);
-  const [timer, setTimer] = useState('5');
+  const [timer, setTimer] = useState('8');
 	const [statusVideo, setStatusVideo] = useState();
 	const webcamRef = useRef(null);
 	const mediaRecorderRef = useRef(null);
@@ -29,7 +30,8 @@ export  default function App({id, secretWord, fullName}) {
 	const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
   const [isRunning, setRunning] = useState(false)
-
+  const cookiesId = getCookies('id')
+  const [isDisabled, setDisabled] = useState(true);
 	let 	options = {};
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
@@ -38,13 +40,6 @@ export  default function App({id, secretWord, fullName}) {
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-
-	useEffect(() => {
-		if(!id){
-			navigate('/')
-		}
-	});
-
   
  const handleDataAvailable = ({ data }) => { 
   if (data.size > 0) { 
@@ -52,11 +47,9 @@ export  default function App({id, secretWord, fullName}) {
   } 
  };
 
-
  const startOpenTimer = () => {
   setOpenTimer(true)
  }
-
 
  // Start recording video
  const startVideo = () => {
@@ -103,7 +96,7 @@ export  default function App({id, secretWord, fullName}) {
     ) 
     formDate.append( 
     'id',
-    id
+    cookiesId
     ) 
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject); 
@@ -168,10 +161,8 @@ export  default function App({id, secretWord, fullName}) {
  const getTimeRemaining = (e) => { 
     const total = Date.parse(e) - Date.parse(new Date()); 
     const seconds = Math.floor((total / 1000) % 60); 
-    const minutes = Math.floor((total / 1000 / 60) % 60);   
-    const hours = Math.floor((total / 1000 / 60 / 60) % 24); 
     return { 
-        total, hours, minutes, seconds 
+        total, seconds 
     }; 
   } 
    
@@ -181,19 +172,21 @@ const startTimer = (e) => {
     setTimer((seconds > 9 ? seconds :  seconds))
   }
   if( seconds === 0){
+    console.log('stopped')
     setRunning(false)
+    setDisabled(false)
     const handleStopCaptureClick = () => { 
-      if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
+      if (mediaRecorderRef.current && mediaRecorderRef.current.stop) {
+        
         mediaRecorderRef.current.stop(); 
       } 
   }; 
     setStatusVideo('Записано') 
   }
   }
-
    
   const clearTimer = (e) => {   
-      setTimer('5'); 
+      setTimer('8'); 
       if (Ref.current) clearInterval(Ref.current); 
       const id = setInterval(() => { 
           startTimer(e); 
@@ -203,7 +196,7 @@ const startTimer = (e) => {
   
   const getDeadTime = () => { 
       let deadline = new Date(); 
-      deadline.setSeconds(deadline.getSeconds() + 5); 
+      deadline.setSeconds(deadline.getSeconds() + 8); 
       return deadline; 
   } 
   
@@ -301,13 +294,13 @@ return (
           color='success' 
           sx={{marginTop: '10px', width: "120px", marginRight:"5px"}} 
           variant="contained" 
-          onClick={startOpenTimer}>
+          onClick={startOpenTimer}
+          disabled={isDisabled}
+          >
             Переснять 
         </Button>
     </div>
   
-
-    
   <Backdrop 
     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
     open={open}>

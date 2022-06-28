@@ -11,50 +11,42 @@ import NotFound from './Components/NotFound/NotFound';
 import VideoAgreement from './Components/VideoAgreement/Agreement'
 import React, { useState, useContext } from "react";
 function App(){
-
+ 
   //Variables
-  const [id, setId] = useState(null);
   const [secretWord, setSecretWord] = useState(null);
   const [fullName, setFullName] = useState(null);
-  // const [fullName, setFullName] = useContext('')
 return(
   <div>
     <Routes>
       <Route path="/" element={<Layout/>}>
         <Route 
           index element={<Main
-          setId={setId}
           />}
         />
         <Route 
           path='identification' 
           element={<Identification 
-          id={id} 
           />}
         />
         <Route 
           path='idcard' 
           element={<Idcard 
-          id={id}
           />}
         />
         <Route 
           path='camera' 
           element={<Camera 
-          id={id}
           setSecretWord={setSecretWord}
           />}
         />
         <Route
           path='terms' 
           element={<Terms 
-          id={id}
           />}
         />
         <Route 
           path='video' 
           element={<Video 
-          id={id}
           secretWord={secretWord}
           setFullName={setFullName}
           />}
@@ -62,7 +54,6 @@ return(
         <Route 
           path='video-agreement' 
           element={<VideoAgreement
-          id={id}
           fullName={fullName}
           />}
         />
@@ -72,7 +63,6 @@ return(
         />
         <Route 
           path='finish'
-          id={id}
           element={<Finish
         />}
         />   

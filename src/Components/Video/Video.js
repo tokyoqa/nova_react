@@ -7,9 +7,9 @@ import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import getCookies from "../../hooks/getCookies";
 
-
-export  default function App({id, secretWord, setFullName}) {
+export  default function App({secretWord, setFullName}) {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
 	const minutes = Math.floor(timeLeft/60);
 	const seconds = timeLeft - minutes * 60;
@@ -29,22 +29,17 @@ export  default function App({id, secretWord, setFullName}) {
 	const [openWarning, setWarning] = React.useState(false)
 	const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
-  const [isRunning, setRunning] = useState(false)
+  const [isRunning, setRunning] = useState(false);
+  const [isDisabled, setDisabled] = useState(true);
 	let 	options = {};
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
   });
+  const cookieId = getCookies('id') 
 
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
-
-	useEffect(() => {
-		if(!id){
-			navigate('/')
-		}
-	});
-
   
  const handleDataAvailable = ({ data }) => { 
   if (data.size > 0) { 
@@ -52,11 +47,9 @@ export  default function App({id, secretWord, setFullName}) {
   } 
  };
 
-
  const startOpenTimer = () => {
   setOpenTimer(true)
  }
-
 
  // Start recording video
  const startVideo = () => {
@@ -91,7 +84,7 @@ export  default function App({id, secretWord, setFullName}) {
   // --** SEND FILE **-- //
   const sendVideoFile = () => { 
   	const formDate = new FormData();
-    setOpen(!open); 
+    setOpen(!open);
     if(!recordedChunks.length){
       setErrorNull(true)
       setOpen(false)
@@ -103,11 +96,12 @@ export  default function App({id, secretWord, setFullName}) {
     ) 
     formDate.append( 
     'id',
-    id
+    cookieId 
     ) 
     const urlObject = URL.createObjectURL(blob); 
-    setVideoSrc(urlObject); 
-      axios 
+    setVideoSrc(urlObject);
+    console.log(formDate)
+      axios
     ( 
       { 
         url: global.config.REST_API + 'api/video', 
@@ -183,6 +177,7 @@ const startTimer = (e) => {
   }
   if( seconds === 0){
     setRunning(false)
+    setDisabled(false)
   const handleStopCaptureClick = () => {
     setRunning(false)
     if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
@@ -191,7 +186,6 @@ const startTimer = (e) => {
   }; 
   }
   }
-
    
   const clearTimer = (e) => {   
       setTimer('5'); 
@@ -216,7 +210,6 @@ const startTimer = (e) => {
     document.getElementById('start-btn').style.display = 'none';
   }
 
-
   const closeError = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -229,7 +222,6 @@ const startTimer = (e) => {
     setErrorWord(false)
   };
 
-
   const renderTime = ({ remainingTime }) => {
     return (
       <div className="timer">
@@ -239,7 +231,6 @@ const startTimer = (e) => {
       </div>
     );
   };
-  
      
 return (
   <>
@@ -270,7 +261,6 @@ return (
             colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
             colorsTime={[3, 2.5, 1.5, 0]}
             onComplete={() => ( { shouldRepeat: false, delay: 1 }, setOpenTimer(false), startVideo(), setRunning(true))}
-            
             >
             {renderTime}  
           </CountdownCircleTimer>
@@ -304,10 +294,11 @@ return (
         </Button>
         <Button 
           id="reset-btn" 
-          color='success' 
+          color='success'
           sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
           variant="contained"  
           onClick={startOpenTimer}
+          disabled={isDisabled}
           >
           Переснять 
         </Button>

@@ -18,9 +18,9 @@ import {
   CardActions,
 } from "@mui/material";
 import MuiAlert from "@mui/material/Alert";
-import { useEffect } from "react";
+import getCookies from '../../hooks/getCookies';
 
-export const Terms = ({ id }) => {
+export const Terms = () => {
   let navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
   const url = global.config.REST_API + "api/submission?";
@@ -33,15 +33,9 @@ export const Terms = ({ id }) => {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  useEffect(() => {
-    if(!id){
-      navigate('/')
-    }
-  });
-
   const handleChangeChecked = (event) => {
     if(!event.target.checked){
-      setChecked()
+      setChecked('1')
     }
     else{
       setChecked('0')
@@ -49,12 +43,12 @@ export const Terms = ({ id }) => {
   };
 
   const agreeSubmit = (event) => {
-      if(!check || check === undefined){
+      if(!check || check === '1'){
         setOpen(false)
         setError(true)
       } else { 
           axios
-          .get(url + "id=" + id + "&check=" + check)
+          .get(url + "id=" + getCookies('id') + "&check=0")
           .then((res) => {
             console.log(res.data);
             setOpen(false);
@@ -78,7 +72,7 @@ export const Terms = ({ id }) => {
               navigate("/video");
               setOpen(false);
           }
-        } )
+        })
         .catch((err) => {
           console.error(err);
           setError(true);
@@ -89,11 +83,13 @@ export const Terms = ({ id }) => {
     };
 
   const disagreeSubmit = () => {
-      setError(false)
-      setOpen(false)
-      setChecked("1")
+      if(!check || check === '1'){
+        setOpen(false)
+        setError(true)
+      } else
+      {
       axios
-      .get(url + "id=" + id + "&check=1")
+      .get(url + "id=" + getCookies('id') + "&check=1")
       .then((res) => {
         setOpen(false);
         if (res.data.statusCode === 1) {
@@ -109,6 +105,7 @@ export const Terms = ({ id }) => {
           navigate("/finish");
         }
       })
+      
 
       .catch((err) => {
         console.error(err);
@@ -116,6 +113,7 @@ export const Terms = ({ id }) => {
         setOpen(false);
       });
       navigate('/finish')
+    }
   };
 
   const closeError = (event, reason) => {
@@ -129,11 +127,11 @@ export const Terms = ({ id }) => {
   };
 
   return (
-    <div>
+    <div >
       <Card className="cardStyle">
           <CardContent>
             <Typography sx={{textAlign: 'center'}} gutterBottom variant="h5" component="p">
-              Удаленная Идентификация
+              Удаленная идентификация
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
               Поздравляем! Ваша заявка на фото-идентификацию находится на стадии рассмотрения. 
@@ -144,7 +142,7 @@ export const Terms = ({ id }) => {
             </Typography>
               <br/>
             <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '5px'}}>
-            <a href="https://ab.kg/guarddog/laravel-filemanager/files/shares/dogovorpublichnoyoferty.pdf" target="_blank">  
+            <a className='link-terms' href="https://ab.kg/guarddog/laravel-filemanager/files/shares/dogovorpublichnoyoferty.pdf" target="_blank">  
             Здесь Вы можете ознакомиться с условиями видео- и фото-идентификаций </a> 
             </Typography>
             <FormControlLabel sx={{marginTop: 2}}
@@ -192,7 +190,7 @@ export const Terms = ({ id }) => {
 
         <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
           <Alert onClose={closeError} severity="error" sx={{ width: "100%" }}>
-            Ошибка! Повторите заново!
+            Необходимо подтверждение на обработку данных 
           </Alert>
         </Snackbar>
 

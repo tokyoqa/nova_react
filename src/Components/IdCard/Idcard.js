@@ -6,9 +6,12 @@ import React, {useState} from "react";
 import { useNavigate } from "react-router";
 import "./Idcard.css"
 import '../../Config';
+import getCookies from '../../hooks/getCookies';
+import setCookies from '../../hooks/setCookies';
+
 
   axios.defaults.headers.post['Contect-Type'] = 'multipart';
-  const Idcard = ({id}) => {
+  const Idcard = () => {
   const navigate = useNavigate()
   const [selectedFileFront, setSelectedFileFront] = useState();
   const [selectedFileBack, setSelectedFileBack] = useState()
@@ -17,6 +20,7 @@ import '../../Config';
   const [openErrorFront, setErrorFront] = useState(false)
   const [openErrorBack, setErrorBack] = useState(false)
   const [openErrorFiles, setErrorFiles] = React.useState(false)
+  const [openCookieError, setCookieError] = React.useState(false)
   const [openWarning, setWarning] = React.useState(false)
   const [previewFront, setPreviewFront] = useState()
   const [previewBack, setPreviewBack] = useState()
@@ -50,14 +54,11 @@ import '../../Config';
     return () => URL.revokeObjectURL(objectUrlBack)
   }, [selectedFileBack])
 
-  useEffect(() => {
-    if(!id){
-      navigate('/')
-    }
-  });
-
 const onFileUpload = () => {
-  if(!selectedFileBack || !selectedFileFront){
+  if(!getCookies('id')){
+    setCookieError(true)
+  }
+  else if(!selectedFileBack || !selectedFileFront){
     setErrorFiles(true)
   }
   else{
@@ -71,7 +72,7 @@ const onFileUpload = () => {
     );
     formDataFront.append(
       'id',
-      id
+      getCookies('id')
     )
 
     formDataBack.append(
@@ -81,7 +82,7 @@ const onFileUpload = () => {
     );
     formDataBack.append(
       'id',
-        id
+      getCookies('id')
     )
     axios({
         method: 'POST',
@@ -170,7 +171,6 @@ const onFileUpload = () => {
     )
   };
   }
-      
   const closeError = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -180,6 +180,7 @@ const onFileUpload = () => {
     setErrorFront(false)
     setErrorBack(false)
     setWarning(false);
+    setCookieError(false)
   };
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -194,7 +195,6 @@ const onFileUpload = () => {
     margin: "0 auto",
     marginTop: "10px"
   };
-
 return (
   <div className='idcard_box'>
     <Card styles={cardStyle} sx={{margin: '0 auto',  marginTop: '20px', border: 1, borderColor: 'grey.300'}}>
@@ -208,7 +208,6 @@ return (
         <div className="photo-area">
             <div className="photo-item">
               <form id="front_passport_form" >
-                
                 <label className="photo-item-label">
                   <img 
                   className='front-preview'
@@ -222,7 +221,6 @@ return (
                       id="front_passport" 
                       />
                 </label>
-
                 <div className="photo-item-title">Лицевая сторона</div>
               </form>
                 </div>
@@ -261,6 +259,11 @@ return (
       <Snackbar open={openErrorBack} autoHideDuration={6000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Плохое качество фото. Загрузите фото лицевой стороны снова.  
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openCookieError} autoHideDuration={6000} onClose={closeError}>
+        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+          Время сессии истекла. Начните заново.  
         </Alert>
       </Snackbar>
       <Snackbar open={openErrorFront} autoHideDuration={6000} onClose={closeError}>

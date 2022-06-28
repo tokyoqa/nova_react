@@ -8,8 +8,9 @@ import { useRef } from 'react';
 import '../../Config';
 import { useEffect } from 'react';
 import MuiAlert from '@mui/material/Alert';
+import getCookies from '../../hooks/getCookies';
   
-export const Identification  = ({id}) => {
+export const Identification  = () => {
     const [open, setOpen] = React.useState(false); 
     const codeMask = "0000";  
     let navigate = useNavigate();
@@ -19,19 +20,17 @@ export const Identification  = ({id}) => {
     const [openErrorCount, setErrorCount] = React.useState(false)
     const [openWarning, setWarning] = React.useState(false)
     const [openErrorNull, setErrorNull] = React.useState(false)
+    const [openCookieError, setCookieError] = React.useState(false)
     const url = global.config.REST_API + 'api/reset?id='
     const [timer, setTimer] = useState('00:00:00');
     const Ref = useRef(null);
     const [isDisabled, setIsDisabled] = useState(true);
+    
 
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
-    useEffect(() => {
-      if(!id){
-        navigate('/')
-      }
-    });
+
     const getTimeRemaining = (e) => {
         const total = Date.parse(e) - Date.parse(new Date());
         const seconds = Math.floor((total / 1000) % 60);
@@ -77,12 +76,15 @@ export const Identification  = ({id}) => {
     }
     // Post code 
     function postSecureCode(){
-        if(!secureCode || secureCode.length < 4){
-          setErrorNull(true)
+      if(!getCookies('id')){
+        setCookieError(true)
+      }
+      else if(!secureCode || secureCode.length < 4){
+        setErrorNull(true)
       }
       else{
       setOpen(!open)
-        axios.get( global.config.REST_API + 'api/code?id=' + id + '&code='  + secureCode )
+        axios.get( global.config.REST_API + 'api/code?id=' + getCookies('id') + '&code='  + secureCode )
         .then((res) => {  
           setOpen(false); 
             if (res.data.statusCode === 1){
@@ -116,7 +118,7 @@ export const Identification  = ({id}) => {
         setIsDisabled(true)
         onClickReset()
         axios
-        .get(url + id)
+        .get(url + getCookies('id'))
           .then((res) => {
             setSuccess(true)
             setOpen(false); 
@@ -154,6 +156,7 @@ export const Identification  = ({id}) => {
       setWarning(false);
       setSuccess(false)
       setErrorNull(false)
+      setCookieError(false)
     };
 
 return(
@@ -187,7 +190,7 @@ return(
     </Card>       
       <Backdrop 
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
-        open={open} 
+        open={open}
         > 
       <CircularProgress color="inherit" /> 
       </Backdrop> 
@@ -195,6 +198,11 @@ return(
       <Snackbar open={openErrorCount} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
           Ошибка. Истечено количество попыток!
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openCookieError} autoHideDuration={3000} onClose={closeError}>
+        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+          Ваща сессия истекла. Начните заново.
         </Alert>
       </Snackbar>
       <Snackbar open={openErrorNull} autoHideDuration={3000} onClose={closeError}>
@@ -209,7 +217,7 @@ return(
       </Snackbar>
       <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ошибка! Повторите заново!
+          Ошибка запроса. Повторите занова.
         </Alert>
       </Snackbar>
       <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>
