@@ -4,7 +4,6 @@ import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import {Backdrop, CircularProgress, Stack, Snackbar, Button} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import { useNavigate } from "react-router";
-import {useEffect } from 'react';
 import '../../Config';
 import axios from 'axios';
 import './Camera.css'
@@ -146,6 +145,7 @@ return (
         :
       <div className='camera-item'>
         <Camera onTakePhotoAnimationDone = {handleTakePhotoAnimationDone}
+          className='camera-item-main'
           isFullscreen={isFullscreen}
           idealFacingMode={FACING_MODES.USER}
           onTakePhoto = {(dataUri) => { handleTakePhoto(dataUri); } }

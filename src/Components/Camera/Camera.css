@@ -1,7 +1,6 @@
 .camera-item{
   display: flex;
   justify-content: center;
-  width: 75px;
   margin: 0 auto;
 }
 
@@ -14,32 +13,31 @@
   width: 75%;
 }
 
-
 /* CAMERA STYLES */
 .camera-text_info{
   display: flex;
   justify-content: center;
-  font-size: 16 px;
+  font-size: 16px;
   margin: 5px 0 5px;
-  
 }
 
 @media screen and (min-width:320px) and (max-width:640px) {
+  .camera-item{
+    width: 75%;
+    height: auto;
+    margin: 0 auto;
+  }
   .demo-image-preview {
     height: 75%;
   }
   .demo-image-preview-fullscreen > img{
     width: 75%;
   }
-  .camera-item{
-    width: 75%;
-    height: auto;
-    margin: 0 auto;
-  } 
+
 }
 
 .btn-group-camera{                                                            
   text-align: center;
   margin-top: 15px;
-  margin-right:20 17px;
+  margin-right: 17px;
 }

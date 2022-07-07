@@ -97,7 +97,7 @@ h1 {
 	.video-item{
     background: rgb(255, 255, 255);
     width: 100%;
-		height: 100%;
+    height: 100%;
   }
   .video-text_word{
     margin: 0 auto;
@@ -109,8 +109,8 @@ h1 {
 /* Media Tablet  */
 @media screen and (min-width:360px) and (max-width:1080px) {
 	.video-item{
-    width: 100%;
-    background: rgb(255, 255, 255);
-		height: 100%;
+      width: 100%;
+      height: 80%;
+      background: rgb(255, 255, 255);
   }
 }

@@ -123,6 +123,7 @@ const Main = () => {
             </Select>
         </FormControl>
             <IMaskInput
+            autoFocus={true}
             mask={(code === '+996' ? kgMask : ruMask)}
             className="form-input-phone"
             onAccept={(value) => {setNumber(value)}}
@@ -132,14 +133,18 @@ const Main = () => {
           <Button 
             color="success" 
             className="main_submit" 
-            sx={{ justifyContent: 'center', marginTop: '30px', width: '60%', borderRadius: "15px"}} 
+            sx={{ justifyContent: 'center', marginTop: '20px', width: '60%', borderRadius: "15px"}}
             variant="contained" 
             onClick={postData}
             >
               Продолжить 
           </Button>
         </CardContent>
+        <Typography sx={{fontSize: '13px', textAlign: 'center', color: '#B22222', marginTop: '8px'}} variant="h5" color="text.secondary">
+          Для телефонов Xiaomi, Redmi, Samsung и подобные просьба пройти идентификацию в Google Chrome
+        </Typography>
       </Card>
+
 
     <Backdrop
       sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 

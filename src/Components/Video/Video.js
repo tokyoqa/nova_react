@@ -86,17 +86,17 @@ export  default function App() {
       setError(true)
       setOpen(false)
     }
-    // else if(!idCookie){
-    //   setOpen(false)
-    //   setErrorMsg('Время сессии истекло. Начните заново')
-    //   setError(true)
-    // }
+    else if(!idCookie){
+      setOpen(false)
+      setErrorMsg('Время сессии истекло. Начните заново')
+      setError(true)
+    }
     else{
-    formDate.append( 
+    formDate.append(
     'video', 
     blob 
-    ) 
-    formDate.append( 
+    )
+    formDate.append(
     'id',
     idCookie
     )

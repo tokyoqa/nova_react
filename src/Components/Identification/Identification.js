@@ -175,6 +175,7 @@ return(
           Введите код из SMS
         </Typography> 
           <IMaskInput
+            autoFocus={true}
             mask={codeMask}
             className="ident_code"
             onAccept={(value) =>{setCode(value)}}
