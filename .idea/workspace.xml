@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28601250-b8c9-4729-83ee-c7cd101f1eea" name="Changes" comment="push to server" />
+    <list default="true" id="28601250-b8c9-4729-83ee-c7cd101f1eea" name="Changes" comment="push to server">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/IdCard/Idcard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/IdCard/Idcard.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/master" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/App.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/Components/SelfiePassport/SelfiePassport.js" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -44,7 +64,13 @@
       <option name="presentableId" value="Default" />
       <updated>1657185809445</updated>
       <workItem from="1657185813659" duration="291000" />
-      <workItem from="1657186107266" duration="1533000" />
+      <workItem from="1657186107266" duration="2946000" />
+      <workItem from="1657190367043" duration="929000" />
+      <workItem from="1657193351828" duration="23000" />
+      <workItem from="1657193376075" duration="3777000" />
+      <workItem from="1657199844254" duration="3091000" />
+      <workItem from="1657206297224" duration="439000" />
+      <workItem from="1657206914542" duration="2144000" />
     </task>
     <task id="LOCAL-00001" summary="check">
       <created>1657186062037</created>
