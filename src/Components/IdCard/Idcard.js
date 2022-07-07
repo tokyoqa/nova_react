@@ -6,25 +6,19 @@ import React, {useState} from "react";
 import { useNavigate } from "react-router";
 import "./Idcard.css"
 import '../../Config';
-import getCookies from '../../hooks/getCookies';
-import setCookies from '../../hooks/setCookies';
+import { getCookies } from '../../hooks/cookies';
+axios.defaults.headers.post['Contect-Type'] = 'multipart';
 
-
-  axios.defaults.headers.post['Contect-Type'] = 'multipart';
   const Idcard = () => {
-  const navigate = useNavigate()
-  const [selectedFileFront, setSelectedFileFront] = useState();
-  const [selectedFileBack, setSelectedFileBack] = useState()
-  const [open, setOpen] = React.useState(false); 
-  const [openError, setError] = React.useState(false)
-  const [openErrorFront, setErrorFront] = useState(false)
-  const [openErrorBack, setErrorBack] = useState(false)
-  const [openErrorFiles, setErrorFiles] = React.useState(false)
-  const [openCookieError, setCookieError] = React.useState(false)
-  const [openWarning, setWarning] = React.useState(false)
-  const [previewFront, setPreviewFront] = useState()
-  const [previewBack, setPreviewBack] = useState()
-  const onFileChangeFront = (event) => {
+    const navigate = useNavigate()
+    const [selectedFileFront, setSelectedFileFront] = useState();
+    const [selectedFileBack, setSelectedFileBack] = useState()
+    const [open, setOpen] = useState(false); 
+    const [openError, setError] = useState(false)
+    const [errorMsg, setErrorMsg] = useState(false)
+    const [previewFront, setPreviewFront] = useState()
+    const [previewBack, setPreviewBack] = useState()
+    const onFileChangeFront = (event) => {
       setSelectedFileFront(event.target.files[0])
       setSelectedFileFront (event.target.files[0])
     };
@@ -56,10 +50,12 @@ import setCookies from '../../hooks/setCookies';
 
 const onFileUpload = () => {
   if(!getCookies('id')){
-    setCookieError(true)
+    setErrorMsg('Время сессии истекло. Начните заново.')
+    setError(true)
   }
   else if(!selectedFileBack || !selectedFileFront){
-    setErrorFiles(true)
+    setErrorMsg('Ошибка! Загрузите фото паспорта!')
+    setError(true)
   }
   else{
     setOpen(true); 
@@ -99,19 +95,23 @@ const onFileUpload = () => {
       setOpen(false)
       if (res.data.statusCode === 1){
         console.log(res.data)
+        setErrorMsg('Ошибка запроса!')
         setError(true)
       }
       else if(res.data.statusCode === 2){
         console.log(res.data)
+        setErrorMsg('Технические проблемы. Повторите запрос позже.')
         setError(true)
       }
       else if(res.data.statusCode === 3){
         console.log(res.data)
-        setWarning(true)
+        setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
+        setError(true)
       }
       else if (res.data.statusCode === 5){
         console.log(res.data)
-        setErrorBack(true)
+        setErrorMsg('Плохое качество фото. Загрузите фото лицевой стороны снова.')
+        setError(true)
       }
       else{
       setOpen(true); 
@@ -142,13 +142,13 @@ const onFileUpload = () => {
           }
           else if(res.data.statusCode === 3){
             console.log(res.data)
-            setWarning(true)
+            setErrorMsg('')
             setOpen(false)
           }
           else if (res.data.statusCode === 5){
             console.log(res.data)
-            setErrorFront(true)
-
+            setErrorMsg('Плохое качество фото. Загрузите фото обратной стороны снова. ')
+            setError(true)
           }
           else{
           navigate('/camera')
@@ -157,6 +157,7 @@ const onFileUpload = () => {
         })
           .catch(error =>{
             console.log(error)
+            setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
             setError(true)
             setOpen(false)
           }
@@ -176,11 +177,6 @@ const onFileUpload = () => {
       return;
     }
     setError(false);
-    setErrorFiles(false)
-    setErrorFront(false)
-    setErrorBack(false)
-    setWarning(false);
-    setCookieError(false)
   };
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -256,34 +252,9 @@ return (
       <CircularProgress color="inherit" /> 
       </Backdrop> 
       <Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={openErrorBack} autoHideDuration={6000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Плохое качество фото. Загрузите фото лицевой стороны снова.  
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openCookieError} autoHideDuration={6000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Время сессии истекла. Начните заново.  
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openErrorFront} autoHideDuration={6000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Плохое качество фото. Загрузите фото обратной стороны снова.  
-        </Alert>
-      </Snackbar>
       <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ошибка! Повторите заново!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openErrorFiles} autoHideDuration={6000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ошибка! Загрузите фото паспорта!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openWarning} autoHideDuration={6000} onClose={closeError}>
-        <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
-          Пожалуйста ожидайте!
+          {errorMsg}
         </Alert>
       </Snackbar>
     </Stack>

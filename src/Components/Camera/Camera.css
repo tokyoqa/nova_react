@@ -1,3 +1,9 @@
+.camera-item{
+  display: flex;
+  justify-content: center;
+  width: 75px;
+  margin: 0 auto;
+}
 
 .demo-image-preview {
   display: flex;
@@ -11,14 +17,11 @@
 
 /* CAMERA STYLES */
 .camera-text_info{
-  display: inline-block;
-  background-color: aquamarine;
-  position: absolute;
-  z-index: 1000;
-  top: 65px;
-  left:50%;
-  transform:translate(-50%, -50%);
-  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  font-size: 16 px;
+  margin: 5px 0 5px;
+  
 }
 
 @media screen and (min-width:320px) and (max-width:640px) {
@@ -39,8 +42,4 @@
   text-align: center;
   margin-top: 15px;
   margin-right:20 17px;
-}
-
-.header{
-  display: none;
 }

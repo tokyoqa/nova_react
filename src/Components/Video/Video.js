@@ -7,56 +7,51 @@ import axios from "axios";
 import {useNavigate} from "react-router";
 import '../../Config';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import getCookies from "../../hooks/getCookies";
+import { setCookies, getCookies } from "../../hooks/cookies";
 
-export  default function App({secretWord, setFullName}) {
+export  default function App() {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
 	const minutes = Math.floor(timeLeft/60);
 	const seconds = timeLeft - minutes * 60;
 	const Ref = useRef(null);
   const [timer, setTimer] = useState('5');
-	const [statusVideo, setStatusVideo] = useState();
-	const webcamRef = useRef(null);
-	const mediaRecorderRef = useRef(null);
+  const webcamRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const [videoSrc, setVideoSrc] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [openError, setError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState(false)
+  const [recordedChunks, setRecordedChunks] = useState([]);
+  const [openTimer, setOpenTimer] = useState(false);
+  const [isDisabled, setDisabled] = useState(false);
+  const [videoText, setVideoText] = useState('Запись');
+  const idCookie = getCookies('id') 
+  let 	options = {};
 	let 	navigate = useNavigate();
-	const [videoSrc, setVideoSrc] = useState(null);
-	const [open, setOpen] = React.useState(false);
-	const [openSuccess, setSuccess] = React.useState(false);
-	const [openError, setError] = React.useState(false)
-	const [openErrorWord, setErrorWord] = React.useState(false)
-	const [openErrorNull, setErrorNull] = React.useState(false)
-	const [openError04, setError04] = React.useState(false)
-	const [openWarning, setWarning] = React.useState(false)
-	const [recordedChunks, setRecordedChunks] = useState([]);
-  const [openTimer, setOpenTimer] = useState(false)
-  const [isRunning, setRunning] = useState(false);
-  const [isDisabled, setDisabled] = useState(true);
-	let 	options = {};
+  const checkWord = getCookies('check_word')
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
   });
-  const cookieId = getCookies('id') 
 
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   
  const handleDataAvailable = ({ data }) => { 
-  if (data.size > 0) { 
+  if (data.size > 0) {
   setRecordedChunks([data]) 
-  } 
+  }
  };
 
  const startOpenTimer = () => {
   setOpenTimer(true)
+  setVideoText('Переснять')
  }
-
  // Start recording video
  const startVideo = () => {
-  setRecordedChunks(null)
+  setDisabled(true)
   setRecordedChunks([null])
-  hideBtn()
-  onClickReset(); 
+  onClickReset();
   try {
     mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, { mimeType: 'audio/webm' });
 }
@@ -73,34 +68,42 @@ export  default function App({secretWord, setFullName}) {
   mediaRecorderRef.current.addEventListener( 
    "dataavailable", 
    handleDataAvailable 
-  ); 
+  );
   mediaRecorderRef.current.start(); 
   onClickReset(); 
-  setTimeout(event => { 
-   mediaRecorderRef.current.stop(); 
-    }, 5000); 
+  setTimeout(event => {
+   mediaRecorderRef.current.stop();
+    }, 6000); 
  };
 
   // --** SEND FILE **-- //
-  const sendVideoFile = () => { 
+  const sendVideoFile = () => {
+    console.log(blob)
   	const formDate = new FormData();
     setOpen(!open);
     if(!recordedChunks.length){
-      setErrorNull(true)
+      setErrorMsg('Ошибка! Нету данных для отправки')
+      setError(true)
       setOpen(false)
     }
+    // else if(!idCookie){
+    //   setOpen(false)
+    //   setErrorMsg('Время сессии истекло. Начните заново')
+    //   setError(true)
+    // }
     else{
     formDate.append( 
     'video', 
-      blob 
+    blob 
     ) 
     formDate.append( 
     'id',
-    cookieId 
-    ) 
+    idCookie
+    )
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject);
-    console.log(formDate)
+    console.log(recordedChunks)
+
       axios
     ( 
       { 
@@ -116,33 +119,32 @@ export  default function App({secretWord, setFullName}) {
       )  
       .then((res) => { 
       setOpen(false);
-      setFullName(res.data.fullName)
       if (res.data.statusCode === 1){ 
-        setErrorWord(true)
+        setErrorMsg('Ошибка! Произнесите слово еще раз. Громко и четко')
+        setError(true)
         console.log(res.data) 
       } 
       else if(res.data.statusCode === 2){
-        setError04(true)
+        setErrorMsg('Технические проблемы. Повторите позже.')
+        setError(true)
         console.log(res.data) 
       } 
       else if(res.data.statusCode === 3){ 
-        setWarning(true) 
+        setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
+        setError(true)
         console.log(res.data) 
       } 
-      else if(res.data.statusCode === 4){ 
-        setError04(true) 
-        console.log(res.data) 
-      } 
-      else{ 
+      else{
+        setCookies('user_name', res.data.fullName)
         navigate('/video-agreement')
         console.log(res.data) 
-        setSuccess(true)
       } 
       }) 
-      .catch(error =>{ 
-        console.error(error) 
+      .catch(error =>{
         setOpen(false) 
-        setError(true) 
+        console.error(error)
+        setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+        setError(true)
       }) 
     }
   }
@@ -173,13 +175,13 @@ export  default function App({secretWord, setFullName}) {
 const startTimer = (e) => {
   let { total, seconds } = getTimeRemaining(e); 
   if (total >= 0) {
-    setTimer((seconds > 9 ? seconds :  seconds))
+    setTimer(seconds > 9 ? seconds :  seconds)
   }
   if( seconds === 0){
-    setRunning(false)
-    setDisabled(false)
+      setTimeout(()=>{
+          setDisabled(false)
+      } ,2000)
   const handleStopCaptureClick = () => {
-    setRunning(false)
     if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
       mediaRecorderRef.current.stop();
     } 
@@ -206,20 +208,11 @@ const startTimer = (e) => {
       clearTimer(getDeadTime()); 
   } 
 
-  const hideBtn = () =>{
-    document.getElementById('start-btn').style.display = 'none';
-  }
-
   const closeError = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
     setError(false); 
-    setError04(false) 
-    setSuccess(false);
-    setWarning(false);
-    setErrorNull(false)
-    setErrorWord(false)
   };
 
   const renderTime = ({ remainingTime }) => {
@@ -260,7 +253,7 @@ return (
             duration={3}
             colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
             colorsTime={[3, 2.5, 1.5, 0]}
-            onComplete={() => ( { shouldRepeat: false, delay: 1 }, setOpenTimer(false), startVideo(), setRunning(true))}
+            onComplete={() => ( { shouldRepeat: false, delay: 1 }, setOpenTimer(false), startVideo())}
             >
             {renderTime}  
           </CountdownCircleTimer>
@@ -269,41 +262,30 @@ return (
       </Backdrop>
     }
     <h2 className="timer-console">{timer}</h2>
-    <div className="video-text_word"> Произнесите слово <strong>{secretWord}</strong> четко и громко один раз
-     для прохождения идентификации </div>
+    <div className="video-text_word"> Произнесите слово <strong>{checkWord}</strong> четко и громко один раз для прохождения идентификации </div>
 
     <div className="btn-items">
-        <Button 
-          id="start-btn" 
-          color='success' 
-          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
-          variant="contained" 
-          onClick={startOpenTimer} // Start timer 
-          >
-          Запись
-        </Button>
-        <Button 
-          id="send-btn" 
-          color='success' 
-          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
-          variant="contained"
-          onClick={sendVideoFile}
-          disabled={isRunning}
-          >
-          Отправить
-        </Button>
-        <Button 
-          id="reset-btn" 
-          color='success'
-          sx={{marginTop: '10px', width: "30%", marginRight:"5px"}} 
-          variant="contained"  
-          onClick={startOpenTimer}
-          disabled={isDisabled}
-          >
-          Переснять 
-        </Button>
+      <Button 
+        id="start-btn" 
+        color='success' 
+        sx={{marginTop: '10px', width: "150px", marginRight:"5px"}} 
+        variant="contained" 
+        onClick={startOpenTimer} // Start timer 
+        disabled={isDisabled}
+        >
+        {videoText}
+      </Button>
+      <Button   
+        id="send-btn" 
+        color='success' 
+        sx={{marginTop: '10px', width: "150px"}} 
+        variant="contained"
+        onClick={sendVideoFile}
+        disabled={isDisabled}
+        >
+        Отправить
+      </Button>
     </div>
-  
 
   <Backdrop 
     sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} 
@@ -311,34 +293,9 @@ return (
     <CircularProgress color="inherit" /> 
   </Backdrop> 
   <Stack spacing={2} sx={{ width: '100%' }}>
-    <Snackbar open={openSuccess} autoHideDuration={3000} onClose={closeError}>
-      <Alert onClose={closeError} severity="success" sx={{ width: '100%' }}>
-        Успешно!
-      </Alert>
-    </Snackbar>
     <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
       <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-        Ошибка! Повторите заново!
-      </Alert>
-    </Snackbar>
-    <Snackbar open={openErrorWord} autoHideDuration={3000} onClose={closeError}>
-      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-        Ошибка! Произнесите слово еще раз. Громко и четко
-      </Alert>
-    </Snackbar>
-    <Snackbar open={openErrorNull} autoHideDuration={3000} onClose={closeError}>
-      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-        Ошибка! Нету данных для отправки
-      </Alert>
-    </Snackbar>
-    <Snackbar open={openError04} autoHideDuration={3000} onClose={closeError}>
-      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-        Ошибка сервиса. Повторите похже пожалуйста!
-      </Alert>
-    </Snackbar>
-    <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>
-      <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
-        Пожалуйста ожидайте!
+        {errorMsg}
       </Alert>
     </Snackbar>
   </Stack>

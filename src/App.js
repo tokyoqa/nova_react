@@ -9,12 +9,10 @@ import Camera from './Components/Camera/Camera'
 import Layout from './Layout/Layout';
 import NotFound from './Components/NotFound/NotFound';
 import VideoAgreement from './Components/VideoAgreement/Agreement'
-import React, { useState, useContext } from "react";
-function App(){
+import SelfiePassport from './Components/SelfiePassport/SelfiePassport';
+import React, { useState } from "react";
+function App(){ 
  
-  //Variables
-  const [secretWord, setSecretWord] = useState(null);
-  const [fullName, setFullName] = useState(null);
 return(
   <div>
     <Routes>
@@ -36,7 +34,11 @@ return(
         <Route 
           path='camera' 
           element={<Camera 
-          setSecretWord={setSecretWord}
+          />}
+        />
+        <Route 
+          path='selfie-passport' 
+          element={<SelfiePassport 
           />}
         />
         <Route
@@ -47,14 +49,11 @@ return(
         <Route 
           path='video' 
           element={<Video 
-          secretWord={secretWord}
-          setFullName={setFullName}
           />}
         />
         <Route 
           path='video-agreement' 
           element={<VideoAgreement
-          fullName={fullName}
           />}
         />
         <Route 

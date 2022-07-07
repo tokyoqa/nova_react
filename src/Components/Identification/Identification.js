@@ -1,4 +1,5 @@
 import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, Typography, Link as Nv } from '@mui/material';
+import MuiAlert from '@mui/material/Alert';
 import {IMaskInput} from "react-imask";
 import axios from "axios";
 import React, { useState } from "react";
@@ -7,31 +8,26 @@ import { useNavigate} from "react-router";
 import { useRef } from 'react';
 import '../../Config';
 import { useEffect } from 'react';
-import MuiAlert from '@mui/material/Alert';
-import getCookies from '../../hooks/getCookies';
+import { getCookies } from '../../hooks/cookies';
   
 export const Identification  = () => {
-    const [open, setOpen] = React.useState(false); 
-    const codeMask = "0000";  
-    let navigate = useNavigate();
-    const [secureCode, setCode] = useState("");
+    const [open, setOpen] = React.useState(false);
     const [openError, setError] = React.useState(false)
-    const [openSuccess, setSuccess] = React.useState(false)
-    const [openErrorCount, setErrorCount] = React.useState(false)
-    const [openWarning, setWarning] = React.useState(false)
-    const [openErrorNull, setErrorNull] = React.useState(false)
-    const [openCookieError, setCookieError] = React.useState(false)
-    const url = global.config.REST_API + 'api/reset?id='
+    const [errorMsg, setErrorMsg] = React.useState(false)
+    const [secureCode, setCode] = useState("");
     const [timer, setTimer] = useState('00:00:00');
-    const Ref = useRef(null);
+    const url = global.config.REST_API + 'api/reset?id='
     const [isDisabled, setIsDisabled] = useState(true);
+    const codeMask = "0000";  
+    const Ref = useRef(null);
+    let navigate = useNavigate();
     
 
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
 
-    const getTimeRemaining = (e) => {
+    const getTimeRemaining = (e) => { 
         const total = Date.parse(e) - Date.parse(new Date());
         const seconds = Math.floor((total / 1000) % 60);
         const minutes = Math.floor((total / 1000 / 60) % 60);
@@ -54,6 +50,12 @@ export const Identification  = () => {
           setIsDisabled(false)
         }
   }
+  // F5 check
+  // useEffect(() => {
+  //   if (performance.navigation.type === 1) {
+  //     navigate('/')
+  //   }
+  // })
     const clearTimer = (e) => {
       setTimer('00:00:60');
       if (Ref.current) clearInterval(Ref.current);
@@ -71,16 +73,20 @@ export const Identification  = () => {
       clearTimer(getDeadTime());
     }, []);
 
+
+
     const onClickReset = () => {
       clearTimer(getDeadTime());
     }
     // Post code 
     function postSecureCode(){
       if(!getCookies('id')){
-        setCookieError(true)
+        setErrorMsg('Ваща сессия истекла. Начните заново.') 
+        setError(true)
       }
       else if(!secureCode || secureCode.length < 4){
-        setErrorNull(true)
+        setErrorMsg('Введите код чтобы продолжить!')
+        setError(true)
       }
       else{
       setOpen(!open)
@@ -88,16 +94,20 @@ export const Identification  = () => {
         .then((res) => {  
           setOpen(false); 
             if (res.data.statusCode === 1){
-              console.log(res.data)
+              setErrorMsg('Неверный код. Попробуйте еще раз')
               setError(true)
             }
             else if(res.data.statusCode === 2){
-              console.log(res.data)
-              setError(true)  
+              setErrorMsg('Технические проблемы. Повторите позже')
+              setError(true)
             }
             else if(res.data.statusCode === 3){
+              setErrorMsg('Время сессии прошло или сервис недоступен! Повторите попытку.')
+              setError(true)
+            }
+            else if(res.data.statusCode === 6){
               console.log(res.data)
-              setWarning(true)
+              setErrorMsg('Ошибка. Истечено количество попыток!')
             }
             else{
             console.log(res.data)
@@ -106,6 +116,7 @@ export const Identification  = () => {
           })
         .catch(error =>{
             console.error(error);
+            setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
             setError(true);
             setOpen(false)
             }
@@ -113,28 +124,28 @@ export const Identification  = () => {
     }
   }
 
-
       const resendNumber = () => {
         setIsDisabled(true)
         onClickReset()
         axios
         .get(url + getCookies('id'))
           .then((res) => {
-            setSuccess(true)
             setOpen(false); 
             if (res.data.statusCode === 1){
+              setErrorMsg('Неверный код. Попробуйте еще раз')
               setError(true)
             }
             else if(res.data.statusCode === 2){
+              setErrorMsg('Технические проблемы. Повторите позже')
               setError(true)
             }
             else if(res.data.statusCode === 3){
-              setWarning(true)
+              setErrorMsg('Код подтверждения истек! Повторите попытку.')
+              setError(true)
             }
             else if(res.data.statusCode === 6){
               console.log(res.data)
-              setSuccess(false)
-              setErrorCount(true)
+              setErrorMsg('Ошибка. Истечено количество попыток!')
             }
             else{
             console.log(res.data)
@@ -143,7 +154,6 @@ export const Identification  = () => {
           .catch((err) => {
             console.log(err)
             setOpen(false)
-            setSuccess(false)
             setError(true)
           })
       }
@@ -152,30 +162,24 @@ export const Identification  = () => {
         return;
       }
       setError(false);
-      setErrorCount(false)
-      setWarning(false);
-      setSuccess(false)
-      setErrorNull(false)
-      setCookieError(false)
     };
 
 return(
   <div className="ident_container">
     <Card className="card-container-ident">
-      <CardHeader  sx={{textAlign: "center", marginTop: 2}}
+      <CardHeader  sx={{textAlign: "center", paddingBottom: '0'}}
         title="Удаленная идентификация"
       />
       <CardContent sx={{fontSize: "20px", textAlign: 'center'}}>
-        <Typography sx={{fontSize: "20px", textAlign: "center", marginBottom: "15px"}} variant="h5" color="text.secondary">
+        <Typography sx={{fontSize: "20px", textAlign: "center", marginBottom: "20px"}} variant="h5" color="text.secondary">
           Введите код из SMS
         </Typography> 
           <IMaskInput
             mask={codeMask}
-            id="firstname" 
             className="ident_code"
             onAccept={(value) =>{setCode(value)}}
             value={secureCode}
-            autocomplete="off"
+            autoComplete="off"
           />
         <Button color="success" sx={{ justifyContent: 'center', marginTop: '15px', width: '60%', borderRadius: "15px"}} variant="contained" onClick={postSecureCode} >
             Продолжить
@@ -195,34 +199,9 @@ return(
       <CircularProgress color="inherit" /> 
       </Backdrop> 
         <Stack spacing={2} sx={{ width: '100%' }}>
-      <Snackbar open={openErrorCount} autoHideDuration={3000} onClose={closeError}>
+        <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ошибка. Истечено количество попыток!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openCookieError} autoHideDuration={3000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ваща сессия истекла. Начните заново.
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openErrorNull} autoHideDuration={3000} onClose={closeError}>
-        <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
-          Введите код чтобы продолжить!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openSuccess} autoHideDuration={3000} onClose={closeError}>
-        <Alert onClose={closeError} severity="success" sx={{ width: '100%' }}>
-          Успешно!
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-          Ошибка запроса. Повторите занова.
-        </Alert>
-      </Snackbar>
-      <Snackbar open={openWarning} autoHideDuration={3000} onClose={closeError}>
-        <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
-          Время сессии прошло или сервис недоступен! Повторите попытку.
+          {errorMsg}
         </Alert>
       </Snackbar>
     </Stack>
