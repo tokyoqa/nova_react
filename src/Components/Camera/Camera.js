@@ -91,7 +91,12 @@ const sendPhoto = () => {
     }
     else if(res.data.statusCode === 3){
       console.log(res.data)
-      setErrorMsg('Количество попыток вышло. Повторите завтра.')
+      setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
+      setError(true)
+    }
+    else if(res.data.statusCode === 6){
+      console.log(res.data)
+      setErrorMsg('Количество попыток закончилось. Попробуйте еще раз завтра!')
       setError(true)
     }
     else{

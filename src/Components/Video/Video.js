@@ -130,7 +130,12 @@ export  default function App() {
         setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
         setError(true)
         console.log(res.data) 
-      } 
+      }
+      else if(res.data.statusCode === 6){
+        console.log(res.data)
+        setErrorMsg('Количество попыток закончилось. Попробуйте еще раз завтра!')
+        setError(true)
+      }
       else{
         setCookies('user_name', res.data.fullName)
         navigate('/video-agreement')
