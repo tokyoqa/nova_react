@@ -84,6 +84,7 @@ export const Terms = () => {
   const disagreeSubmit = () => {
       if(!check || check === '1'){
         setOpen(false)
+        setErrorMsg('Нажмите на принятие условий')
         setError(true)
       } else
       {
@@ -92,16 +93,13 @@ export const Terms = () => {
       .then((res) => {
         setOpen(false);
         if (res.data.statusCode === 1) {
-          setErrorMsg('')
+          setErrorMsg('Ошибка запроса. Повторите занова')
           setError(true);
         } else if (res.data.statusCode === 2) {
-          setErrorMsg('')
+          setErrorMsg('Технические проблемы. Повторите позже')
           setError(true);
         } else if (res.data.statusCode === 3) {
-          setErrorMsg('')
-          setError(true);
-        } else if (res.data.statusCode === 5) {
-          setErrorMsg('')
+          setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
           setError(true);
         } else {
           setOpen(false)
@@ -110,7 +108,7 @@ export const Terms = () => {
       })
       .catch((err) => {
         console.error(err);
-        setErrorMsg('')
+        setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
         setError(true);
         setOpen(false);
       });

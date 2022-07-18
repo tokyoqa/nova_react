@@ -12,11 +12,11 @@ import { getCookies, setCookies} from '../../hooks/cookies';
 
 const  CameraJS = ({ setSecretWord }) => {
   const [dataUri, setDataUri] = useState('');
-  const [open, setOpen] = useState(false); 
-  const [openError, setError] = useState(false)
-  const [errorMsg, setErrorMsg] = useState(false)
-  const [isDisabled, setDisabled] = useState(true)
-  const [isDisabledReady, setDisabledReady] = useState(true)
+  const [open, setOpen] = useState(false);
+  const [openError, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(false);
+  const [isDisabled, setDisabled] = useState(true);
+  const [isDisabledReady, setDisabledReady] = useState(true);
   const idCookie = getCookies('id')
   let navigate = useNavigate();
 
@@ -55,8 +55,8 @@ const sendPhoto = () => {
     setError(true)
   }
   else{
-  setError(false)
-  setOpen(true)
+  setError(false);
+  setOpen(true);
   setDataUri(dataUri);
   axios({
       method: 'POST',
@@ -85,13 +85,13 @@ const sendPhoto = () => {
     }
     else if(res.data.statusCode === 2){
       console.log(res.data)
-      setError(true)
       setErrorMsg('Техничесие проблемы. Повторите позже')
+      setError(true)
       setError(true)
     }
     else if(res.data.statusCode === 3){
       console.log(res.data)
-      setErrorMsg('Время ожидания запроса вышло. Повторите снова!')
+      setErrorMsg('Количество попыток вышло. Повторите завтра.')
       setError(true)
     }
     else{
@@ -115,11 +115,9 @@ const sendPhoto = () => {
     setDisabled(false)
     setError(false);
   };
-
   const isFullscreen = false
   const ImagePreview = ({ dataUri, isFullscreen }) => {
       let classNameFullscreen = isFullscreen ? 'demo-image-preview-fullscreen' : '';
-    
       return (
         <div className={'demo-image-preview ' + classNameFullscreen}>
           <img src={dataUri} alt=""/> 

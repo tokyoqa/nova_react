@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="28601250-b8c9-4729-83ee-c7cd101f1eea" name="Changes" comment="changed idcard sending">
+    <list default="true" id="28601250-b8c9-4729-83ee-c7cd101f1eea" name="Changes" comment="changed setting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Camera/Camera.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Camera/Camera.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Camera/Camera.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Camera/Camera.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/IdCard/Idcard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/IdCard/Idcard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/Identification/Identification.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Identification/Identification.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Identification/Identification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Identification/Identification.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Main/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Main/Main.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Terms/Terms.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Terms/Terms.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NotFound/NotFound.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NotFound/NotFound.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/NotFound/NotFound.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/NotFound/NotFound.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/Terms/Terms.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Terms/Terms.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Video/Video.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Video/Video.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/Video/Video.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/Video/Video.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Layout/Layout.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/Layout/Layout.module.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/getCookies.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/removeCookies.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hooks/setCookies.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Components/VideoAgreement/Agreement.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/VideoAgreement/Agreement.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +81,11 @@
       <workItem from="1657206297224" duration="439000" />
       <workItem from="1657206914542" duration="2144000" />
       <workItem from="1657210234813" duration="1760000" />
-      <workItem from="1657212695162" duration="9039000" />
+      <workItem from="1657212695162" duration="14384000" />
+      <workItem from="1657444630772" duration="137000" />
+      <workItem from="1657445746772" duration="652000" />
+      <workItem from="1657594647352" duration="36000" />
+      <workItem from="1658114451721" duration="4544000" />
     </task>
     <task id="LOCAL-00001" summary="check">
       <created>1657186062037</created>
@@ -106,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657210282848</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="changed setting">
+      <created>1657225500595</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1657225500595</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,6 +136,7 @@
     <MESSAGE value="check" />
     <MESSAGE value="push to server" />
     <MESSAGE value="changed idcard sending" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed idcard sending" />
+    <MESSAGE value="changed setting" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed setting" />
   </component>
 </project>

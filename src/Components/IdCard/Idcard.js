@@ -87,23 +87,31 @@ const onFileUpload = () => {
         setOpen(false);
         if (res.data.statusCode === 1){
           console.log(res.data)
+          setErrorMsg('Ошибка запроса')
           setError(true)
           setOpen(false)
         }
         else if(res.data.statusCode === 2){
           console.log(res.data)
+          setErrorMsg('Технические проблемы. Повторите позже')
           setError(true)
           setOpen(false)
 
         }
         else if(res.data.statusCode === 3){
           console.log(res.data)
-          setErrorMsg('')
+          setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
+          setError(true)
           setOpen(false)
         }
         else if (res.data.statusCode === 5){
           console.log(res.data)
           setErrorMsg('Плохое качество фото. Загрузите фото обратной стороны снова. ')
+          setError(true)
+        }
+        else if (res.data.statusCode === 7){
+          console.log(res.data)
+          setErrorMsg('Ваш паспорт скоро истечет. Просьба заменить ваш паспорт')
           setError(true)
         }
         else{
@@ -195,23 +203,30 @@ const onFileUpload = () => {
             setOpen(false);
             if (res.data.statusCode === 1){
               console.log(res.data)
+              setErrorMsg('Ошибка запроса!')
               setError(true)
               setOpen(false)
             }
             else if(res.data.statusCode === 2){
               console.log(res.data)
+              setErrorMsg('Технические проблемы. Повторите запрос позже.')
               setError(true)
               setOpen(false)
-
             }
             else if(res.data.statusCode === 3){
               console.log(res.data)
-              setErrorMsg('')
+              setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
+              setError(true)
               setOpen(false)
             }
             else if (res.data.statusCode === 5){
               console.log(res.data)
               setErrorMsg('Плохое качество фото. Загрузите фото обратной стороны снова. ')
+              setError(true)
+            }
+            else if (res.data.statusCode === 7){
+              console.log(res.data)
+              setErrorMsg('Ваш паспорт скоро истечет. Просьба заменить ваш паспорт')
               setError(true)
             }
             else{
@@ -230,6 +245,7 @@ const onFileUpload = () => {
     })
     .catch(error =>{
       console.log(error)
+      setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
       setError(true)
       setOpen(false)
     }

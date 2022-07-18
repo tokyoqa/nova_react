@@ -4,7 +4,7 @@ const cardStyle = {
     display: "block",
     transitionDuration: "0.3s",
     height: "200px",
-    width: "95%",
+    width: "40%",
     margin: "0 auto",
     marginTop: "30px"
   };
@@ -17,7 +17,7 @@ function NotFound() {
             <Typography sx={{textAlign: 'center'}} gutterBottom variant="h5" component="p">
               Удаленная Идентификация
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
+            <Typography variant="body2" sx={{fontSize: "16px", textAlign: 'center', marginTop: '30px'}}>
               Ошибка. Страница не найдена!
             </Typography>
           </CardContent>

@@ -103,16 +103,13 @@ export  default function App() {
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject);
     console.log(recordedChunks)
-
       axios
     ( 
       { 
         url: global.config.REST_API + 'api/video', 
         method: 'POST', 
         data: formDate, 
-        headers: { 
-      'Content-Type': 'multipart/form-data' 
-        }, 
+        headers: {'Content-Type': 'multipart/form-data'},
         enctype: "multipart/form-data",
         transformRequest: (d) => d
       } 

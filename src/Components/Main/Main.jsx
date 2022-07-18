@@ -140,8 +140,8 @@ const Main = () => {
               Продолжить 
           </Button>
         </CardContent>
-        <Typography sx={{fontSize: '13px', textAlign: 'center', color: '#B22222', marginTop: '8px'}} variant="h5" color="text.secondary">
-          Для телефонов Xiaomi, Redmi, Samsung и подобные просьба пройти идентификацию в Google Chrome
+        <Typography sx={{fontSize: '13px', textAlign: 'center', color: '#B22222', marginTop: '8px', padding: "0 20px 0 20px"}} variant="h5" color="text.secondary">
+          Просьба идентификацию проходить через браузеры Google Chrome или Safari
         </Typography>
       </Card>
 
