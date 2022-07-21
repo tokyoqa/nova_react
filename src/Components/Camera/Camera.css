@@ -33,11 +33,15 @@
   .demo-image-preview-fullscreen > img{
     width: 75%;
   }
-
 }
 
 .btn-group-camera{                                                            
   text-align: center;
   margin-top: 15px;
   margin-right: 17px;
+}
+
+/*TEMP*/
+
+.temp-input{
 }

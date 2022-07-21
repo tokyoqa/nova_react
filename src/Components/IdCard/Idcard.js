@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import "./Idcard.css";
 import '../../Config';
 import { getCookies } from '../../hooks/cookies';
-axios.defaults.headers.post['Contect-Type'] = 'multipart';
+axios.defaults.headers.post['Content-Type'] = 'multipart';
 
   const Idcard = () => {
     const navigate = useNavigate()
@@ -19,10 +19,11 @@ axios.defaults.headers.post['Contect-Type'] = 'multipart';
     const [previewFront, setPreviewFront] = useState();
     const [previewBack, setPreviewBack] = useState();
     const [isSendFront, setSendFront] = useState(false);
-    const onFileChangeFront = (event) => {
-      setSelectedFileFront(event.target.files[0])
-      setSelectedFileFront (event.target.files[0])
-    };
+
+  const onFileChangeFront = (event) => {
+    setSelectedFileFront(event.target.files[0])
+    setSelectedFileFront (event.target.files[0])
+  };
   useEffect(() => {
     if (!selectedFileFront) {
       setPreviewFront(undefined)
@@ -60,8 +61,8 @@ const onFileUpload = () => {
   else if(isSendFront){
     console.log('SEND BACK WITHOUT FRONT')
     // SEND REQUEST BACK IF FRONT WAS SEND
-    const formDataBack = new FormData();
-    formDataBack.append(
+      const formDataBack = new FormData();
+      formDataBack.append(
       "backSide",
       selectedFileBack,
       selectedFileBack.name
@@ -285,16 +286,16 @@ return (
             <div className="photo-item">
               <form id="front_passport_form" >
                 <label className="photo-item-label">
-                  <img 
+                  <img
                   className='front-preview'
                   src={previewFront}
                   alt=''
                   />
                   <input
-                      type="file" 
+                      type="file"
                       onChange={onFileChangeFront}
-                      name="front_passport" 
-                      id="front_passport" 
+                      name="front_passport"
+                      id="front_passport"
                       />
                 </label>
                 <div className="photo-item-title">Лицевая сторона</div>

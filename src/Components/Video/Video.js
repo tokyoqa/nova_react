@@ -8,6 +8,7 @@ import {useNavigate} from "react-router";
 import '../../Config';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { setCookies, getCookies } from "../../hooks/cookies";
+import {toUnitless} from "@mui/material/styles/cssUtils";
 
 export  default function App() {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
@@ -33,6 +34,15 @@ export  default function App() {
     type: options?.mimeType || "" 
   });
 
+  // TEMP
+  const [selectedFile, setSelectedFile] = useState();
+  const onFileChange = async (event) => {
+   setSelectedFile(event.target.files[0])
+   setSelectedFile(event.target.files[0])
+  };
+
+
+  // TEMP
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
@@ -78,13 +88,66 @@ export  default function App() {
 
   // --** SEND FILE **-- //
   const sendVideoFile = () => {
-    console.log(blob)
   	const formDate = new FormData();
     setOpen(!open);
     if(!recordedChunks.length){
-      setErrorMsg('Ошибка! Нету данных для отправки')
-      setError(true)
-      setOpen(false)
+      // setErrorMsg('Ошибка! Нету данных для отправки')
+      // setError(true)
+      // setOpen(false)
+      setOpen(true)
+      formDate.append(
+        'video',
+        selectedFile
+      )
+      formDate.append(
+        'id',
+        idCookie
+      )
+      axios
+      (
+        {
+          url: global.config.REST_API + 'api/video',
+          method: 'POST',
+          data: formDate,
+          headers: {'Content-Type': 'multipart/form-data'},
+          enctype: "multipart/form-data",
+          transformRequest: (d) => d
+        }
+      )
+        .then((res) => {
+          setOpen(false);
+          if (res.data.statusCode === 1){
+            setErrorMsg('Ошибка! Произнесите слово еще раз. Громко и четко')
+            setError(true)
+            console.log(res.data)
+          }
+          else if(res.data.statusCode === 2){
+            setErrorMsg('Технические проблемы. Повторите позже.')
+            setError(true)
+            console.log(res.data)
+          }
+          else if(res.data.statusCode === 3){
+            setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
+            setError(true)
+            console.log(res.data)
+          }
+          else if(res.data.statusCode === 6){
+            console.log(res.data)
+            setErrorMsg('Количество попыток закончилось. Попробуйте еще раз завтра!')
+            setError(true)
+          }
+          else{
+            setCookies('user_name', res.data.fullName)
+            navigate('/video-agreement')
+            console.log(res.data)
+          }
+        })
+        .catch(error =>{
+          setOpen(false)
+          console.error(error)
+          setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+          setError(true)
+        })
     }
     else if(!idCookie){
       setOpen(false)
@@ -102,9 +165,8 @@ export  default function App() {
     )
     const urlObject = URL.createObjectURL(blob); 
     setVideoSrc(urlObject);
-    console.log(recordedChunks)
       axios
-    ( 
+      (
       { 
         url: global.config.REST_API + 'api/video', 
         method: 'POST', 
@@ -186,8 +248,8 @@ const startTimer = (e) => {
   const handleStopCaptureClick = () => {
     if (mediaRecorderRef.current && mediaRecorderRef.current.stop) { 
       mediaRecorderRef.current.stop();
-    } 
-  }; 
+    }
+  };
   }
   }
    
@@ -203,8 +265,8 @@ const startTimer = (e) => {
   const getDeadTime = () => { 
       let deadline = new Date(); 
       deadline.setSeconds(deadline.getSeconds() + 5); 
-      return deadline; 
-  } 
+      return deadline;
+  }
   
   const onClickReset = () => { 
       clearTimer(getDeadTime()); 
@@ -226,7 +288,7 @@ const startTimer = (e) => {
       </div>
     );
   };
-     
+console.log(selectedFile)
 return (
   <>
     <div className="video-form">
@@ -267,6 +329,14 @@ return (
     <div className="video-text_word"> Произнесите слово <strong>{checkWord}</strong> четко и громко один раз для прохождения идентификации </div>
 
     <div className="btn-items">
+      {/*TEMP */}
+      <div className="temp-input">
+        <input
+          onChange={onFileChange}
+          type="file"
+        />
+      </div>
+      {/*TEMP*/}
       <Button 
         id="start-btn" 
         color='success' 
