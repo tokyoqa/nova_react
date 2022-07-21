@@ -84,6 +84,7 @@ export const Terms = () => {
   const disagreeSubmit = () => {
       if(!check || check === '1'){
         setOpen(false)
+        setErrorMsg('Нажмите на принятие условий')
         setError(true)
       } else
       {
@@ -92,16 +93,13 @@ export const Terms = () => {
       .then((res) => {
         setOpen(false);
         if (res.data.statusCode === 1) {
-          setErrorMsg('')
+          setErrorMsg('Ошибка запроса. Повторите занова')
           setError(true);
         } else if (res.data.statusCode === 2) {
-          setErrorMsg('')
+          setErrorMsg('Технические проблемы. Повторите позже')
           setError(true);
         } else if (res.data.statusCode === 3) {
-          setErrorMsg('')
-          setError(true);
-        } else if (res.data.statusCode === 5) {
-          setErrorMsg('')
+          setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
           setError(true);
         } else {
           setOpen(false)
@@ -110,7 +108,7 @@ export const Terms = () => {
       })
       .catch((err) => {
         console.error(err);
-        setErrorMsg('')
+        setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
         setError(true);
         setOpen(false);
       });
@@ -132,34 +130,34 @@ export const Terms = () => {
             <Typography sx={{textAlign: 'center'}} gutterBottom variant="h5" component="p">
               Удаленная идентификация
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
+            <Typography variant="body2" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
               Поздравляем! Ваша заявка на фото-идентификацию находится на стадии рассмотрения. 
               Нажмите "Закончить" для завершения идентификации.
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '5px'}}>
+            <Typography variant="body2" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
               Для расширения возможностей необходимо пройти видео-идентификацию. Для этого нажмите "Продолжить" 
             </Typography>
-              <br/>
-            <Typography variant="body2" color="text.secondary" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '5px'}}>
-              <a className='link-terms' href="https://ab.kg/guarddog/laravel-filemanager/files/shares/dogovorpublichnoyoferty.pdf" target="_blank">  
-            Здесь Вы можете ознакомиться с условиями видео- и фото-идентификаций </a> 
+            <Typography className="terms-text-link" variant="body2" sx={{fontSize: "16px", textAlign: 'text-justify', marginTop: '10px'}}>
+              <a className='link-terms' href="https://ab.kg/guarddog/laravel-filemanager/files/shares/dogovorpublichnoyoferty.pdf" target="_blank">
+                Здесь Вы можете ознакомиться с условиями видео- и фото-идентификаций
+              </a>
             </Typography>
             <FormControlLabel sx={{marginTop: 2}}
             control={ 
               <Checkbox onChange={handleChangeChecked} name="" />
             }
-            label={<Typography  variant="body2" color="textSecondary">
+            label={<Typography  variant="body2">
               Подтверждаю согласие на сбор, обработку и передачу персональных данных
               </Typography>}
           />
           </CardContent>
         <CardActions >
-          <Button sx={{margin: '0 auto', marginTop: '20px'}} variant="outlined"
+          <Button sx={{margin: '0 auto', marginTop: '10px'}} variant="outlined"
                   endIcon={<AssignmentOutlinedIcon />} onClick={disagreeSubmit}
                   disabled={isDisabledEnd}>
             Закончить
           </Button>
-          <Button  sx={{margin: '0 auto', marginTop: '20px'}} variant="contained" 
+          <Button  sx={{margin: '0 auto', marginTop: '10px'}} variant="contained"
                   endIcon={<AssignmentTurnedInOutlinedIcon />} onClick={agreeSubmit}
                   disabled={isDisabledNext}>
             Продолжить

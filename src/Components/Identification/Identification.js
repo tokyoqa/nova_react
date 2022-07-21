@@ -140,7 +140,7 @@ export const Identification  = () => {
               setError(true)
             }
             else if(res.data.statusCode === 3){
-              setErrorMsg('Код подтверждения истек! Повторите попытку.')
+                setErrorMsg('Код подтверждения истек! Повторите попытку.')
               setError(true)
             }
             else if(res.data.statusCode === 6){
@@ -154,7 +154,8 @@ export const Identification  = () => {
           .catch((err) => {
             console.log(err)
             setOpen(false)
-            setError(true)
+            setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+            setError(true);
           })
       }
     const closeError = (event, reason) => {
@@ -175,6 +176,7 @@ return(
           Введите код из SMS
         </Typography> 
           <IMaskInput
+            autoFocus={true}
             mask={codeMask}
             className="ident_code"
             onAccept={(value) =>{setCode(value)}}

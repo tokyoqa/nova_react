@@ -1,32 +1,34 @@
 import {Backdrop, CircularProgress, Stack, Snackbar, Button, Card, CardHeader, CardContent, Typography} from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
-import {useEffect} from 'react'
+import {useEffect} from 'react';
 import axios from "axios";
 import React, {useState} from "react";
 import { useNavigate } from "react-router";
-import "./Idcard.css"
+import "./Idcard.css";
 import '../../Config';
 import { getCookies } from '../../hooks/cookies';
-axios.defaults.headers.post['Contect-Type'] = 'multipart';
+axios.defaults.headers.post['Content-Type'] = 'multipart';
 
   const Idcard = () => {
     const navigate = useNavigate()
     const [selectedFileFront, setSelectedFileFront] = useState();
-    const [selectedFileBack, setSelectedFileBack] = useState()
+    const [selectedFileBack, setSelectedFileBack] = useState();
     const [open, setOpen] = useState(false); 
-    const [openError, setError] = useState(false)
-    const [errorMsg, setErrorMsg] = useState(false)
-    const [previewFront, setPreviewFront] = useState()
-    const [previewBack, setPreviewBack] = useState()
-    const onFileChangeFront = (event) => {
-      setSelectedFileFront(event.target.files[0])
-      setSelectedFileFront (event.target.files[0])
-    };
+    const [openError, setError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState(false);
+    const [previewFront, setPreviewFront] = useState();
+    const [previewBack, setPreviewBack] = useState();
+    const [isSendFront, setSendFront] = useState(false);
+
+  const onFileChangeFront = (event) => {
+    setSelectedFileFront(event.target.files[0])
+    setSelectedFileFront (event.target.files[0])
+  };
   useEffect(() => {
     if (!selectedFileFront) {
       setPreviewFront(undefined)
       return
-    }
+    };
     const objectUrlFront = URL.createObjectURL(selectedFileFront)
     setPreviewFront(objectUrlFront)
     return () => URL.revokeObjectURL(objectUrlFront)
@@ -42,7 +44,6 @@ axios.defaults.headers.post['Contect-Type'] = 'multipart';
       setPreviewBack(undefined)
       return
     }
-
     const objectUrlBack = URL.createObjectURL(selectedFileBack)
     setPreviewBack(objectUrlBack)
     return () => URL.revokeObjectURL(objectUrlBack)
@@ -57,7 +58,78 @@ const onFileUpload = () => {
     setErrorMsg('Ошибка! Загрузите фото паспорта!')
     setError(true)
   }
+  else if(isSendFront){
+    console.log('SEND BACK WITHOUT FRONT')
+    // SEND REQUEST BACK IF FRONT WAS SEND
+      const formDataBack = new FormData();
+      formDataBack.append(
+      "backSide",
+      selectedFileBack,
+      selectedFileBack.name
+    );
+    formDataBack.append(
+      'id',
+      getCookies('id')
+    )
+    setOpen(true);
+    axios({
+      method: 'POST',
+      url: global.config.REST_API + 'api/passport-back',
+      data: formDataBack,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Methods': '*',
+      }
+    })
+
+      .then((res) => {
+        setOpen(false);
+        if (res.data.statusCode === 1){
+          console.log(res.data)
+          setErrorMsg('Ошибка запроса')
+          setError(true)
+          setOpen(false)
+        }
+        else if(res.data.statusCode === 2){
+          console.log(res.data)
+          setErrorMsg('Технические проблемы. Повторите позже')
+          setError(true)
+          setOpen(false)
+
+        }
+        else if(res.data.statusCode === 3){
+          console.log(res.data)
+          setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
+          setError(true)
+          setOpen(false)
+        }
+        else if (res.data.statusCode === 5){
+          console.log(res.data)
+          setErrorMsg('Плохое качество фото. Загрузите фото обратной стороны снова. ')
+          setError(true)
+        }
+        else if (res.data.statusCode === 7){
+          console.log(res.data)
+          setErrorMsg('Ваш паспорт скоро истечет. Просьба заменить ваш паспорт')
+          setError(true)
+        }
+        else{
+          navigate('/camera')
+          console.log(res.data)
+        }
+      })
+      .catch(error =>{
+          console.log(error)
+          setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+          setError(true)
+          setOpen(false)
+        }
+      )
+  }
   else{
+    console.log('SEND FRONT WITH BACK')
     setOpen(true); 
     const formDataFront = new FormData();
     const formDataBack = new FormData();
@@ -114,46 +186,54 @@ const onFileUpload = () => {
         setError(true)
       }
       else{
-      setOpen(true); 
-      axios({
-        method: 'POST',
-        url: global.config.REST_API + 'api/passport-back',
-        data: formDataBack,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': '*',
-          'Access-Control-Allow-Methods': '*',
-        }
-      })
+        setSendFront(true)
+        setOpen(true);
+        axios({
+          method: 'POST',
+          url: global.config.REST_API + 'api/passport-back',
+          data: formDataBack,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Methods': '*',
+          }
+        })
 
-        .then((res) => {
-          setOpen(false); 
-          if (res.data.statusCode === 1){
+          .then((res) => {
+            setOpen(false);
+            if (res.data.statusCode === 1){
+              console.log(res.data)
+              setErrorMsg('Ошибка запроса!')
+              setError(true)
+              setOpen(false)
+            }
+            else if(res.data.statusCode === 2){
+              console.log(res.data)
+              setErrorMsg('Технические проблемы. Повторите запрос позже.')
+              setError(true)
+              setOpen(false)
+            }
+            else if(res.data.statusCode === 3){
+              console.log(res.data)
+              setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
+              setError(true)
+              setOpen(false)
+            }
+            else if (res.data.statusCode === 5){
+              console.log(res.data)
+              setErrorMsg('Плохое качество фото. Загрузите фото обратной стороны снова. ')
+              setError(true)
+            }
+            else if (res.data.statusCode === 7){
+              console.log(res.data)
+              setErrorMsg('Ваш паспорт скоро истечет. Просьба заменить ваш паспорт')
+              setError(true)
+            }
+            else{
+            navigate('/camera')
             console.log(res.data)
-            setError(true)
-            setOpen(false)
-          }
-          else if(res.data.statusCode === 2){
-            console.log(res.data)
-            setError(true)
-            setOpen(false)
-
-          }
-          else if(res.data.statusCode === 3){
-            console.log(res.data)
-            setErrorMsg('')
-            setOpen(false)
-          }
-          else if (res.data.statusCode === 5){
-            console.log(res.data)
-            setErrorMsg('Плохое качество фото. Загрузите фото обратной стороны снова. ')
-            setError(true)
-          }
-          else{
-          navigate('/camera')
-          console.log(res.data)
-          }
+            }
         })
           .catch(error =>{
             console.log(error)
@@ -161,11 +241,12 @@ const onFileUpload = () => {
             setError(true)
             setOpen(false)
           }
-                )
+          )
       }
     })
     .catch(error =>{
       console.log(error)
+      setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
       setError(true)
       setOpen(false)
     }
@@ -205,16 +286,16 @@ return (
             <div className="photo-item">
               <form id="front_passport_form" >
                 <label className="photo-item-label">
-                  <img 
+                  <img
                   className='front-preview'
                   src={previewFront}
                   alt=''
                   />
                   <input
-                      type="file" 
+                      type="file"
                       onChange={onFileChangeFront}
-                      name="front_passport" 
-                      id="front_passport" 
+                      name="front_passport"
+                      id="front_passport"
                       />
                 </label>
                 <div className="photo-item-title">Лицевая сторона</div>

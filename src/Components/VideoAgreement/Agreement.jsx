@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+  import React, { useEffect, useRef, useState } from "react";
 import {Backdrop, CircularProgress, Stack, Snackbar, Button } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 import Webcam from "react-webcam";
@@ -7,7 +7,7 @@ import {useNavigate} from "react-router";
 import '../../Config';
 import '../Video/Video.css';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import {getCookies} from "../../hooks/cookies"
+import {getCookies, setCookies} from "../../hooks/cookies"
 
 export  default function App() {
 	const [timeLeft, setTimeLeft] = useState(2 * 60);
@@ -33,6 +33,18 @@ export  default function App() {
   const blob = new Blob(recordedChunks, {
     type: options?.mimeType || "" 
   });
+
+
+  // TEMP
+  const [selectedFile, setSelectedFile] = useState();
+  const onFileChange = async (event) => {
+    setSelectedFile(event.target.files[0])
+    setSelectedFile(event.target.files[0])
+  };
+console.log(selectedFile)
+
+  // TEMP
+
 
   const Alert = React.forwardRef(function Alert(props, ref) {
   	return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -80,19 +92,65 @@ export  default function App() {
  const formDate = new FormData();
   // --** SEND FILE **-- //
   const sendVideoFile = () => {
-    formDate.append(
-  'video',
-        blob 
-    )
-    formDate.append( 
-      'id',
-      cookiesId
-    )  
     setOpen(!open);
-    if(!formDate){
-      setErrorMsg('Ошибка! Нету данных для отправки')
-      setError(true)
-      setOpen(false)
+    if(selectedFile) {
+      // setErrorMsg('Ошибка! Нету данных для отправки')
+      // setError(true)
+      // setOpen(false)
+      setOpen(true)
+      formDate.append(
+        'video',
+        selectedFile
+      )
+      formDate.append(
+        'id',
+        cookiesId
+      )
+      axios
+      (
+        {
+          url: global.config.REST_API + 'api/video-agreement',
+          method: 'POST',
+          data: formDate,
+          headers: {'Content-Type': 'multipart/form-data'},
+          enctype: "multipart/form-data",
+          transformRequest: (d) => d
+        }
+      )
+        .then((res) => {
+          setOpen(false);
+          if (res.data.statusCode === 1){
+            setErrorMsg('Ошибка! Произнесите слово еще раз. Громко и четко')
+            setError(true)
+            console.log(res.data)
+          }
+          else if(res.data.statusCode === 2){
+            setErrorMsg('Технические проблемы. Повторите позже.')
+            setError(true)
+            console.log(res.data)
+          }
+          else if(res.data.statusCode === 3){
+            setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
+            setError(true)
+            console.log(res.data)
+          }
+          else if(res.data.statusCode === 6){
+            console.log(res.data)
+            setErrorMsg('Количество попыток закончилось. Попробуйте еще раз завтра!')
+            setError(true)
+          }
+          else{
+            setCookies('user_name', res.data.fullName)
+            navigate('/finish')
+            console.log(res.data)
+          }
+        })
+        .catch(error =>{
+          setOpen(false)
+          console.error(error)
+          setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+          setError(true)
+        })
     }
     else if(!cookiesId){
       setOpen(false)
@@ -101,7 +159,15 @@ export  default function App() {
     
     }
     else{
-    const urlObject = URL.createObjectURL(blob); 
+      formDate.append(
+        'video',
+        blob
+      )
+      formDate.append(
+        'id',
+        cookiesId
+      )
+      const urlObject = URL.createObjectURL(blob);
     setVideoSrc(urlObject);
     console.log(recordedChunks)
 
@@ -266,6 +332,14 @@ return (
     <h2 className="timer-console">{timer}</h2>
     <div className="video-agreement_text">Произнесите <b> "Я, {cookieName}, соглашаюсь на обработку персональных данных" </b> для того, чтобы пройти идентификацию.</div>
     <div className="btn-items">
+      {/*TEMP */}
+      <div className="temp-input">
+        <input
+          onChange={onFileChange}
+          type="file"
+        />
+      </div>
+      {/*TEMP*/}
         <Button 
           id="reset-btn"
           color='success'
