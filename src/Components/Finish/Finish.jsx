@@ -3,6 +3,7 @@ import MuiAlert from "@mui/material/Alert";
 import React, {useState} from "react";
 import "./Finish.css";
 import { useNavigate } from "react-router";
+import {removeCookies} from "../../hooks/cookies";
 
 const Finish = ({id}) => {
   // Values
@@ -15,6 +16,11 @@ const Finish = ({id}) => {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
+
+  removeCookies('id')
+  removeCookies('check_word')
+  removeCookies('user_name')
+
 
   const closeError = (event, reason) => {
     if (reason === "clickaway") {

@@ -38,7 +38,7 @@ axios.defaults.headers.post['Content-Type'] = 'multipart';
     setSelectedFileBack(event.target.files[0])
     setSelectedFileBack (event.target.files[0])
   };
-    
+
   useEffect(() => {
     if (!selectedFileBack) {
       setPreviewBack(undefined)
@@ -59,8 +59,6 @@ const onFileUpload = () => {
     setError(true)
   }
   else if(isSendFront){
-    console.log('SEND BACK WITHOUT FRONT')
-    // SEND REQUEST BACK IF FRONT WAS SEND
       const formDataBack = new FormData();
       formDataBack.append(
       "backSide",
@@ -87,41 +85,34 @@ const onFileUpload = () => {
       .then((res) => {
         setOpen(false);
         if (res.data.statusCode === 1){
-          console.log(res.data)
           setErrorMsg('Ошибка запроса')
           setError(true)
           setOpen(false)
         }
         else if(res.data.statusCode === 2){
-          console.log(res.data)
           setErrorMsg('Технические проблемы. Повторите позже')
           setError(true)
           setOpen(false)
 
         }
         else if(res.data.statusCode === 3){
-          console.log(res.data)
           setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
           setError(true)
           setOpen(false)
         }
         else if (res.data.statusCode === 5){
-          console.log(res.data)
-          setErrorMsg('Плохое качество фото. Загрузите фото обратной стороны снова. ')
+          setErrorMsg('Плохое качество фото. Загрузите фото обратной стороны снова.')
           setError(true)
         }
         else if (res.data.statusCode === 7){
-          console.log(res.data)
           setErrorMsg('Ваш паспорт скоро истечет. Просьба заменить ваш паспорт')
           setError(true)
         }
         else{
           navigate('/camera')
-          console.log(res.data)
         }
       })
       .catch(error =>{
-          console.log(error)
           setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
           setError(true)
           setOpen(false)
@@ -129,10 +120,10 @@ const onFileUpload = () => {
       )
   }
   else{
-    console.log('SEND FRONT WITH BACK')
-    setOpen(true); 
+    setOpen(true); // Open loading
     const formDataFront = new FormData();
     const formDataBack = new FormData();
+    // Adding data to fomdDate
     formDataFront.append(
       "frontSide",
       selectedFileFront,
@@ -142,7 +133,6 @@ const onFileUpload = () => {
       'id',
       getCookies('id')
     )
-
     formDataBack.append(
       "backSide",
       selectedFileBack,
@@ -166,22 +156,18 @@ const onFileUpload = () => {
     .then((res) => {
       setOpen(false)
       if (res.data.statusCode === 1){
-        console.log(res.data)
         setErrorMsg('Ошибка запроса!')
         setError(true)
       }
       else if(res.data.statusCode === 2){
-        console.log(res.data)
         setErrorMsg('Технические проблемы. Повторите запрос позже.')
         setError(true)
       }
       else if(res.data.statusCode === 3){
-        console.log(res.data)
         setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
         setError(true)
       }
       else if (res.data.statusCode === 5){
-        console.log(res.data)
         setErrorMsg('Плохое качество фото. Загрузите фото лицевой стороны снова.')
         setError(true)
       }
@@ -199,44 +185,36 @@ const onFileUpload = () => {
             'Access-Control-Allow-Methods': '*',
           }
         })
-
           .then((res) => {
             setOpen(false);
             if (res.data.statusCode === 1){
-              console.log(res.data)
               setErrorMsg('Ошибка запроса!')
               setError(true)
               setOpen(false)
             }
             else if(res.data.statusCode === 2){
-              console.log(res.data)
               setErrorMsg('Технические проблемы. Повторите запрос позже.')
               setError(true)
               setOpen(false)
             }
             else if(res.data.statusCode === 3){
-              console.log(res.data)
               setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
               setError(true)
               setOpen(false)
             }
             else if (res.data.statusCode === 5){
-              console.log(res.data)
               setErrorMsg('Плохое качество фото. Загрузите фото обратной стороны снова. ')
               setError(true)
             }
             else if (res.data.statusCode === 7){
-              console.log(res.data)
               setErrorMsg('Ваш паспорт скоро истечет. Просьба заменить ваш паспорт')
               setError(true)
             }
             else{
             navigate('/camera')
-            console.log(res.data)
             }
         })
           .catch(error =>{
-            console.log(error)
             setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
             setError(true)
             setOpen(false)
@@ -245,7 +223,7 @@ const onFileUpload = () => {
       }
     })
     .catch(error =>{
-      console.log(error)
+      console.error(error)
       setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
       setError(true)
       setOpen(false)
@@ -334,7 +312,7 @@ return (
       </Backdrop> 
       <Stack spacing={2} sx={{ width: '100%' }}>
       <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
-        <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+        <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
           {errorMsg}
         </Alert>
       </Snackbar>

@@ -41,7 +41,6 @@ export  default function App() {
     setSelectedFile(event.target.files[0])
     setSelectedFile(event.target.files[0])
   };
-console.log(selectedFile)
 
   // TEMP
 
@@ -122,27 +121,22 @@ console.log(selectedFile)
           if (res.data.statusCode === 1){
             setErrorMsg('Ошибка! Произнесите слово еще раз. Громко и четко')
             setError(true)
-            console.log(res.data)
           }
           else if(res.data.statusCode === 2){
             setErrorMsg('Технические проблемы. Повторите позже.')
             setError(true)
-            console.log(res.data)
           }
           else if(res.data.statusCode === 3){
             setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
             setError(true)
-            console.log(res.data)
           }
           else if(res.data.statusCode === 6){
-            console.log(res.data)
             setErrorMsg('Количество попыток закончилось. Попробуйте еще раз завтра!')
             setError(true)
           }
           else{
             setCookies('user_name', res.data.fullName)
             navigate('/finish')
-            console.log(res.data)
           }
         })
         .catch(error =>{
@@ -169,7 +163,6 @@ console.log(selectedFile)
       )
       const urlObject = URL.createObjectURL(blob);
     setVideoSrc(urlObject);
-    console.log(recordedChunks)
 
       axios 
     ( 
@@ -189,22 +182,18 @@ console.log(selectedFile)
       if (res.data.statusCode === 1){ 
         setErrorMsg('Ошибка! Нету данных для отправки.')
         setError(true)
-        console.log(res.data) 
-      } 
+      }
       else if(res.data.statusCode === 2){
         setErrorMsg('Технические проблемы. Повторите позже.')
         setError(true)
-        console.log(res.data) 
-      } 
+      }
       else if(res.data.statusCode === 3){
         setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
         setError(true) 
-        console.log(res.data) 
-      } 
+      }
       else{ 
         navigate('/finish')
-        console.log(res.data)
-      } 
+      }
       }) 
       .catch(error =>{
         setOpen(false) 
