@@ -14,43 +14,14 @@ const  SelfiePassport = () => {
   const [open, setOpen] = useState(false); 
   const [openError, setError] = useState(false)
   const [errorMsg, setErrorMsg] = useState(false)
-  // is Disabled = true
-  const [isDisabled, setDisabled] = useState(false)
-  const [isDisabledReady, setDisabledReady] = useState(false)
+  const [isDisabled, setDisabled] = useState(true)
+  const [isDisabledReady, setDisabledReady] = useState(true)
   const idCookie = getCookies('id')
   let navigate = useNavigate();
-
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-  // TEMP
-  const [selectedFile, setSelectedFile] = useState();
-  const onFileChange = async (event) => {
-    const file = event.target.files[0]
-    const base64 = await convertBase64(file);
-    setSelectedFile(base64)
-  };
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
-
-  //TEMP
-
-
-
-    
   function handleTakePhoto (dataUri) {
     setDataUri(dataUri)
     setDisabled(false)
@@ -76,73 +47,10 @@ const sendPhoto = () => {
     setErrorMsg('Ошибка. Время сессии прошло. Начните заново')
     setError(true)
   }
-  else if(!dataUri){
-    // setErrorMsg('Ошибка. Нету данных для отправки!')
-    // setError(true)
-    // TEMP
-
-
-    setOpen(true)
-    const formData = new FormData();
-
-    axios({
-      method: 'POST',
-      url: global.config.REST_API + 'api/selfie',
-      data:{
-        base64: selectedFile,
-        id: idCookie
-      },
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        'Access-Control-Allow-Methods': '*',
-        mode: 'no-cors'
-      },
-    })
-      .then((res) => {
-        setOpen(false)
-        setCookies('check_word' , res.data.secretWord)
-        setDataUri(null)
-        if (res.data.statusCode === 1){
-          console.log(res.data)
-          setErrorMsg('Внимание! Фото лица не разпознано или не найдено. Повторите еще раз')
-          setError(true)
-        }
-        else if(res.data.statusCode === 2){
-          console.log(res.data)
-          setErrorMsg('Техничесие проблемы. Повторите позже')
-          setError(true)
-          setError(true)
-        }
-        else if(res.data.statusCode === 3){
-          console.log(res.data)
-          setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
-          setError(true)
-        }
-        else if(res.data.statusCode === 6){
-          console.log(res.data)
-          setErrorMsg('Количество попыток закончилось. Попробуйте еще раз завтра!')
-          setError(true)
-        }
-        else{
-          navigate('/terms')
-          console.log(res.data)
-        }
-      })
-      .catch(error =>{
-        setOpen(false)
-        setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
-        setError(true)
-        console.log(error)
-      })
+  else if(!dataUri) {
+    setErrorMsg('Ошибка. Нету данных для отправки!')
+    setError(true)
   }
-
-  // temp
-
-
-
   else{
   setError(false)
   setOpen(true)
@@ -167,23 +75,19 @@ const sendPhoto = () => {
     setOpen(false)
     setDataUri(null)
     if (res.data.statusCode === 1){
-      console.log(res.data)
       setErrorMsg('Ошибка. Повторите запрос еще раз')
       setError(true)
     }
     else if(res.data.statusCode === 2){
-      console.log(res.data)
       setErrorMsg('Техничесие проблемы. Повторите позже')
       setError(true)
     }
     else if(res.data.statusCode === 3){
-      console.log(res.data)
       setErrorMsg('Время ожидания запроса вышло. Повторите снова!')
       setError(true)
     }
     else{
     navigate('/terms')
-    console.log(res.data)
     }
   })
   .catch(error =>{
@@ -236,7 +140,7 @@ return (
           idealFacingMode={FACING_MODES.USER}
           onTakePhoto = {(dataUri) => { handleTakePhoto(dataUri); } }
           onCameraError = { (error) => { handleCameraError(error); } }  
-          imageType = {IMAGE_TYPES.PNG}
+          imageType = {IMAGE_TYPES.JPG}
           imageCompression = {0.97}
           isMaxResolution = {true}
           isImageMirror = {true}
@@ -248,14 +152,6 @@ return (
         />
       </div>
     }
-    {/*TEMP */}
-    <div className="temp-input">
-      <input
-        type="file"
-        onChange={onFileChange}
-      />
-    </div>
-    {/*TEMP*/}
     <div className="btn-group-camera">
       <Button  sx={{width: '120px',marginRight: '10px'}} 
       variant="outlined" 

@@ -106,11 +106,9 @@ export const Identification  = () => {
               setError(true)
             }
             else if(res.data.statusCode === 6){
-              console.log(res.data)
               setErrorMsg('Ошибка. Истечено количество попыток!')
             }
             else{
-            console.log(res.data)
             navigate('/idcard')
             }
           })
@@ -144,11 +142,9 @@ export const Identification  = () => {
               setError(true)
             }
             else if(res.data.statusCode === 6){
-              console.log(res.data)
               setErrorMsg('Ошибка. Истечено количество попыток!')
             }
             else{
-            console.log(res.data)
             }
           })
           .catch((err) => {
