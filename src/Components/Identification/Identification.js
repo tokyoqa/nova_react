@@ -138,11 +138,17 @@ export const Identification  = () => {
               setError(true)
             }
             else if(res.data.statusCode === 3){
-                setErrorMsg('Код подтверждения истек! Повторите попытку.')
+              setErrorMsg('Код подтверждения истек! Повторите попытку.')
               setError(true)
             }
             else if(res.data.statusCode === 6){
               setErrorMsg('Ошибка. Истечено количество попыток!')
+              setError(true)
+              setIsDisabled(true)
+              clearTimer()
+              setTimeout(event => {
+                navigate('/')
+              }, 9000);
             }
             else{
             }

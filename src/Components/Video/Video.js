@@ -123,172 +123,178 @@ export default function App() {
           } else if (res.data.statusCode === 6) {
             setErrorMsg('Количество попыток закончилось. Попробуйте еще раз завтра!')
             setError(true)
-            navigate('/')
-          } else {
-            setCookies('user_name', res.data.fullName)
-            navigate('/video-agreement')
+            setTimeout(event => {
+              navigate('/')
+            }, 9000);
           }
-        })
-        .catch(error => {
-          setOpen(false)
-          console.error(error)
-          setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
-          setError(true)
-        })
-    }
-  }
-
-  const custVideoConstraints = {
-    width: 640,
-    height: 480,
-    facingMode: "user",
-  };
-
-  const custAudioConstraints = {
-    suppressLocalAudioPlayback: true,
-    noiseSuppression: true,
-    echoCancellation: true,
-  };
-
-  // Timer function
-  const getTimeRemaining = (e) => {
-    const total = Date.parse(e) - Date.parse(new Date());
-    const seconds = Math.floor((total / 1000) % 60);
-    const minutes = Math.floor((total / 1000 / 60) % 60);
-    const hours = Math.floor((total / 1000 / 60 / 60) % 24);
-    return {
-      total, hours, minutes, seconds
-    };
-  }
-
-  const startTimer = (e) => {
-    let {total, seconds} = getTimeRemaining(e);
-    if (total >= 0) {
-      setTimer(seconds > 9 ? seconds : seconds)
-    }
-    if (seconds === 0) {
-      setTimeout(() => {
-        setDisabled(false)
-      }, 2000)
-      const handleStopCaptureClick = () => {
-        if (mediaRecorderRef.current && mediaRecorderRef.current.stop) {
-          mediaRecorderRef.current.stop();
+          else
+            {
+              setCookies('user_name', res.data.fullName)
+              navigate('/video-agreement')
+            }
+          }
+        )
+        .
+          catch(error => {
+            setOpen(false)
+            console.error(error)
+            setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+            setError(true)
+          })
         }
+    }
+
+    const custVideoConstraints = {
+      width: 640,
+      height: 480,
+      facingMode: "user",
+    };
+
+    const custAudioConstraints = {
+      suppressLocalAudioPlayback: true,
+      noiseSuppression: true,
+      echoCancellation: true,
+    };
+
+    // Timer function
+    const getTimeRemaining = (e) => {
+      const total = Date.parse(e) - Date.parse(new Date());
+      const seconds = Math.floor((total / 1000) % 60);
+      const minutes = Math.floor((total / 1000 / 60) % 60);
+      const hours = Math.floor((total / 1000 / 60 / 60) % 24);
+      return {
+        total, hours, minutes, seconds
       };
     }
-  }
 
-  const clearTimer = (e) => {
-    setTimer('5');
-    if (Ref.current) clearInterval(Ref.current);
-    const id = setInterval(() => {
-      startTimer(e);
-    }, 1000)
-    Ref.current = id;
-  }
-
-  const getDeadTime = () => {
-    let deadline = new Date();
-    deadline.setSeconds(deadline.getSeconds() + 5);
-    return deadline;
-  }
-
-  const onClickReset = () => {
-    clearTimer(getDeadTime());
-  }
-
-  const closeError = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setError(false);
-  };
-
-  const renderTime = ({remainingTime}) => {
-    return (
-      <div className="timer">
-        <div className="text">Запись начнется...</div>
-        <div className="value">{remainingTime}</div>
-        <div className="text">секунд</div>
-      </div>
-    );
-  };
-  return (
-    <>
-      <div className="video-form">
-        <Webcam
-          className="video-item"
-          ref={webcamRef}
-          height={400}
-          mirrored={true}
-          audio={true}
-          muted={true}
-          videoConstraints={custVideoConstraints}
-          audioConstraints={custAudioConstraints}
-        />
-      </div>
-      {
-        (!openTimer)
-          ? null
-          :
-          <Backdrop
-            sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
-            open={openTimer}>
-            <div className="App">
-              <div className="timer-wrapper">
-                <CountdownCircleTimer
-                  isPlaying
-                  duration={3}
-                  colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-                  colorsTime={[3, 2.5, 1.5, 0]}
-                  onComplete={() => ({shouldRepeat: false, delay: 1}, setOpenTimer(false), startVideo())}
-                >
-                  {renderTime}
-                </CountdownCircleTimer>
-              </div>
-            </div>
-          </Backdrop>
+    const startTimer = (e) => {
+      let {total, seconds} = getTimeRemaining(e);
+      if (total >= 0) {
+        setTimer(seconds > 9 ? seconds : seconds)
       }
-      <h2 className="timer-console">{timer}</h2>
-      <div className="video-text_word"> Произнесите слово <strong>{checkWord}</strong> четко и громко один раз для
-        прохождения идентификации
-      </div>
+      if (seconds === 0) {
+        setTimeout(() => {
+          setDisabled(false)
+        }, 2000)
+        const handleStopCaptureClick = () => {
+          if (mediaRecorderRef.current && mediaRecorderRef.current.stop) {
+            mediaRecorderRef.current.stop();
+          }
+        };
+      }
+    }
 
-      <div className="btn-items">
-        <Button
-          id="start-btn"
-          color='success'
-          sx={{marginTop: '10px', width: "150px", marginRight: "5px"}}
-          variant="contained"
-          onClick={startOpenTimer} // Start timer
-          disabled={isDisabled}
-        >
-          {videoText}
-        </Button>
-        <Button
-          id="send-btn"
-          color='success'
-          sx={{marginTop: '10px', width: "150px"}}
-          variant="contained"
-          onClick={sendVideoFile}
-          disabled={isDisabled}
-        >
-          Отправить
-        </Button>
-      </div>
+    const clearTimer = (e) => {
+      setTimer('5');
+      if (Ref.current) clearInterval(Ref.current);
+      const id = setInterval(() => {
+        startTimer(e);
+      }, 1000)
+      Ref.current = id;
+    }
 
-      <Backdrop
-        sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
-        open={open}>
-        <CircularProgress color="inherit"/>
-      </Backdrop>
-      <Stack spacing={2} sx={{width: '100%'}}>
-        <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
-          <Alert onClose={closeError} severity="error" sx={{width: '100%'}}>
-            {errorMsg}
-          </Alert>
-        </Snackbar>
-      </Stack>
-    </>
-  );
-}
+    const getDeadTime = () => {
+      let deadline = new Date();
+      deadline.setSeconds(deadline.getSeconds() + 5);
+      return deadline;
+    }
+
+    const onClickReset = () => {
+      clearTimer(getDeadTime());
+    }
+
+    const closeError = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setError(false);
+    };
+
+    const renderTime = ({remainingTime}) => {
+      return (
+        <div className="timer">
+          <div className="text">Запись начнется...</div>
+          <div className="value">{remainingTime}</div>
+          <div className="text">секунд</div>
+        </div>
+      );
+    };
+    return (
+      <>
+        <div className="video-form">
+          <Webcam
+            className="video-item"
+            ref={webcamRef}
+            height={400}
+            mirrored={true}
+            audio={true}
+            muted={true}
+            videoConstraints={custVideoConstraints}
+            audioConstraints={custAudioConstraints}
+          />
+        </div>
+        {
+          (!openTimer)
+            ? null
+            :
+            <Backdrop
+              sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+              open={openTimer}>
+              <div className="App">
+                <div className="timer-wrapper">
+                  <CountdownCircleTimer
+                    isPlaying
+                    duration={3}
+                    colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+                    colorsTime={[3, 2.5, 1.5, 0]}
+                    onComplete={() => ({shouldRepeat: false, delay: 1}, setOpenTimer(false), startVideo())}
+                  >
+                    {renderTime}
+                  </CountdownCircleTimer>
+                </div>
+              </div>
+            </Backdrop>
+        }
+        <h2 className="timer-console">{timer}</h2>
+        <div className="video-text_word"> Произнесите слово <strong>{checkWord}</strong> четко и громко один раз для
+          прохождения идентификации
+        </div>
+
+        <div className="btn-items">
+          <Button
+            id="start-btn"
+            color='success'
+            sx={{marginTop: '10px', width: "150px", marginRight: "5px"}}
+            variant="contained"
+            onClick={startOpenTimer} // Start timer
+            disabled={isDisabled}
+          >
+            {videoText}
+          </Button>
+          <Button
+            id="send-btn"
+            color='success'
+            sx={{marginTop: '10px', width: "150px"}}
+            variant="contained"
+            onClick={sendVideoFile}
+            disabled={isDisabled}
+          >
+            Отправить
+          </Button>
+        </div>
+
+        <Backdrop
+          sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+          open={open}>
+          <CircularProgress color="inherit"/>
+        </Backdrop>
+        <Stack spacing={2} sx={{width: '100%'}}>
+          <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
+            <Alert onClose={closeError} severity="error" sx={{width: '100%'}}>
+              {errorMsg}
+            </Alert>
+          </Snackbar>
+        </Stack>
+      </>
+    );
+  }

@@ -157,13 +157,12 @@ const Main = () => {
           />
           <FormControlLabel sx={{margin: '0 18px 8px 12px'}}
                             control={
-                              <Checkbox onChange={handleChangeChecked} name="" sx={{}}/>
+                              <Checkbox onChange={handleChangeChecked} name=""/>
                             }
-                            label={<Typography variant="body2" sx={{textAlign: 'justify'}}>
+                            label={<Typography variant="body2" sx={{fontSize: '12px', textAlign: 'justify', marginTop: '10px'}}>
                               Подтверждаю согласие на сбор, обработку и передачу персональных данных
                             </Typography>}
           />
-
           <Button
             color="success"
             className="main_submit"
