@@ -99,7 +99,7 @@ const  CameraJS = ( ) => {
       setCookies('check_word' , res.data.secretWord)
       setDataUri(null)
       if (res.data.statusCode === 1){
-        setErrorMsg('Внимание! Фото лица не разпознано или не найдено. Повторите еще раз')
+        setErrorMsg('Внимание! Фото лица не распознано или не найдено. Повторите еще раз')
         setError(true)
       }
       else if(res.data.statusCode === 2){
