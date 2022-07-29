@@ -25,7 +25,7 @@ export  default function App() {
 	const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
   const [videoText, setVideoText] = useState('Записать')
-  const [isDisabled, setDisabled] = useState(false)
+  const [isDisabled, setDisabled] = useState(true)
 
   const cookiesId = getCookies('id')
   const cookieName = getCookies('user_name')
@@ -34,15 +34,6 @@ export  default function App() {
     type: options?.mimeType || "" 
   });
 
-
-  // TEMP
-  const [selectedFile, setSelectedFile] = useState();
-  const onFileChange = async (event) => {
-    setSelectedFile(event.target.files[0])
-    setSelectedFile(event.target.files[0])
-  };
-
-  // TEMP
 
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -93,58 +84,9 @@ export  default function App() {
   const sendVideoFile = () => {
     setOpen(!open);
     if(selectedFile) {
-      // setErrorMsg('Ошибка! Нету данных для отправки')
-      // setError(true)
-      // setOpen(false)
-      setOpen(true)
-      formDate.append(
-        'video',
-        selectedFile
-      )
-      formDate.append(
-        'id',
-        cookiesId
-      )
-      axios
-      (
-        {
-          url: global.config.REST_API + 'api/video-agreement',
-          method: 'POST',
-          data: formDate,
-          headers: {'Content-Type': 'multipart/form-data'},
-          enctype: "multipart/form-data",
-          transformRequest: (d) => d
-        }
-      )
-        .then((res) => {
-          setOpen(false);
-          if (res.data.statusCode === 1){
-            setErrorMsg('Ошибка! Произнесите слово еще раз. Громко и четко')
-            setError(true)
-          }
-          else if(res.data.statusCode === 2){
-            setErrorMsg('Технические проблемы. Повторите позже.')
-            setError(true)
-          }
-          else if(res.data.statusCode === 3){
-            setErrorMsg('Время ожидания запроса вышло. Повторите снова.')
-            setError(true)
-          }
-          else if(res.data.statusCode === 6){
-            setErrorMsg('Количество попыток закончилось. Попробуйте еще раз завтра!')
-            setError(true)
-          }
-          else{
-            setCookies('user_name', res.data.fullName)
-            navigate('/finish')
-          }
-        })
-        .catch(error =>{
-          setOpen(false)
-          console.error(error)
-          setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
-          setError(true)
-        })
+      setErrorMsg('Ошибка! Нету данных для отправки')
+      setError(true)
+      setOpen(false)
     }
     else if(!cookiesId){
       setOpen(false)
@@ -321,14 +263,6 @@ return (
     <h2 className="timer-console">{timer}</h2>
     <div className="video-agreement_text">Произнесите <b> "Я, {cookieName}, соглашаюсь на обработку персональных данных" </b> для того, чтобы пройти идентификацию.</div>
     <div className="btn-items">
-      {/*TEMP */}
-      <div className="temp-input">
-        <input
-          onChange={onFileChange}
-          type="file"
-        />
-      </div>
-      {/*TEMP*/}
         <Button 
           id="reset-btn"
           color='success'

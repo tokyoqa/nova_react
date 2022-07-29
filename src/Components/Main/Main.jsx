@@ -155,11 +155,11 @@ const Main = () => {
             value={number}
             placeholder={(code === '+996' ? "(000) 000 - 000" : '(000) 000 - 00 - 00')}
           />
-          <FormControlLabel sx={{marginLeft: '16px'}}
+          <FormControlLabel sx={{margin: '0 18px 8px 12px'}}
                             control={
-                              <Checkbox onChange={handleChangeChecked} name=""/>
+                              <Checkbox onChange={handleChangeChecked} name="" sx={{}}/>
                             }
-                            label={<Typography variant="body2" sx={{textAlign: ''}}>
+                            label={<Typography variant="body2" sx={{textAlign: 'justify'}}>
                               Подтверждаю согласие на сбор, обработку и передачу персональных данных
                             </Typography>}
           />
