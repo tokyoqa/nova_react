@@ -175,6 +175,14 @@ const onFileUpload = () => {
         setErrorMsg('Плохое качество фото. Загрузите фото лицевой стороны снова.')
         setError(true)
       }
+      else if (res.data.statusCode === 7){
+        setErrorMsg('Ваш паспорт скоро истечет. Просьба заменить ваш паспорт')
+        setError(true)
+      }
+      else if (res.data.statusCode === 8) {
+        setErrorMsg('Срок Вашего паспорта истек.')
+        setError(true)
+      }
       else{
         setSendFront(true)
         setOpen(true);
