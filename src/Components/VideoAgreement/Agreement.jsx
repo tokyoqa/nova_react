@@ -25,7 +25,7 @@ export  default function App() {
 	const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
   const [videoText, setVideoText] = useState('Записать')
-  const [isDisabled, setDisabled] = useState(true)
+  const [isDisabled, setDisabled] = useState(false)
 
   const cookiesId = getCookies('id')
   const cookieName = getCookies('user_name')
@@ -83,7 +83,7 @@ export  default function App() {
   // --** SEND FILE **-- //
   const sendVideoFile = () => {
     setOpen(!open);
-    if(selectedFile) {
+    if(!recordedChunks) {
       setErrorMsg('Ошибка! Нету данных для отправки')
       setError(true)
       setOpen(false)
