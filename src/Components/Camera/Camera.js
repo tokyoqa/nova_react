@@ -114,7 +114,9 @@ const  CameraJS = ( ) => {
       else if(res.data.statusCode === 6){
         setErrorMsg('Количество попыток закончилось. Попробуйте еще раз завтра!')
         setError(true)
-        navigate('/')
+        setTimeout(event => {
+          navigate('/')
+        }, 9000);
       }
       else{
       navigate('/selfie-passport')

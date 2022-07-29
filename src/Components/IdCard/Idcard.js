@@ -108,6 +108,10 @@ const onFileUpload = () => {
           setErrorMsg('Ваш паспорт скоро истечет. Просьба заменить ваш паспорт')
           setError(true)
         }
+        else if (res.data.statusCode === 8) {
+          setErrorMsg('Срок Вашего паспорта истек.')
+          setError(true)
+        }
         else{
           navigate('/camera')
         }
