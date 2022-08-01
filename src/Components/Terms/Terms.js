@@ -21,6 +21,8 @@ import MuiAlert from "@mui/material/Alert";
 import {getCookies, setCookies} from '../../hooks/cookies';
 import axios from "axios";
 import "./Terms.css";
+// axios.defaults.timeout === 10000000;
+
 
 export const Terms = () => {
   let navigate = useNavigate();
@@ -48,8 +50,8 @@ export const Terms = () => {
     setDisabledNext(false)
   }
 
-  useEffect(()=>{
-    if (agreement === '-1'){
+  useEffect(() => {
+    if (agreement === '-1') {
       setDisabledNext(true)
     }
   })
@@ -59,10 +61,8 @@ export const Terms = () => {
     if (!agreement) {
       setErrorMsg('Нажмите на принятие условий')
       setError(true)
-    }
-    else
-      if (!idCookie) {
-        setOpen(false)
+    } else if (!idCookie) {
+      setOpen(false)
       setErrorMsg('Время сессии истекло. Начните занова')
       setError(true)
     } else if (agreement === '-1') {
@@ -72,7 +72,7 @@ export const Terms = () => {
       axios({
         method: 'get',
         url: url + "id=" + idCookie + "&check=0",
-        timeout: 180000, // Let's say you want to wait at least 180 seconds
+        timeout: 100000 * 2, // Let's say you want to wait at least 180 seconds
       }).then((res) => {
         setOpen(false);
         if (res.data.statusCode === 1) {
@@ -91,10 +91,14 @@ export const Terms = () => {
         }
       })
         .catch((err) => {
-          console.error(err);
-          setErrorMsgServer('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
-          setErrorServer(true);
           setOpen(false);
+          if (err.res) {
+            console.error(err);
+          } else {
+            setErrorMsgServer('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+            setErrorServer(true);
+          }
+
         });
     }
   };
@@ -165,13 +169,17 @@ export const Terms = () => {
               onChange={handleChange}
             >
               <FormControlLabel value="1" control={<Radio/>} label={
-                <Typography sx={{fontSize: '12px', marginTop: '10px'}} variant="body2" >
-                  Я ознакомлен и принимаю условия <a href="https://ab.kg/guarddog/laravel-filemanager/files/shares/dogovorpublichnoyoferty.pdf">договора публичной оферты Банка</a>
+                <Typography sx={{fontSize: '12px', marginTop: '10px'}} variant="body2">
+                  Я ознакомлен и принимаю условия <a
+                  href="https://ab.kg/guarddog/laravel-filemanager/files/shares/dogovorpublichnoyoferty.pdf">договора
+                  публичной оферты Банка</a>
                 </Typography>}
               />
               <FormControlLabel value="-1" control={<Radio/>} label={
                 <Typography sx={{fontSize: '12px', marginTop: '10px'}} variant="body2">
-                  Я ознакомлен и не принимаю условия <a href="https://ab.kg/guarddog/laravel-filemanager/files/shares/dogovorpublichnoyoferty.pdf">договора публичной оферты Банка</a>
+                  Я ознакомлен и не принимаю условия <a
+                  href="https://ab.kg/guarddog/laravel-filemanager/files/shares/dogovorpublichnoyoferty.pdf">договора
+                  публичной оферты Банка</a>
                 </Typography>}
               />
             </RadioGroup>
@@ -182,7 +190,7 @@ export const Terms = () => {
           <Button sx={{margin: '0 auto', marginTop: '10px'}} variant="outlined"
                   endIcon={<AssignmentOutlinedIcon/>} onClick={disagreeSubmit}
                   disabled={isDisabledEnd}>
-             Завершить
+            Завершить
           </Button>
           <Button sx={{margin: '0 auto', marginTop: '10px'}} variant="contained"
                   endIcon={<AssignmentTurnedInOutlinedIcon/>} onClick={agreeSubmit}
