@@ -13,7 +13,9 @@ const  SelfiePassport = () => {
   const [dataUri, setDataUri] = useState('');
   const [open, setOpen] = useState(false); 
   const [openError, setError] = useState(false)
+  const [openErrorServer, setOpenErrorServer] = useState(false)
   const [errorMsg, setErrorMsg] = useState(false)
+  const [errorMsgServer, setErrorMsgServer] = useState(false)
   const [isDisabled, setDisabled] = useState(true)
   const [isDisabledReady, setDisabledReady] = useState(true)
   const idCookie = getCookies('id')
@@ -92,7 +94,7 @@ const sendPhoto = () => {
   })
   .catch(error =>{
     setOpen(false)
-    setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+    setErrorMsgServer('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
     setError(true)
     console.log(error)
   })
@@ -105,6 +107,7 @@ const sendPhoto = () => {
     setDisabledReady(false)
     setDisabled(false)
     setError(false);
+    setOpenErrorServer(false)
   };
 
   const isFullscreen = false
@@ -180,8 +183,14 @@ return (
 
   <Stack spacing={2} sx={{ width: '100%' }}>
     <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
-      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+      <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
       {errorMsg}
+      </Alert>
+    </Snackbar>
+
+    <Snackbar open={openErrorServer} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+        {errorMsgServer}
       </Alert>
     </Snackbar>
   </Stack>

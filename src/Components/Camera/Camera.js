@@ -14,34 +14,13 @@ const  CameraJS = ( ) => {
     const [dataUri, setDataUri] = useState('');
     const [open, setOpen] = useState(false);
     const [openError, setError] = useState(false);
-    const [errorMsg, setErrorMsg] = useState(false);
+    const [openErrorServer, setOpenErrorServer] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('');
+    const [errorMsgServer, setErrorMsgServer] = useState('')
     const [isDisabled, setDisabled] = useState(true);
     const [isDisabledReady, setDisabledReady] = useState(true);
     const idCookie = getCookies('id')
     let navigate = useNavigate();
-    // TEMP
-    const [selectedFile, setSelectedFile] = useState();
-    const onFileChange = async (event) => {
-      const file = event.target.files[0]
-      const base64 = await convertBase64(file);
-      setSelectedFile(base64)
-    };
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  };
-
-
-    //TEMP
     const Alert = React.forwardRef(function Alert(props, ref) {
       return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
     });
@@ -124,8 +103,8 @@ const  CameraJS = ( ) => {
     })
     .catch(error =>{
       setOpen(false)
-      setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
-      setError(true)
+      setErrorMsgServer('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+      setOpenErrorServer(true)
       console.log(error)
     })
     }
@@ -137,6 +116,7 @@ const  CameraJS = ( ) => {
       setDisabledReady(false)
       setDisabled(false)
       setError(false);
+      setOpenErrorServer(false)
     };
     const isFullscreen = false
     const ImagePreview = ({ dataUri, isFullscreen }) => {
@@ -212,8 +192,13 @@ const  CameraJS = ( ) => {
 
     <Stack spacing={2} sx={{ width: '100%' }}>
       <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
+        <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
+          {errorMsg}
+        </Alert>
+      </Snackbar>
+      <Snackbar open={openErrorServer} autoHideDuration={3000} onClose={closeError}>
         <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
-        {errorMsg}
+          {errorMsgServer}
         </Alert>
       </Snackbar>
     </Stack>

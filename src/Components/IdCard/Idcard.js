@@ -15,7 +15,9 @@ axios.defaults.headers.post['Content-Type'] = 'multipart';
     const [selectedFileBack, setSelectedFileBack] = useState();
     const [open, setOpen] = useState(false); 
     const [openError, setError] = useState(false);
+    const [openErrorServer, setOpenErrorServer] = useState(false)
     const [errorMsg, setErrorMsg] = useState(false);
+    const [errorMsgServer, setErrorMsgServer] = useState('')
     const [previewFront, setPreviewFront] = useState();
     const [previewBack, setPreviewBack] = useState();
     const [isSendFront, setSendFront] = useState(false);
@@ -118,7 +120,7 @@ const onFileUpload = () => {
       })
       .catch(error =>{
           setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
-          setError(true)
+          setOpenErrorServer(true)
           setOpen(false)
         }
       )
@@ -222,13 +224,17 @@ const onFileUpload = () => {
               setErrorMsg('Ваш паспорт скоро истечет. Просьба заменить ваш паспорт')
               setError(true)
             }
+            else if (res.data.statusCode === 8) {
+              setErrorMsg('Срок Вашего паспорта истек.')
+              setError(true)
+            }
             else{
             navigate('/camera')
             }
         })
           .catch(error =>{
-            setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
-            setError(true)
+            setErrorMsgServer('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+            setOpenErrorServer(true)
             setOpen(false)
           }
           )
@@ -236,8 +242,8 @@ const onFileUpload = () => {
     })
     .catch(error =>{
       console.error(error)
-      setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
-      setError(true)
+      setErrorMsgServer('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+      setOpenErrorServer(true)
       setOpen(false)
     }
     )
@@ -248,6 +254,7 @@ const onFileUpload = () => {
       return;
     }
     setError(false);
+    setOpenErrorServer(false)
   };
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -328,6 +335,11 @@ return (
           {errorMsg}
         </Alert>
       </Snackbar>
+        <Snackbar open={openErrorServer} autoHideDuration={6000} onClose={closeError}>
+          <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+            {errorMsgServer}
+          </Alert>
+        </Snackbar>
     </Stack>
   </div>
   )

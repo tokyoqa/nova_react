@@ -27,9 +27,11 @@ import {setCookies, removeCookies} from '../../hooks/cookies';
 const Main = () => {
   // Values
   const [number, setNumber] = useInputValue('');
-  const [errorMsg, setErrorMsg] = useState('')
   const [openLoading, setOpenLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('')
+  const [errorMsgServer, setErrorMsgServer] = useState('')
   const [openError, setError] = useState(false);
+  const [openErrorServer, setOpenErrorServer] = useState(false)
   const [code, setCode] = React.useState('+996');
   const [check, setChecked] = useState('')
   const [isDisabled, setDisabled] = useState(true)
@@ -49,6 +51,7 @@ const Main = () => {
       return;
     }
     setError(false);
+    setOpenErrorServer(false)
   };
 
   const handleChangeChecked = (event) => {
@@ -118,8 +121,8 @@ const Main = () => {
       }).catch((err) => {
         console.log(err)
         setOpenLoading(false)
-        setError(true)
-        setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+        setErrorMsgServer('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+        setOpenErrorServer(true)
       })
     }
   }
@@ -159,7 +162,8 @@ const Main = () => {
                             control={
                               <Checkbox onChange={handleChangeChecked} name=""/>
                             }
-                            label={<Typography variant="body2" sx={{fontSize: '12px', textAlign: 'justify', marginTop: '10px'}}>
+                            label={<Typography variant="body2"
+                                               sx={{fontSize: '12px', textAlign: 'justify', marginTop: '10px'}}>
                               Подтверждаю согласие на сбор, обработку и передачу персональных данных
                             </Typography>}
           />
@@ -189,8 +193,13 @@ const Main = () => {
       </Backdrop>
       <Stack spacing={2} sx={{width: '100%'}}>
         <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
-          <Alert onClose={closeError} severity="error" sx={{width: '100%'}}>
+          <Alert onClose={closeError} severity="warning" sx={{width: '100%'}}>
             {errorMsg}
+          </Alert>
+        </Snackbar>
+        <Snackbar open={openErrorServer} autoHideDuration={3000} onClose={closeError}>
+          <Alert onClose={closeError} severity="error" sx={{width: '100%'}}>
+            {errorMsgServer}
           </Alert>
         </Snackbar>
       </Stack>

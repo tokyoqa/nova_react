@@ -12,6 +12,9 @@
 .demo-image-preview > img {
   width: 75%;
 }
+.demo-image-preview-fullscreen > img{
+  width: 75%;
+}
 
 /* CAMERA STYLES */
 .camera-text_info{
@@ -39,9 +42,4 @@
   text-align: center;
   margin-top: 15px;
   margin-right: 17px;
-}
-
-/*TEMP*/
-
-.temp-input{
 }

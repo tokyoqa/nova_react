@@ -21,8 +21,12 @@ export  default function App() {
 	const [videoSrc, setVideoSrc] = useState(null);
 	const [open, setOpen] = useState(false);
 	const [openError, setError] = useState(false)
-	const [errorMsg, setErrorMsg] = useState(false)
-	const [recordedChunks, setRecordedChunks] = useState([]);
+  const [openErrorServer, setErrorServer] = useState(false)
+
+  const [errorMsg, setErrorMsg] = useState('')
+  const [errorMsgServer, setErrorMsgServer] = useState('')
+
+  const [recordedChunks, setRecordedChunks] = useState([]);
   const [openTimer, setOpenTimer] = useState(false)
   const [videoText, setVideoText] = useState('Записать')
   const [isDisabled, setDisabled] = useState(false)
@@ -140,8 +144,8 @@ export  default function App() {
       .catch(error =>{
         setOpen(false) 
         console.error(error)
-        setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
-        setError(true)
+        setErrorMsgServer('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+        setErrorServer(true)
 
       }) 
     }
@@ -211,7 +215,8 @@ const startTimer = (e) => {
     if (reason === 'clickaway') {
       return;
     }
-    setError(false); 
+    setError(false);
+    setErrorServer(false)
   };
 
   const renderTime = ({ remainingTime }) => {
@@ -293,8 +298,13 @@ return (
   </Backdrop> 
   <Stack spacing={2} sx={{ width: '100%' }}>
     <Snackbar open={openError} autoHideDuration={3000} onClose={closeError}>
-      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+      <Alert onClose={closeError} severity="warning" sx={{ width: '100%' }}>
         {errorMsg}
+      </Alert>
+    </Snackbar>
+    <Snackbar open={openErrorServer} autoHideDuration={3000} onClose={closeError}>
+      <Alert onClose={closeError} severity="error" sx={{ width: '100%' }}>
+        {errorMsgServer}
       </Alert>
     </Snackbar>
   </Stack>

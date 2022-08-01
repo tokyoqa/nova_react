@@ -27,7 +27,10 @@ export const Terms = () => {
   const [open, setOpen] = useState(false);
   const url = global.config.REST_API + "api/submission?";
   const [openError, setError] = useState(false);
+  const [openErrorServer, setErrorServer] = useState(false);
+  const [errorMsgServer, setErrorMsgServer] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
+
   const [check, setChecked] = useState('')
   const idCookie = getCookies('id')
   const [isDisabledNext, setDisabledNext] = useState(true);
@@ -89,8 +92,8 @@ export const Terms = () => {
       })
         .catch((err) => {
           console.error(err);
-          setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
-          setError(true);
+          setErrorMsgServer('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+          setErrorServer(true);
           setOpen(false);
         });
     }
@@ -125,8 +128,8 @@ export const Terms = () => {
       })
         .catch((err) => {
           console.error(err);
-          setErrorMsg('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
-          setError(true);
+          setErrorMsgServer('Ошибка сервера или отсутствует интернет. Повторите позже пожалуйста!')
+          setErrorServer(true);
           setOpen(false);
         });
     }
@@ -137,6 +140,7 @@ export const Terms = () => {
       return;
     }
     setError(false);
+    setErrorServer(false)
   };
 
   return (
@@ -197,8 +201,13 @@ export const Terms = () => {
 
       <Stack spacing={2} sx={{width: "100%"}}>
         <Snackbar open={openError} autoHideDuration={6000} onClose={closeError}>
-          <Alert onClose={closeError} severity="error" sx={{width: "100%"}}>
+          <Alert onClose={closeError} severity="warning" sx={{width: "100%"}}>
             {errorMsg}
+          </Alert>
+        </Snackbar>
+        <Snackbar open={openErrorServer} autoHideDuration={6000} onClose={closeError}>
+          <Alert onClose={closeError} severity="error" sx={{width: "100%"}}>
+            {errorMsgServer}
           </Alert>
         </Snackbar>
       </Stack>
